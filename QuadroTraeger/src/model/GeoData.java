@@ -15,7 +15,7 @@ public class GeoData {
 	private float longitude;
 	
 	/**
-	 * Höhe über normal Null
+	 * Hoehe ueber normal Null
 	 */
 	private float height;
 
