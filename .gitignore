@@ -4,6 +4,4 @@
 *.jar
 *.war
 *.ear
-*.project
-*.classpath
 *.metadata
