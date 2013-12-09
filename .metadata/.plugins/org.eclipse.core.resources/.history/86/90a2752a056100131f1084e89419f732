@@ -1,0 +1,5 @@
+package de.th_wildau.quadroid.interfaces;
+
+public abstract class AbstractTransmitter {
+
+}

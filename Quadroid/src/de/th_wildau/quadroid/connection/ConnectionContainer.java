@@ -1,0 +1,119 @@
+package de.th_wildau.quadroid.connection;
+
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.Set;
+
+
+/**
+ * This class contains an set of connections, it is necessary 
+ * because ports can not have two connections
+ * 
+ * @author Thomas Rohde TM-12, trohde(at)th-wildau.de
+ * @version 1.0, 05.12.2013, (JDK 7)
+ * 
+ * */
+
+public final class ConnectionContainer 
+{
+	/**reference of this class*/
+	private static ConnectionContainer cc = null;
+	/**save connections*/
+	private Set<Connect> connectionset = null;
+	
+	/**
+	 * no public constructor for singleton
+	 * */
+	private ConnectionContainer()
+	{
+		cc = this;
+		this.connectionset = new HashSet<Connect>();
+	}
+	
+	/**
+	 * singleton constructor
+	 * @return get an single reference of ConnectionContainer
+	 * */
+	protected static ConnectionContainer getReference()
+	{
+		if(cc == null)
+			new ConnectionContainer();
+		return cc;
+	}
+	
+	/**
+	 * this method save connections
+	 * 
+	 * @param hand over an reference of {@link Connect}
+	 * 
+	 * */
+	protected void addConnection(Connect connection)
+	{
+		if(connection == null)
+			return;
+		//already available? 
+		if(!this.connectionset.contains(connection))
+			this.connectionset.add(connection);
+	}
+	
+	/**
+	 * this method remove an given device from list
+	 * 
+	 * @param device hand over an device of {@link de.th_wildau.quadroid.interfaces.IDevice} 
+	 * */
+	protected void removeConnection(Connect connection)
+	{	//if available --> remove 
+		if(this.connectionset.contains(connection))
+			return;
+		this.connectionset.remove(connection);
+	}
+	
+	/**
+	 * this function prove whether a device is connected
+	 * 
+	 * @param hand over an specific port to prove connections
+	 * 
+	 * @return return true device is connected, false if not connected
+	 * */
+	protected boolean isConnected(String port)
+	{	
+		Iterator<Connect> connection = this.connectionset.iterator();
+		//prove all connections 
+		while(connection.hasNext())
+		{//iterator pattern
+			Connect nextconnection = connection.next();
+			//if port already connected?
+			if(nextconnection.getDevice().getPort().equals(port))
+			{
+				return true;
+			}
+		}
+		
+		return false;
+	}
+
+	
+	/**
+	 * get an exist connection for given port
+	 * 
+	 * @param port - hand over an port 
+	 * 
+	 * @return get reference of {@link Connect} for given port or null if no available
+	 * */
+	public Connect getConnectionForPort(String port)
+	{
+		Iterator<Connect> connection = this.connectionset.iterator();
+		//prove all connections 
+		while(connection.hasNext())
+		{//iterator pattern
+			Connect nextconnection = connection.next();
+			//if port already connected?
+			if(nextconnection.getDevice().getPort().equals(port))
+			{
+				return nextconnection;
+			}
+		}
+	   return null;	
+	}
+	
+}

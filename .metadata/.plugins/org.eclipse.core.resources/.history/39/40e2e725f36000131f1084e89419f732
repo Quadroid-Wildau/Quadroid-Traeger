@@ -1,0 +1,118 @@
+package de.th_wildau.quadroid.connection;
+
+
+import java.util.HashSet;
+import java.util.Set;
+
+import de.th_wildau.quadroid.interfaces.IDevice;
+
+/**
+ * This class contains an set of connections, it is necessary 
+ * because ports can have two connections
+ * 
+ * @author Thomas Rohde TM-12, trohde(at)th-wildau.de
+ * @version 1.0, 05.12.2013, (JDK 7)
+ * 
+ * */
+
+public final class ConnectionContainer 
+{
+	/**reference of this class*/
+	private static ConnectionContainer cc = null;
+	/**save connections*/
+	private Set<Connect> connectionset = null;
+	
+	/**
+	 * no public constructor for singleton
+	 * */
+	private ConnectionContainer()
+	{
+		cc = this;
+		this.connectionset = new HashSet<Connect>();
+	}
+	
+	/**
+	 * singleton constructor
+	 * @return get an single reference of ConnectionContainer
+	 * */
+	protected static ConnectionContainer getReference()
+	{
+		if(cc == null)
+			new ConnectionContainer();
+		return cc;
+	}
+	
+	/**
+	 * this method save connections
+	 * @param hand over an reference of {@link Connect}
+	 * 
+	 * @param ident - hand over an identifier for given device (unique device name)
+	 * 
+	 * */
+	protected void addConnection(IDevice device)
+	{
+		if(device == null || ident == null)
+			return;
+		if(!this.connectionset.containsValue(device))
+			this.connectionset.put(ident, device);
+	}
+	
+	/**
+	 * this method remove an given device from list
+	 * 
+	 * @param device hand over an device of {@link de.th_wildau.quadroid.interfaces.IDevice} 
+	 * */
+	protected void removeDevice(IDevice device)
+	{
+		if(!this.connectionset.containsValue(device))
+			return;
+		this.connectionset.remove(device);
+	}
+	
+	/**
+	 * this function prove whether a device is connected
+	 * 
+	 * @param device hand over an device to prove
+	 * 
+	 * @return return true device is connected, false if not connected
+	 * */
+	protected boolean isConnected(IDevice device)
+	{
+		for(IDevice d : this.connectionset.values())
+		{	//prove whether port is connected
+			if(d.getPort().equals(device.getPort()))
+				return true;
+		}
+		
+		return false;
+	}
+	
+	/**
+	 * this function get an collection of connected devices
+	 * @return return an collection of typ IDevice
+	 * */
+	public Collection<IDevice> getAlleDevices()
+	{	//copy all devices into arraylist and return it
+		return this.connectionset.values();
+	}
+	
+	/**
+	 * get an specific device 
+	 * 
+	 * @param deviceName - hand over an key for identifier the device
+	 * 
+	 * @return get an device of type {@link de.th_wildau.quadroid.interfaces.IDevice},
+	 * if no device found return null
+	 * 
+	 * */
+	public IDevice getDevice(String deviceName)
+	{
+		for(IDevice d : this.getAlleDevices())
+		{//search device with unique device name
+			if(d.getDeviceName().equals(deviceName))
+				return d;
+		}
+		
+		return null;
+	}
+}

@@ -1,0 +1,60 @@
+package de.th_wildau.quadroid.devices;
+
+import de.th_wildau.quadroid.connection.Connect;
+import de.th_wildau.quadroid.interfaces.IDevice;
+
+public class FlightCtrl implements IDevice
+{
+	
+	/**step speed for communication (baudrate)*/
+	private int baud = 0; 
+	/**type of parity even, ode, none*/
+	private int parity = 0;
+	/**number of stop bits*/
+	private int stopbits = 0;
+	/**number of data bits*/
+	private int databits = 0;
+	/**save an unique device name*/
+	private String devicename = null;
+	/**port for connection*/
+	private String port = null;
+
+	@Override
+	public String getPort() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public String getDeviceName() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public int getBaud() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public int getParity() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public int getDatabits() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public int getStopBits() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+}
+
+}

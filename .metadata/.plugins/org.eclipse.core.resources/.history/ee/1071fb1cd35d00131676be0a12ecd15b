@@ -1,0 +1,18 @@
+package de.th_wildau.quadroid.interfaces;
+
+/**
+ * this interface define an device for connect to serial port
+ * 
+ * @author Thomas Rohde TM-12, trohde(at)th-wildau.de
+ * @version 1.0, 05.12.2013, (JDK 7)
+ * */
+
+public interface IDevice 
+{
+	/**
+	 * Getter Function
+	 * @return get an value to describe the serial communication
+	 * between two zigbee devices
+	 * */
+	public int getValue();
+}

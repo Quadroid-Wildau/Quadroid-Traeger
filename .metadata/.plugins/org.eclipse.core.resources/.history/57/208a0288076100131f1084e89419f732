@@ -1,0 +1,76 @@
+package de.th_wildau.quadroid.handler;
+
+import java.nio.ByteBuffer;
+import java.util.zip.CRC32;
+import org.apache.commons.codec.binary.Base64;
+import org.slf4j.Logger;
+import de.th_wildau.quadroid.QuadroidMain;
+import de.th_wildau.quadroid.connection.Connect;
+import de.th_wildau.quadroid.enums.Marker;
+import de.th_wildau.quadroid.interfaces.AbstractTransmitter;
+
+/**
+ * 
+ * 
+ * @author Thomas Rohde, trohde@th-wildau.de
+ * @version 1.0 27.11.2013 (JDK 7)
+ *  
+ * */
+
+public class XBeeTransmitterHandler extends AbstractTransmitter
+{
+	/**reference of logger*/
+	private Logger logger = QuadroidMain.logger;
+	
+	/**save connection to zigbee*/
+	private Connect connection = null;
+	
+	/**
+	 * public Constructor 
+	 * 
+	 * @param connection -
+	 * hand over an connection of typ {@link de.th_wildau.quadroid.connection.Connect}
+	 * 
+	 * @throws NullPointerException if connection are <b>null</b> 
+	 * 
+	 * */
+	public XBeeTransmitterHandler(Connect connection) throws NullPointerException
+	{	
+		super(connection);
+		
+		
+		if(connection == null)//if no usable connection available abort here
+			throw new NullPointerException("Hand over null for parameter \"connection\" ");
+		this.connection = connection;
+	}
+		
+
+	/**
+	 * this function transmit data to xBee ground station
+	 * 
+	 * @param msg - hand over data to transmit
+	 * */
+	@Override
+	public void transmit(byte[] msg)
+	{
+		if(msg == null)
+			return;
+		//encode data
+		byte[] tx = Base64.encodeBase64(msg);
+		logger.debug("EncodeBase64");
+		
+	  try
+	  {	
+		this.connection.getOutputStream().write(tx);//send data
+		this.connection.getOutputStream().write("<<<".getBytes());//send end marker
+		this.connection.getOutputStream().flush();//flush pipe
+		logger.debug("Transmit Data");
+	  }catch(Exception e)
+	  {
+		  logger.error("Transmission Exception: ", e);
+	  }	
+		
+	}
+	
+	
+}

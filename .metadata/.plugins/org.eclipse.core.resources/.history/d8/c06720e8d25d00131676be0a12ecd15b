@@ -1,0 +1,10 @@
+package de.th_wildau.quadroid.interfaces;
+
+/**
+ * @author 
+ * */
+
+public interface IDevice 
+{
+
+}

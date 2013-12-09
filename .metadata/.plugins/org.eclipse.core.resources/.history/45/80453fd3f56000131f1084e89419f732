@@ -1,0 +1,22 @@
+package de.th_wildau.quadroid.enums;
+
+/**
+ * This enum define the communication with Flight-Ctrl 2.5
+ * 
+ * */
+
+public enum FlightCtrl {
+
+	/**save an parameter*/
+	private int value = -1;
+	
+	/**
+	 * no public Constructor
+	 * @param value hand over an parameter for define the communication with Flight-Ctrl
+	 * */
+	private FlightCtrl(int value)
+	{
+		this.value = value;
+	}
+	
+}

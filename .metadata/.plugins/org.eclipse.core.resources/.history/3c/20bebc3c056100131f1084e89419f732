@@ -1,0 +1,23 @@
+package de.th_wildau.quadroid.interfaces;
+
+import de.th_wildau.quadroid.connection.Connect;
+
+public abstract class AbstractTransmitter {
+
+	/**
+	 * public Constructor 
+	 * 
+	 * @param connection -
+	 * hand over an connection of typ {@link de.th_wildau.quadroid.connection.Connect}
+	 * 
+	 * @throws NullPointerException if connection are <b>null</b> 
+	 * 
+	 * */
+	public AbstractTransmitter(Connect connection) throws NullPointerException
+	{	
+		if(connection == null)//if no usable connection available abort here
+			throw new NullPointerException("Hand over null for parameter \"connection\" ");
+		this.connection = connection;
+	}
+	
+}

@@ -1,0 +1,8 @@
+package de.th_wildau.quadroid.devices;
+
+import de.th_wildau.quadroid.interfaces.IDevice;
+
+public class FlightCtrl implements IDevice
+{
+
+}
