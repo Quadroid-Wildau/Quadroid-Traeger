@@ -27,7 +27,7 @@ public class QuadroidMain
 	{
 		logger = LoggerFactory.getLogger(QuadroidMain.class.getName());
 		
-
+		QuadroidMain.logger.info("Start");
 		
 	}
 

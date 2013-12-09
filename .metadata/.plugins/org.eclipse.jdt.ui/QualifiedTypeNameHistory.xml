@@ -16,4 +16,5 @@
 <fullyQualifiedTypeName name="org.slf4j.Logger"/>
 <fullyQualifiedTypeName name="java.lang.Override"/>
 <fullyQualifiedTypeName name="de.th_wildau.quadroid.interfaces.AbstractTransmitter"/>
+<fullyQualifiedTypeName name="de.th_wildau.quadroid.enums.Marker"/>
 </qualifiedTypeNameHistroy>
