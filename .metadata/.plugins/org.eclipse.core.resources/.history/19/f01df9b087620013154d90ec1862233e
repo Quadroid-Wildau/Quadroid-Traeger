@@ -1,0 +1,89 @@
+package de.th_wildau.quadroid.interfaces;
+
+import java.io.InputStream;
+import java.io.OutputStream;
+import gnu.io.SerialPort;
+import gnu.io.SerialPortEvent;
+import org.slf4j.Logger;
+
+import de.th_wildau.quadroid.enums.Marker;
+
+/**
+ * This interface realized an information system for serial events 
+ * advantage of this, directly access to Input- or OutputStream  
+ * for read and write data  
+ * 
+ * @author Thomas Rohde, trohde@th-wildau.de
+ * @version 1.0 17.11.2013 (JDK 7) 
+ * 
+ * */
+public abstract class AbstractReceiver
+{
+	
+	/**
+	 * prove contained crc32 value
+	 * 
+	 * @param startmarker - 
+	 * hand over startmarker for begin of computing crc
+	 * 
+	 * @param endmarker -
+	 * hand over endmarker for end of computing crc
+	 * 
+	 * @param data -
+	 * hand over data contains startmarker, endmarker, data, 
+	 * crcstartmarker, crc-sum, crcendmarker
+	 * 
+	 * @return 
+	 * <ul>
+	 * <li>true = contained CRC32 equal computed CRC32</li>
+	 * <li>false = crc computing failed or CRC32 unequal</li>
+	 * </ul>
+	 * 
+	 * */
+	public boolean proveCRC(String startmarker, String endmarker, byte[] data)
+	{
+		if(startmarker == null || endmarker == null || data == null)
+			return false;//aboard when parameters invalid
+		
+		String crcdata = new String(data); 
+		// convert to string for searching 
+		// und create substrings
+		
+		//prove at marker available, 
+		if(crcdata.contains(startmarker) && crcdata.contains(endmarker) &&
+			crcdata.contains(Marker.CRCSTART.getMarker()) && 
+			crcdata.contains(Marker.CRCEND.getMarker()))
+		{
+			
+		}
+		
+		return false;
+	}
+	
+	
+	/**
+	 * this method is called once detect an event of {@link gnu.io.SerialPortEvent} 
+	 * prove event with: if(envt.getEventType() == SerialPortEvent.DATA_AVAILABLE) 
+	 * 
+	 * @param evnt for this see {@link gnu.io.SerialPortEvent}
+	 * 
+	 * @param istream reference of {@link java.io.InputStream} 
+	 * for reading data from serial port
+	 * 
+	 * @param ostream reference of {@link java.io.OutputStream}
+	 * for writing data to serial port
+	 * 
+	 * @param logger reference of {@link org.slf4j.Logger}
+	 * for logging
+	 * 
+	 * @param port instance of {@link gnu.io.SerialPort} for 
+	 * enable oder disable data input
+	 *   
+	 * 
+	 * */
+	public void serialEvent(SerialPortEvent evnt, SerialPort port, InputStream istream, OutputStream ostream, Logger logger)
+	{	//notify for incoming data
+		logger.info("Incoming date from " + port.getName() + " device/port");
+	}
+	
+}
