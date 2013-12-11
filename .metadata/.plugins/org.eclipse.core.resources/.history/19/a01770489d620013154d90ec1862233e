@@ -1,0 +1,20 @@
+package de.th_wildau.quadroid.models.devices;
+
+
+
+import java.awt.image.BufferedImage;
+
+public class Landmark {
+	
+	/**
+	 * Metadaten der erreichten
+	 * Landmarke.
+	 */
+	private MetaData tdata;
+	
+	/**
+	 * Bild der erreichten Landmarke
+	 */
+	private BufferedImage lmPic;
+
+}

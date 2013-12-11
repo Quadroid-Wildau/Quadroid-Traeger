@@ -1,0 +1,50 @@
+package de.th_wildau.quadroid.models.devices;
+
+import java.awt.image.BufferedImage;
+
+/**
+ * this model define an detected landmark 
+ * 
+ * @author Thomas Rohde TM-12, trohde(at)th-wildau.de
+ * @version 1.0, 11.12.2013, (JDK 7)
+ * 
+ * */
+
+public class Landmark {
+	
+	/**save meta data for detected landmark*/
+	private MetaData tdata;
+	
+	/**save an picture of detected landmark */
+	private BufferedImage pictureoflandmark;
+
+	/**
+	 * @return the tdata
+	 */
+	public MetaData getTdata() {
+		return tdata;
+	}
+
+	/**
+	 * @param tdata the tdata to set
+	 */
+	public void setTdata(MetaData tdata) {
+		this.tdata = tdata;
+	}
+
+	/**
+	 * @return the pictureoflandmark
+	 */
+	public BufferedImage getPictureoflandmark() {
+		return pictureoflandmark;
+	}
+
+	/**
+	 * @param pictureoflandmark the pictureoflandmark to set
+	 */
+	public void setPictureoflandmark(BufferedImage pictureoflandmark) {
+		this.pictureoflandmark = pictureoflandmark;
+	}
+
+	
+}
