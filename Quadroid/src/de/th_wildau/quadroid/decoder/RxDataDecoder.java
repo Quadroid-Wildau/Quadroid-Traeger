@@ -3,23 +3,49 @@ package de.th_wildau.quadroid.decoder;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
+import java.util.zip.CRC32;
+
 import javax.imageio.ImageIO;
+
+import org.apache.commons.codec.binary.Base64;
 import org.slf4j.Logger;
 import de.th_wildau.quadroid.QuadroidMain;
+import de.th_wildau.quadroid.enums.Marker;
 
 /**
  * this class decoded data to objects after receiving
  * 
  * @author Thomas Rohde TM-12, trohde(at)th-wildau.de
  * @version 1.0, 11.12.2013, (JDK 7)
+ * @see Runnable
  * 
  * */
 
-public class RxDataDecoder 
+public class RxDataDecoder implements Runnable
 {
-
-	/**Logger for logging with log4j*/
+	/**save received data*/
+	private byte[] rx = null;
+	/**state of decoding*/
+	private boolean isdecoded = false;
+	/**state of crc32*/
+	private boolean iscrcok = false;
+	/**logger for logging with log4j*/
 	private Logger logger = QuadroidMain.logger;
+	/**offset for index of search*/
+	private static final byte OFFSET = 3;
+	
+	/**
+	 * public constructor 
+	 * 
+	 * @param data - hand over received data as encoded base64 byte-array
+	 * 
+	 * */
+	public RxDataDecoder(byte[] data)
+	{
+		this.rx = data;
+		Thread decode = new Thread(this);
+		decode.start();// decode data from array
+	}
 	
 	/**
 	 * this function convert an byte-array to {@link java.awt.image.BufferedImage} object
@@ -30,7 +56,7 @@ public class RxDataDecoder
 	 * if <tt>imagedata null</tt> return <b>null</b> 
 	 * 
 	 * */
-	public BufferedImage convertByteToBufferedImage(byte[] imagedata)
+	public BufferedImage byteToBufferedImage(byte[] imagedata)
 	{
 		if(imagedata == null)
 			return null;
@@ -59,6 +85,117 @@ public class RxDataDecoder
 		}
 		
 		return bufferedimage;
+	}
+
+	/**
+	 * prove contained crc32 value
+	 * 
+	 * @param startmarker - 
+	 * hand over startmarker for begin of computing crc
+	 * 
+	 * @param endmarker -
+	 * hand over endmarker for end of computing crc
+	 * 
+	 * @param data -
+	 * hand over data contains startmarker, endmarker, data, 
+	 * crcstartmarker, crc-sum, crcendmarker
+	 * 
+	 * @return 
+	 * <ul>
+	 * <li>true = contained CRC32 equal computed CRC32</li>
+	 * <li>false = crc computing failed or CRC32 unequal</li>
+	 * </ul>
+	 * 
+	 * */
+	public boolean proveCRC(String startmarker, String endmarker, byte[] data)
+	{
+		if(startmarker == null || endmarker == null || data == null)
+			return false;//aboard when parameters invalid
+		
+		// convert to string for searching 
+		// und create substrings
+		String crcdata = new String(data); 
+		String crcval = null;// for saving crc substring
+		long crcvalue = -1;// saving long value
+		byte[] computdata = null;//saving data for computung crc
+		
+		
+		
+		//prove at marker available
+		if(crcdata.contains(startmarker) && crcdata.contains(endmarker) &&
+			crcdata.contains(Marker.CRCSTART.getMarker()) && 
+			crcdata.contains(Marker.CRCEND.getMarker()))
+		{	//get index position of marker for select substring, offset is needed to
+			//get right position for start-marker
+			int begindata = (crcdata.indexOf(startmarker) + OFFSET);
+			int enddata = crcdata.indexOf(endmarker);
+			int begincrc = (crcdata.indexOf(Marker.CRCSTART.getMarker()) + OFFSET);
+			int endcrc = crcdata.indexOf(Marker.CRCEND.getMarker());
+			
+			crcval = crcdata.substring(begincrc, endcrc);// get substring for crc
+			crcdata = crcdata.substring(begindata, enddata);// get substring for data
+			
+			computdata = crcdata.getBytes();
+			
+			try
+			{//try to cast to long 
+				crcvalue = Long.valueOf(crcval);
+				logger.debug("Cast CRCVal to Long...");
+			}catch(Exception e)
+			{
+				logger.error("Cast Exception Long.valueOf(crcval): ", e);
+			}	
+			
+			CRC32 crc32 = new CRC32();
+			crc32.update(computdata);//comput crc value
+			
+			if(crc32.getValue() == crcvalue)//CRC32 equals?
+			{
+				logger.debug("Equals CRC32");
+				logger.info("CRC OK");
+				return true;
+			}
+			logger.debug("Unequal CRC32");
+		}
+		
+		return false;
+	}
+	
+	/**
+	 * Getter Function
+	 * 
+	 * @return get state of decoding
+	 * <ul>
+	 * <li>true = end of decoding successfully</li>
+	 * <li>false = working in process</li>
+	 * </ul>
+	 * 
+	 * */
+	public boolean isDecode()
+	{
+		return this.isdecoded;
+	}
+	
+	
+	
+	@Override
+	public void run() 
+	{
+		//decoding from base64
+		byte[] data = Base64.decodeBase64(rx);
+		//prove CRC32 if an picture available
+		this.iscrcok = this.proveCRC(Marker.PICTURESTART.getMarker(), 
+									  Marker.PICTUREEND.getMarker(), data);
+		
+		//go into, picture must be available and CRC32 OK!
+		if(this.iscrcok)
+		{
+			//TODO: decode picture
+		}
+		
+		//TODO: decoding other data here
+		
+		this.isdecoded = true;
 	}
 	
 }

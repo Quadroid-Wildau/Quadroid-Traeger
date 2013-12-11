@@ -1,7 +1,7 @@
 package de.th_wildau.quadroid.models;
 
 /**
- * 
+ * this model define data from Flight-Ctrl
  * 
  * @author Stefan ...
  * @author Thomas Rohde TM-12, trohde(at)th-wildau.de

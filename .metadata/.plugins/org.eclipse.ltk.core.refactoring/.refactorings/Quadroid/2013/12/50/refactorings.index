@@ -19,3 +19,6 @@
 1386786066451	Rename type 'DataConverter'
 1386786135714	Rename type 'RxEncoder'
 1386792374006	Rename package 'de.th_wildau.quadroid.models.devices'
+1386792961542	Rename type 'IDataReceiver'
+1386793746001	Rename method 'convertByteToBufferedImage'
+1386794559771	Rename field 'isdecode'

@@ -1,0 +1,111 @@
+package de.th_wildau.quadroid.decoder;
+
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayInputStream;
+import java.io.IOException;
+import javax.imageio.ImageIO;
+
+import org.apache.commons.codec.binary.Base64;
+import org.slf4j.Logger;
+import de.th_wildau.quadroid.QuadroidMain;
+
+/**
+ * this class decoded data to objects after receiving
+ * 
+ * @author Thomas Rohde TM-12, trohde(at)th-wildau.de
+ * @version 1.0, 11.12.2013, (JDK 7)
+ * @see Runnable
+ * 
+ * */
+
+public class RxDataDecoder implements Runnable
+{
+	/**save received data*/
+	private byte[] rx = null;
+	/**state of decoding*/
+	private boolean isdecode = false;
+	
+	/**
+	 * public constructor 
+	 * 
+	 * @param data - hand over received data as encoded base64 byte-array
+	 * 
+	 * */
+	public RxDataDecoder(byte[] data)
+	{
+		this.rx = data;
+		Thread decode = new Thread(this);
+		decode.start();// decode data from array
+	}
+	
+	/**Logger for logging with log4j*/
+	private Logger logger = QuadroidMain.logger;
+	
+	/**
+	 * this function convert an byte-array to {@link java.awt.image.BufferedImage} object
+	 * 
+	 * @param imagedata - hand over image data for convert into {@link java.awt.image.BufferedImage}
+	 * 
+	 * @return return an instance of {@link java.awt.image.BufferedImage},
+	 * if <tt>imagedata null</tt> return <b>null</b> 
+	 * 
+	 * */
+	public BufferedImage byteToBufferedImage(byte[] imagedata)
+	{
+		if(imagedata == null)
+			return null;
+		//hand over data to stream
+		ByteArrayInputStream bais = new ByteArrayInputStream(imagedata);
+		BufferedImage bufferedimage = null;
+		try 
+		{	//create new BufferedImage object with given data from Stream
+			bufferedimage = ImageIO.read(bais);
+			logger.debug("Create new BufferedImage object " + 
+			bufferedimage.getWidth() + " " + 
+			bufferedimage.getHeight());
+		} catch (IOException e) 
+		{
+			logger.error("ImageIO.read(bais) Exception: ", e);
+		}
+		finally
+		{
+			try 
+			{	//close stream
+				bais.close();
+			} catch (IOException e) 
+			{
+				logger.error("bais.close() Exception: ", e);
+			}
+		}
+		
+		return bufferedimage;
+	}
+
+	/**
+	 * Getter Function
+	 * 
+	 * @return get state of decoding
+	 * <ul>
+	 * <li>true = end of decoding successfully</li>
+	 * <li>false = working in process</li>
+	 * </ul>
+	 * 
+	 * */
+	public boolean isDecode()
+	{
+		return this.isdecode;
+	}
+	
+	
+	@Override
+	public void run() 
+	{
+		//decoding from base64
+		byte[] data = Base64.decodeBase64(rx);
+		
+		//TODO: decoding here
+		
+		this.isdecode = true;
+	}
+	
+}
