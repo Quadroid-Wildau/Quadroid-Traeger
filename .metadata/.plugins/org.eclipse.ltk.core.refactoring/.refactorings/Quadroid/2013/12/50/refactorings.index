@@ -14,3 +14,7 @@
 1386613308210	Rename local variable 'os'
 1386614009238	Rename type 'IReceiver'
 1386615397809	Rename field 'comm'
+1386785843921	Rename package 'de.th_wildau.quadroid.converter'
+1386786002556	Rename package 'de.th_wildau.quadroid.DataEncoder'
+1386786066451	Rename type 'DataConverter'
+1386786135714	Rename type 'RxEncoder'

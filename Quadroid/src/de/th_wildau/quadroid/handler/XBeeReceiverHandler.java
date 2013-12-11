@@ -52,7 +52,7 @@ public class XBeeReceiverHandler extends AbstractReceiver
 				//decode data from base64 so data bytes
 				byte[] data = Base64.decodeBase64(rxbase64buffer.toByteArray()); 
 				//notify all observer
-				if(data.length >= 4)//only notify if really data are available and no marker
+				if(data.length >= 4)//only notify if really data are available no marker
 					
 				//TODO: Decode Array of data info objects and notify listeners
 					

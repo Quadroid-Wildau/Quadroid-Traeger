@@ -2,9 +2,14 @@ package de.th_wildau.quadroid.interfaces;
 
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.util.zip.CRC32;
+
 import gnu.io.SerialPort;
 import gnu.io.SerialPortEvent;
 import org.slf4j.Logger;
+
+import de.th_wildau.quadroid.QuadroidMain;
+import de.th_wildau.quadroid.enums.Marker;
 
 /**
  * This interface realized an information system for serial events 
@@ -17,6 +22,10 @@ import org.slf4j.Logger;
  * */
 public abstract class AbstractReceiver
 {
+	/**logger for logging with log4j*/
+	private Logger logger = QuadroidMain.logger;
+	/**offset for index of search*/
+	private static final byte OFFSET = 3;
 	
 	/**
 	 * prove contained crc32 value
@@ -40,6 +49,55 @@ public abstract class AbstractReceiver
 	 * */
 	public boolean proveCRC(String startmarker, String endmarker, byte[] data)
 	{
+		if(startmarker == null || endmarker == null || data == null)
+			return false;//aboard when parameters invalid
+		
+		// convert to string for searching 
+		// und create substrings
+		String crcdata = new String(data); 
+		String crcval = null;// for saving crc substring
+		long crcvalue = -1;// saving long value
+		byte[] computdata = null;//saving data for computung crc
+		
+		
+		
+		//prove at marker available
+		if(crcdata.contains(startmarker) && crcdata.contains(endmarker) &&
+			crcdata.contains(Marker.CRCSTART.getMarker()) && 
+			crcdata.contains(Marker.CRCEND.getMarker()))
+		{	//get index position of marker for select substring, offset is needed to
+			//get right position for start-marker
+			int begindata = (crcdata.indexOf(startmarker) + OFFSET);
+			int enddata = crcdata.indexOf(endmarker);
+			int begincrc = (crcdata.indexOf(Marker.CRCSTART.getMarker()) + OFFSET);
+			int endcrc = crcdata.indexOf(Marker.CRCEND.getMarker());
+			
+			crcval = crcdata.substring(begincrc, endcrc);// get substring for crc
+			crcdata = crcdata.substring(begindata, enddata);// get substring for data
+			
+			computdata = crcdata.getBytes();
+			
+			try
+			{//try to cast to long 
+				crcvalue = Long.valueOf(crcval);
+				logger.debug("Cast CRCVal to Long...");
+			}catch(Exception e)
+			{
+				logger.error("Cast Exception Long.valueOf(crcval): ", e);
+			}	
+			
+			CRC32 crc32 = new CRC32();
+			crc32.update(computdata);//comput crc value
+			
+			if(crc32.getValue() == crcvalue)//CRC32 equals?
+			{
+				logger.debug("Equals CRC32");
+				logger.info("CRC OK");
+				return true;
+			}
+			logger.debug("Unequal CRC32");
+		}
+		
 		return false;
 	}
 	

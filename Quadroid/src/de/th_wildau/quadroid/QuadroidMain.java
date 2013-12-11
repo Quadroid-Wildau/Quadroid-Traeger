@@ -3,8 +3,6 @@ package de.th_wildau.quadroid;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-
-
 /**
  * 
  * Main Method for quadroid project
@@ -29,6 +27,7 @@ public class QuadroidMain
 		
 		QuadroidMain.logger.info("StartQuadroid");
 		
+	
 	}
 
 	
