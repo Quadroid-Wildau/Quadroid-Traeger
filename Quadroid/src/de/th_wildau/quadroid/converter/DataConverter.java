@@ -182,7 +182,7 @@ public class DataConverter
 		
 		return false;
 	}
-
+/*
 	public static void main(String[] val)
 	{
 		String data = Marker.AKKUSTART.getMarker() + "1234567890" + Marker.AKKUEND.getMarker();
@@ -202,5 +202,5 @@ public class DataConverter
 		DataConverter dc = new DataConverter();
 		System.out.println( dc.proveCRC(data.getBytes(), Marker.AKKUSTART.getMarker(), Marker.AKKUEND.getMarker()) );
 	}
-	
+*/	
 }
