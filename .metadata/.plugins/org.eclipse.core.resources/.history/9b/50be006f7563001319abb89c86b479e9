@@ -1,0 +1,399 @@
+package de.th_wildau.quadroid.encoder;
+
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.nio.ByteBuffer;
+import java.util.zip.CRC32;
+
+import javax.imageio.ImageIO;
+import org.slf4j.Logger;
+import de.th_wildau.quadroid.QuadroidMain;
+import de.th_wildau.quadroid.enums.Marker;
+import de.th_wildau.quadroid.models.Attitude;
+import de.th_wildau.quadroid.models.Course;
+import de.th_wildau.quadroid.models.GNSS;
+import de.th_wildau.quadroid.models.Landmark;
+import de.th_wildau.quadroid.models.MetaData;
+import de.th_wildau.quadroid.models.QuadroidAirplane;
+import de.th_wildau.quadroid.models.Waypoint;
+
+
+/**
+ * This class encoded objects to byte data before transmission 
+ * 
+ * 
+ * @author Thomas Rohde, trohde@th-wildau.de
+ * @version 1.0 30.11.2013 (JDK 7) 
+ * 
+ * */
+
+public class TxDataEncoder 
+{
+	/**instance of {@link org.slf4j.Logger} for logging*/
+	private static Logger logger = QuadroidMain.logger;
+	
+	/**
+	 * this function convert an {@link java.awt.image.BufferedImage} object to
+	 * bytes
+	 * 
+	 * @param bufferedimage - hand over an reference of {@link java.awt.image.BufferedImage}
+	 * 
+	 * @param type - hand over an type of file for example: "jpg", "png", "bmp" or other...
+	 * 
+	 * @return return an byte-array contains data from given BufferedImage,
+	 * return <b>null</b> if parameters are <tt>null</tt> 
+	 * */
+	public byte[] imageToByteArray(BufferedImage bufferedimage, String type)
+	{	//prove parameter
+		if(bufferedimage == null || type == null)
+			return null;
+		
+		ByteArrayOutputStream bos = new ByteArrayOutputStream();
+		try 
+		{	//write image date into ByteArrayOutputStream
+			ImageIO.write(bufferedimage, type, bos);
+			logger.debug("Write data into ByteStream");
+		} catch (IOException e) 
+		{
+			logger.error("ImageIO.write(bufferedimage, type, bos) Exception: ", e);
+		}
+		try 
+		{
+			bos.flush();//clean pipe
+		} catch (IOException e) 
+		{
+			logger.error("bos.flush() Exception: ", e);
+		}
+		finally
+		{
+			try 
+			{
+				bos.close();//close pipe
+			} catch (IOException e) 
+			{
+				logger.error("bos.close() Exception: ", e);
+			}
+		}	
+		
+		return bos.toByteArray();
+	}
+	
+	/**
+	 * this function convert data of type {@link Attitude} to bytes
+	 * 
+	 * @param attitude - hand over an reference of type {@link Attitude}
+	 * 
+	 * @return an array of bytes when operation was successfully, return <b>null</b>
+	 * if input parameter are <tt>null</tt>
+	 * 
+	 * */
+	public byte[] attitudeToBytes(Attitude attitude)
+	{	
+		if(attitude != null)
+		{	//data buffer for saving data
+			ByteArrayOutputStream buffer = new ByteArrayOutputStream();
+			
+			try
+			{	//marker for searching yaw values
+				buffer.write(Marker.ATTITUDESTART.getMarker().getBytes());
+				buffer.write(Marker.YAWSTART.getMarker().getBytes());
+				buffer.write(String.valueOf(attitude.getYaw()).getBytes());// set value
+				buffer.write(Marker.YAWEND.getMarker().getBytes());
+				//marker for searching roll values
+				buffer.write(Marker.ROLLSTART.getMarker().getBytes());
+				buffer.write(String.valueOf(attitude.getRoll()).getBytes());// set value
+				buffer.write(Marker.ROLLEND.getMarker().getBytes());
+				//marker for searching pitch values
+				buffer.write(Marker.PITCHSTART.getMarker().getBytes());
+				buffer.write(String.valueOf(attitude.getPitch()).getBytes());// set value
+				buffer.write(Marker.PITCHEND.getMarker().getBytes());
+				buffer.write(Marker.ATTITUDEEND.getMarker().getBytes());
+				
+			}catch(Exception e)
+			{
+				logger.error("Fail-attitudeToBytes: ", e);
+				return null;
+			}
+			
+			finally
+			{
+				try 
+				{
+					buffer.close();
+				} catch (IOException e) 
+				{
+					logger.error("Cant close buffer.close()", e);
+					return null;
+				}
+			}
+			logger.debug("return converted attitudeToBytes");
+			return buffer.toByteArray();//return data as bytes
+		}
+		
+		return null;
+	}
+	
+	/**
+	 * this function convert data of type {@link Course} to bytes
+	 * 
+	 * @param course - hand over an reference of type {@link Course}
+	 * 
+	 * @return an array of bytes when operation was successfully, return <b>null</b>
+	 * if input parameter are <tt>null</tt>
+	 * 
+	 * */
+	public byte[] courseToBytes(Course course)
+	{
+		if(course != null)
+		{	//data buffer converted to string before string.getBytes()
+			StringBuffer buffer = new StringBuffer();
+			
+			try
+			{	
+				buffer.append(Marker.COURSESTART.getMarker());
+				//marker for searching values
+				buffer.append(Marker.ANGLESTART.getMarker());
+				buffer.append(String.valueOf(course.getAngleReference()));// set value
+				buffer.append(Marker.ANGELEND.getMarker());
+				//marker for searching values
+				buffer.append(Marker.SPEEDSTART.getMarker());
+				buffer.append(String.valueOf(course.getSpeed()));// set value
+				buffer.append(Marker.SPEEDEND.getMarker());
+				
+				buffer.append(Marker.COURSEEND.getMarker());
+				
+				logger.debug("return converted courseToBytes");
+				return buffer.toString().getBytes();//return data as bytes
+			}catch(Exception e)
+			{
+				logger.error("Fail-courseToBytes: ", e);
+				return null;
+			}
+			
+		}
+		
+		return null;
+	}
+	
+	/**
+	 * this function convert data of type {@link GNSS} to bytes
+	 * 
+	 * @param geodata - hand over an reference of type {@link GNSS}
+	 * 
+	 * @return an array of bytes when operation was successfully, return <b>null</b>
+	 * if input parameter are <tt>null</tt>
+	 * 
+	 * */
+	public byte[] geodataToBytes(GNSS geodata)
+	{
+		if(geodata != null)
+		{	//data buffer converted to string before string.getBytes()
+			StringBuffer buffer = new StringBuffer();
+			
+			try
+			{	
+				buffer.append(Marker.GNSSSTART.getMarker());
+				//marker for searching values
+				buffer.append(Marker.LATITUDESTART.getMarker());
+				buffer.append(String.valueOf(geodata.getLatitude()));// set value
+				buffer.append(Marker.LATITUDEEND.getMarker());
+				//marker for searching values
+				buffer.append(Marker.LONGITUDESTART.getMarker());
+				buffer.append(String.valueOf(geodata.getLongitude()));// set value
+				buffer.append(Marker.LONGITUDEEND.getMarker());
+				//marker for searching values
+				buffer.append(Marker.HEIGHTSTART.getMarker());
+				buffer.append(String.valueOf(geodata.getHeight()));// set value
+				buffer.append(Marker.HEIGHTEND.getMarker());
+				
+				buffer.append(Marker.GNSSEND.getMarker());
+				
+				logger.debug("return converted geodataToBytes");
+				return buffer.toString().getBytes();//return data as bytes
+			}catch(Exception e)
+			{
+				logger.error("Fail-geodataToBytes: ", e);
+				return null;
+			}
+			
+		}
+		
+		return null;
+	}
+	
+	/**
+	 * this function convert data of type {@link Landmark} to bytes
+	 * 
+	 * @param landmark - hand over an reference of type {@link Landmark}
+	 * 
+	 * @return an array of bytes when operation was successfully, return <b>null</b>
+	 * if input parameter are <tt>null</tt>
+	 * 
+	 * */
+	public byte[] landmarkToBytes(Landmark landmark)
+	{
+		if(landmark != null)
+		{	//data buffer converted to string before string.getBytes()
+			StringBuffer buffer = new StringBuffer();
+			
+			try
+			{	
+				buffer.append(Marker.LANDMARKSTART.getMarker());
+				//marker for searching values
+				if(landmark.getPictureoflandmark() != null)
+				{
+					buffer.append(Marker.PICTURESTART.getMarker());//start marker for image data
+					buffer.append(new String(this.imageToByteArray(landmark.getPictureoflandmark(), 
+							Marker.IMAGETYPE.getMarker())));//convert buffered image to bytes and append
+					
+					buffer.append(Marker.PICTUREEND.getMarker());//set endmarker for image
+				}	
+				
+				if()
+				{
+					
+				}
+				//marker for searching values
+				buffer.append(GNSS.LONGITUDE);
+				buffer.append(String.valueOf(geodata.getLongitude()));// set value
+				//marker for searching values
+				buffer.append(GNSS.HEIGHT);
+				buffer.append(String.valueOf(geodata.getHeight()));// set value
+				
+				buffer.append(Marker.LANDMARKEND.getMarker());
+				
+				logger.debug("return converted geodataToBytes");
+				return buffer.toString().getBytes();//return data as bytes
+			}catch(Exception e)
+			{
+				logger.error("Fail-geodataToBytes: ", e);
+				return null;
+			}
+			
+		}
+		
+		return null;
+	}
+	
+	
+	/**
+	 * this function convert data of type {@link MetaData} to bytes
+	 * 
+	 * @param metadata - hand over an reference of type {@link MetaData}
+	 * 
+	 * @return an array of bytes when operation was successfully, return <b>null</b>
+	 * if input parameter are <tt>null</tt>
+	 * 
+	 * */
+	public byte[] metadataToBytes(MetaData metadata)
+	{
+		return null;
+	}
+	
+	/**
+	 * this function convert data of type {@link QuadroidAirplane} to bytes
+	 * 
+	 * @param airplane - hand over an reference of type {@link QuadroidAirplane}
+	 * 
+	 * @return an array of bytes when operation was successfully, return <b>null</b>
+	 * if input parameter are <tt>null</tt>
+	 * 
+	 * */
+	public byte[] quadroidairplaneToBytes(QuadroidAirplane airplane)
+	{
+		return null;
+	}
+	
+	/**
+	 * this function convert data of type {@link Waypoint} to bytes
+	 * 
+	 * @param point - hand over an reference of type {@link Waypoint}
+	 * 
+	 * @return an array of bytes when operation was successfully, return <b>null</b>
+	 * if input parameter are <tt>null</tt>
+	 * 
+	 * */
+	public byte[] waypointToBytes(Waypoint point)
+	{
+		return null;
+	}
+	
+	/**
+	 * this function appends data - enclosed with marker-from second byte array to first array
+	 * 
+	 * @param availabledata - hand over available date at byte-array if no data available hand over <tt>null</tt>
+	 * 
+	 * @param startmarker - hand over an start marker see {@link de.th_wildau.quadroid.enums.Marker} 
+	 * 
+	 * @param appenddata - hand over data for append 
+	 * 
+	 * @param endmarker - hand over an end marker see {@link de.th_wildau.quadroid.enums.Marker} 
+	 * 
+	 * @return returns an byte array with data from first an second array, or <tt>null</tt> 
+	 * if first or second array or marker are <tt>null</tt>
+	 *  
+	 * */
+	public byte[] appendData(byte[] availabledata, String startmarker,
+			byte[] appenddata, String endmarker) 
+	{	//interrupt if data not valid
+		if(availabledata == null || 
+			 startmarker == null || 
+			  appenddata == null || 
+			  endmarker == null)
+			return null;
+		
+		//length for allocate
+		int length = (availabledata.length + startmarker.length() + 
+				appenddata.length + endmarker.length());
+		//create buffer with specific length
+		ByteBuffer buffer = ByteBuffer.allocate(length);
+		//set avaiable data
+		buffer.put(availabledata);
+		//set start marker for embedded data
+		buffer.put(startmarker.getBytes());
+		//append data
+		buffer.put(appenddata);
+		//set end marker
+		buffer.put(endmarker.getBytes());
+				
+		return buffer.array();
+	}
+	
+	/**
+	 * this function append the CRC32 Checksum at last bytes into the array
+	 * 
+	 * @param data - hand over data for calculate crc checksum 
+	 * 
+	 * @return an array of bytes with appended CRC32 Checksum,
+	 * if data <tt>null</tt> return null
+	 *   
+	 * */
+	public byte[] appendCRC32(byte[] data) 
+	{
+		if(data == null)
+			return null;
+			
+		CRC32 crc = new CRC32();
+		//crc calculation
+		crc.update(data);
+		
+		String crcvalue = String.valueOf(crc.getValue());
+		String startmarker = Marker.CRCSTART.getMarker();
+		String endmarker = Marker.CRCEND.getMarker();
+		//length for allocation
+		int length = (data.length + crcvalue.length() + 
+				startmarker.length() + endmarker.length());
+		//init buffer
+		ByteBuffer buffer = ByteBuffer.allocate(length);
+		//set data
+		buffer.put(data);
+		//set start marker
+		buffer.put(startmarker.getBytes());
+		//set crc value
+		buffer.put(crcvalue.getBytes());
+		//set end marker
+		buffer.put(endmarker.getBytes());
+		return buffer.array();
+	}
+}

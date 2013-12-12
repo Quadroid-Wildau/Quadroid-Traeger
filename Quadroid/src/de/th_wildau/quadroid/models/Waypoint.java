@@ -13,15 +13,15 @@ package de.th_wildau.quadroid.models;
 
 public class Waypoint extends Landmark{
 
-	/**save an position of type {@link GeoData}*/
-	private GeoData sollPos;
+	/**save an position of type {@link GNSS}*/
+	private GNSS sollPos;
 
 	/**
 	 * Getter Function
 	 * 
-	 * @return get an Position of type {@link GeoData}
+	 * @return get an Position of type {@link GNSS}
 	 * */
-	public GeoData getPosition() {
+	public GNSS getPosition() {
 		return sollPos;
 	}
 
@@ -30,7 +30,7 @@ public class Waypoint extends Landmark{
 	 * 
 	 * @param sollPos set an new position
 	 * */
-	public void setPosition(GeoData sollPos) {
+	public void setPosition(GNSS sollPos) {
 		this.sollPos = sollPos;
 	}
 }

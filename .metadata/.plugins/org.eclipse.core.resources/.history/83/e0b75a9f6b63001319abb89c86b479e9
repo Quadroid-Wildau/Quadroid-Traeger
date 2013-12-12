@@ -1,0 +1,103 @@
+package de.th_wildau.quadroid.enums;
+
+/**
+ * This enum contains marker for transmissions
+ * <ul>
+ * <li>Picture bytes</li>
+ * <li>GNSS position</li>
+ * <li>Gyro data</li>
+ * <li>Height data</li>
+ * <li>Akku state</li>
+ * <li>Time value</li>
+ * <li>Speed value</li>
+ * <li>Course data</li>
+ * <li>CRC data</li>
+ * <li></li>
+ * <li></li>
+ * <li></li>
+ * 
+ * </ul>
+ * 
+ * @author Thomas Rohde, trohde@th-wildau.de
+ * @version 1.0 27.11.2013 (JDK 7) 
+ * 
+ * */
+
+public enum Marker 
+{
+	/**marker ||> for picture values*/
+	PICTURESTART("||>"), 
+	/**marker < || for picture values*/
+	PICTUREEND("<||"),
+	/**marker ##> for GNSS data*/
+	GNSSSTART("##>"), 
+	/**marker < ## for GNSS data*/
+	GNSSEND("<##"),
+	/**marker //> for gyro data*/
+	GYROSTART("//>"), 
+	/**marker < // for gyro data*/
+	GYROEND("<//"),
+	/**marker ??> for height data*/
+	//HEIGHTSTART("??>"), 
+	/**marker < ?? for height data*/
+	HEIGHTEND("<??"),
+	/**marker !!> for Akku data*/
+	//AKKUSTART("!!>"), 
+	/**marker < !! for Akku data*/
+	//AKKUEND("<!!"),
+	/**marker ;;> for time value*/
+	TIMESTART(";;>"), 
+	/**marker < ;; for time value*/
+	//TIMEEND("<;;"),
+	/**marker ::> for speed value */
+	//SPEEDSTART("::>"), 
+	/**marker < :: for speed value*/
+	//SPEEDEND("<::"),
+	/**marker &&> for course value*/
+	COURSESTART("&&>"), 
+	/**marker < && for course value*/
+	COURSEEND("<&&"),
+	/**marker $$> for crc32 value */
+	CRCSTART("$$>"), 
+	/**marker < $$ for crc32 value */
+	CRCEND("<$$"),
+	/**marker < Y> for de-/encoder yaw data*/
+	YAWSTART("<Y>"),
+	/**marker < /Y> for de-/encoder yaw data*/
+	YAWEND("</Y"),
+	/**marker < R> for de-/encoder roll data*/
+	ROLLSTART("<R>"),
+	/**marker < /R for de-/encoder roll data*/
+	ROLLEND("</R"),
+	/**marker < P> for de-/encoder pitch data*/
+	PITCHSTART("<P>"),
+	/**marker < /P for de-/encoder pitch data*/
+	PITCHEND("</P");
+	
+	
+	/**marker for searching speed values */
+	public static final String SPEEDMARKER = "<S>";
+	/**marker for searching angle values*/
+	public static final String ANGLEMARKER = "<A>";
+	
+	/**save marker*/
+	private String val = null;
+	
+	/**
+	 * invisible constructor 
+	 * */
+	private Marker(String value)
+	{
+		this.val = value;
+	}
+
+	/**
+	 * Getter Function
+	 * 
+	 * @return marker for images 
+	 * */
+	public String getMarker()
+	{
+		return this.val;
+	}
+}

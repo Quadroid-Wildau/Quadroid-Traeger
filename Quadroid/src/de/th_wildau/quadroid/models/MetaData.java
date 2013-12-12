@@ -11,209 +11,74 @@ package de.th_wildau.quadroid.models;
 
 public class MetaData {
 	
-	/**
-	 * save an geoposition
-	 */
-	private GeoData gdata;
+	/**save the attitude of airplane*/
+	private Attitude attitude = null;
 	
-	/**
-	 * save an time
-	 */
-	private long time;
+	/**save current course of airplane*/
+	private Course course = null;
 	
-	/**
-	 * angle of rotation axis z
-	 */
-	private float yaw;
-	
-	/**
-	 * angle of rotation axis x (main direction)
-	 */
-	private float roll;
-	
-	/**
-	 * angle of rotation axis y (diagonally to main direction)
-	 */
-	private float pitch;
-	
-	/**
-	 * battery power state [0 ... 100] (percent) 
-	 */
-	private byte batteryState;
-	
-	/**
-	 * current speed
-	 */
-	private float speed;
-	
-	/**
-	 * course at degree, between magnetic 
-	 * Nord and aircraft (LOP - Line Of Position)
-	 */
-	private float course;
-	
-	/**
-	 * Getter Function
-	 * 
-	 * @return get an position see {@link GeoData}
-	 * 
-	 * */
-	public GeoData GeoData() {
-		return gdata;
-	}
-	
-	/**
-	 * Setter Method
-	 * 
-	 * @param gdata - set an position 
-	 * 
-	 * */
-	public void setGeoData(GeoData gdata) {
-		this.gdata = gdata;
-	}
+	/**save all relevant data to our quadroid*/
+	private QuadroidAirplane airplane = null;
 
 	/**
 	 * Getter Function
 	 * 
-	 * @return get an time
-	 * 
-	 * */
-	public long getTime() {
-		return time;
+	 * @return the attitude of our airplane see {@link Attitude}
+	 */
+	public Attitude getAttitude() {
+		return attitude;
 	}
 
 	/**
 	 * Setter Method
 	 * 
-	 * @param time - set an new time
-	 * 
-	 * */
-	public void setTime(long time) {
-		this.time = time;
+	 * @param attitude set an new attitude for airplane
+	 */
+	public void setAttitude(Attitude attitude) {
+		this.attitude = attitude;
 	}
 
 	/**
 	 * Getter Function
 	 * 
-	 * @return get angle of rotation for axis z
+	 * @return the course of our airplane see {@link Course}
 	 * 
-	 * */
-	public float getYaw() {
-		return yaw;
-	}
-
-	/**
-	 * Setter Method
-	 * 
-	 * @param yaw - set an new angle of rotation for axis z
-	 * 
-	 * */
-	public void setYaw(float yaw) {
-		this.yaw = yaw;
-	}
-
-	/**
-	 * Getter Function
-	 * 
-	 * @return get angle of rotation for axis x (at main direction)
-	 * 
-	 * */
-	public float getRoll() {
-		return roll;
-	}
-
-	/**
-	 * Setter Method
-	 * 
-	 * @param roll - set an new angle of rotation for axis x (at main direction)
-	 * 
-	 * */
-	public void setRoll(float roll) {
-		this.roll = roll;
-	}
-
-	/**
-	 * Getter Function
-	 * 
-	 * @return get angle of rotation for axis y (diagonally to main direction)
-	 * 
-	 * */
-	public float getPitch() {
-		return pitch;
-	}
-
-	/**
-	 * Setter Method
-	 * 
-	 * @param pitch - set an new angle of rotation for axis y (diagonally to main direction)
-	 * 
-	 * */
-	public void setPitch(float pitch) {
-		this.pitch = pitch;
-	}
-
-	/**
-	 * Getter Function
-	 * 
-	 * @return value indicated the power of battery
-	 * this value can be between [0 ... 100] (percent)
-	 * 
-	 * */
-	public byte getBatteryState() {
-		return batteryState;
-	}
-
-	/**
-	 * Setter Method
-	 * 
-	 * @param batteryState - set new battery state,
-	 * value can be between [0 ... 100] (percent)
-	 * 
-	 * */
-	public void setBatteryState(byte batteryState) {
-		this.batteryState = batteryState;
-	}
-
-	/**
-	 * Getter Function
-	 * 
-	 * @return current speed
-	 * 
-	 * */
-	public float getSpeed() {
-		return speed;
-	}
-
-	/**
-	 * Setter Method
-	 * 
-	 * @param speed - set an new speed value
-	 * 
-	 * */
-	public void setSpeed(float speed) {
-		this.speed = speed;
-	}
-
-	/**
-	 * Getter Function
-	 * 
-	 * @return get course at degree, between magnetic 
-	 * Nord and aircraft (LOP - Line of Position)
-	 * 
-	 * */
-	public float getCourse() {
+	 */
+	public Course getCourse() {
 		return course;
 	}
 
 	/**
 	 * Setter Method
 	 * 
-	 * @param course - set an new course at degree (between magnetic 
-	 * Nord and aircraft (LOP - Line of Position))
-	 * 
-	 * */
-	public void setCourse(float course) {
+	 * @param course - set an new course for airplane
+	 */
+	public void setCourse(Course course) {
 		this.course = course;
 	}
+
+	/**
+	 * Getter Function
+	 * 
+	 * @return information about quadroid airplane see {@link QuadroidAirplane} 
+	 */
+	public QuadroidAirplane getAirplane() {
+		return airplane;
+	}
+
+	/**
+	 * Setter Method
+	 * 
+	 * @param airplane - set net state of airplane
+	 */
+	public void setAirplane(QuadroidAirplane airplane) {
+		this.airplane = airplane;
+	}
+	
+	
+
+
+
+
 
 }

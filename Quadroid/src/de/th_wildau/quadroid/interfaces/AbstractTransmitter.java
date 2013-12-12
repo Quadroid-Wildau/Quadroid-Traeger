@@ -1,11 +1,8 @@
 package de.th_wildau.quadroid.interfaces;
 
-import java.nio.ByteBuffer;
-import java.util.zip.CRC32;
 import org.slf4j.Logger;
 import de.th_wildau.quadroid.QuadroidMain;
 import de.th_wildau.quadroid.connection.Connect;
-import de.th_wildau.quadroid.enums.Marker;
 
 /**
  * This interface manage 
@@ -60,83 +57,7 @@ public abstract class AbstractTransmitter {
 		this.connection = connection;
 	}
 	
-	/**
-	 * this function appends data - enclosed with marker-from second byte array to first array
-	 * 
-	 * @param availabledata - hand over available date at byte-array if no data available hand over <tt>null</tt>
-	 * 
-	 * @param startmarker - hand over an start marker see {@link de.th_wildau.quadroid.enums.Marker} 
-	 * 
-	 * @param appenddata - hand over data for append 
-	 * 
-	 * @param endmarker - hand over an end marker see {@link de.th_wildau.quadroid.enums.Marker} 
-	 * 
-	 * @return returns an byte array with data from first an second array, or <tt>null</tt> 
-	 * if first or second array or marker are <tt>null</tt>
-	 *  
-	 * */
-	public byte[] appendData(byte[] availabledata, String startmarker,
-			byte[] appenddata, String endmarker) 
-	{	//interrupt if data not valid
-		if(availabledata == null || 
-			 startmarker == null || 
-			  appenddata == null || 
-			  endmarker == null)
-			return null;
-		
-		//length for allocate
-		int length = (availabledata.length + startmarker.length() + 
-				appenddata.length + endmarker.length());
-		//create buffer with specific length
-		ByteBuffer buffer = ByteBuffer.allocate(length);
-		//set avaiable data
-		buffer.put(availabledata);
-		//set start marker for embedded data
-		buffer.put(startmarker.getBytes());
-		//append data
-		buffer.put(appenddata);
-		//set end marker
-		buffer.put(endmarker.getBytes());
-				
-		return buffer.array();
-	}
 
-	/**
-	 * this function append the CRC32 Checksum at last bytes into the array
-	 * 
-	 * @param data - hand over data for calculate crc checksum 
-	 * 
-	 * @return an array of bytes with appended CRC32 Checksum,
-	 * if data <tt>null</tt> return null
-	 *   
-	 * */
-	public byte[] appendCRC32(byte[] data) 
-	{
-		if(data == null)
-			return null;
-			
-		CRC32 crc = new CRC32();
-		//crc calculation
-		crc.update(data);
-		
-		String crcvalue = String.valueOf(crc.getValue());
-		String startmarker = Marker.CRCSTART.getMarker();
-		String endmarker = Marker.CRCEND.getMarker();
-		//length for allocation
-		int length = (data.length + crcvalue.length() + 
-				startmarker.length() + endmarker.length());
-		//init buffer
-		ByteBuffer buffer = ByteBuffer.allocate(length);
-		//set data
-		buffer.put(data);
-		//set start marker
-		buffer.put(startmarker.getBytes());
-		//set crc value
-		buffer.put(crcvalue.getBytes());
-		//set end marker
-		buffer.put(endmarker.getBytes());
-		return buffer.array();
-	}
 
 	/**
 	 * this function transmit data to connected device

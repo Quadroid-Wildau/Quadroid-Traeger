@@ -1,0 +1,29 @@
+package de.th_wildau.quadroid.models;
+
+/**
+ * this model define data from Flight-Ctrl
+ * 
+ * @author Stefan ...
+ * @author Thomas Rohde TM-12, trohde(at)th-wildau.de
+ * @version 1.0, 11.12.2013, (JDK 7)
+ * 
+ * */
+
+public class MetaData {
+	
+	/**save the attitude of airplane*/
+	private Attitude attitude = null;
+	
+	/**save current course of airplane*/
+	private Course course = null;
+	
+	/**save all relevant data to our quadroid*/
+	private QuadroidAirplane airplane = null;
+	
+	
+
+
+
+
+
+}

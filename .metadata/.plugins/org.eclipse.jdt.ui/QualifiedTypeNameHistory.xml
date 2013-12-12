@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <qualifiedTypeNameHistroy>
 <fullyQualifiedTypeName name="de.th_wildau.quadroid.marker.Marker"/>
-<fullyQualifiedTypeName name="java.util.zip.CRC32"/>
 <fullyQualifiedTypeName name="java.util.Vector"/>
 <fullyQualifiedTypeName name="de.th_wildau.quadroid.interfaces.IDevice"/>
 <fullyQualifiedTypeName name="java.awt.List"/>
@@ -12,9 +11,13 @@
 <fullyQualifiedTypeName name="java.util.Set"/>
 <fullyQualifiedTypeName name="java.util.HashSet"/>
 <fullyQualifiedTypeName name="java.util.Iterator"/>
-<fullyQualifiedTypeName name="de.th_wildau.quadroid.QuadroidMain"/>
-<fullyQualifiedTypeName name="org.slf4j.Logger"/>
 <fullyQualifiedTypeName name="java.lang.Override"/>
 <fullyQualifiedTypeName name="de.th_wildau.quadroid.interfaces.AbstractTransmitter"/>
 <fullyQualifiedTypeName name="de.th_wildau.quadroid.enums.Marker"/>
+<fullyQualifiedTypeName name="java.util.StringTokenizer"/>
+<fullyQualifiedTypeName name="java.util.zip.CRC32"/>
+<fullyQualifiedTypeName name="de.th_wildau.quadroid.QuadroidMain"/>
+<fullyQualifiedTypeName name="org.slf4j.Logger"/>
+<fullyQualifiedTypeName name="de.th_wildau.quadroid.models.MetaData"/>
+<fullyQualifiedTypeName name="de.th_wildau.quadroid.decoder.RxDataDecoder"/>
 </qualifiedTypeNameHistroy>

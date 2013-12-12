@@ -1,0 +1,26 @@
+package de.th_wildau.quadroid.models;
+
+/**
+ * this model define our airplane the quadroid
+ * 
+ * @author Thomas Rohde TM-12, trohde(at)th-wildau.de
+ * @version 1.0, 12.12.2013, (JDK 7)
+ * 
+ * */
+
+public class QuadroidAirplane {
+
+	
+	/**
+	 * save an time
+	 */
+	private long time;
+	
+	
+	/**
+	 * battery power state [0 ... 100] (percent) 
+	 */
+	private byte batteryState;
+	
+	
+}

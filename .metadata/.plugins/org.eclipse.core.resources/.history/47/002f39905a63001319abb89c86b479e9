@@ -1,0 +1,71 @@
+package de.th_wildau.quadroid.models;
+
+/**
+ * this model define data from Flight-Ctrl
+ * 
+ * @author Stefan ...
+ * @author Thomas Rohde TM-12, trohde(at)th-wildau.de
+ * @version 1.0, 11.12.2013, (JDK 7)
+ * 
+ * */
+
+public class MetaData {
+	
+	/**save the attitude of airplane*/
+	private Attitude attitude = null;
+	
+	/**save current course of airplane*/
+	private Course course = null;
+	
+	/**save all relevant data to our quadroid*/
+	private QuadroidAirplane airplane = null;
+
+	/**
+	 * @return the attitude
+	 */
+	public Attitude getAttitude() {
+		return attitude;
+	}
+
+	/**
+	 * @param attitude the attitude to set
+	 */
+	public void setAttitude(Attitude attitude) {
+		this.attitude = attitude;
+	}
+
+	/**
+	 * @return the course
+	 */
+	public Course getCourse() {
+		return course;
+	}
+
+	/**
+	 * @param course the course to set
+	 */
+	public void setCourse(Course course) {
+		this.course = course;
+	}
+
+	/**
+	 * @return the airplane
+	 */
+	public QuadroidAirplane getAirplane() {
+		return airplane;
+	}
+
+	/**
+	 * @param airplane the airplane to set
+	 */
+	public void setAirplane(QuadroidAirplane airplane) {
+		this.airplane = airplane;
+	}
+	
+	
+
+
+
+
+
+}

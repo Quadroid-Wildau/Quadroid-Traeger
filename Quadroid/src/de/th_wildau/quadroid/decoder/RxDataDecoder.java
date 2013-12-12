@@ -186,11 +186,15 @@ public class RxDataDecoder implements Runnable
 		//prove CRC32 if an picture available
 		this.iscrcok = this.proveCRC(Marker.PICTURESTART.getMarker(), 
 									  Marker.PICTUREEND.getMarker(), data);
+		String stringdata = new String(data);// for index and searching convert to string 
 		
 		//go into, picture must be available and CRC32 OK!
 		if(this.iscrcok)
 		{
-			//TODO: decode picture
+			int startpicture = (stringdata.indexOf(Marker.PICTURESTART.getMarker()) + OFFSET); // get start index of image
+			int endpicture = stringdata.indexOf(Marker.PICTUREEND.getMarker()); // get end index of image
+			// select only image data and convert to bytes
+			BufferedImage imgdata = this.byteToBufferedImage(stringdata.substring(startpicture, endpicture).getBytes());
 		}
 		
 		//TODO: decoding other data here
