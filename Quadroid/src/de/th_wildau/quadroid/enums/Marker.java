@@ -81,14 +81,14 @@ public enum Marker
 	SPEEDSTART("<S>"),
 	/**marker < /S* for speed data*/
 	SPEEDEND("</S"),
-	/**marker < LA> for latitude data*/
-	LATITUDESTART("<LA>"),
-	/**marker < /LA for latitude data*/
-	LATITUDEEND("</LA"),
+	/**marker < D> for latitude data*/
+	LATITUDESTART("<D>"),
+	/**marker < /D for latitude data*/
+	LATITUDEEND("</D"),
 	/**marker < LO> for longitude data*/
-	LONGITUDESTART("<LO>"),
-	/**marker < /LO for longitude data*/
-	LONGITUDEEND("</LO"),
+	LONGITUDESTART("<O>"),
+	/**marker < /O for longitude data*/
+	LONGITUDEEND("</O"),
 	/**marker < H> for height data*/
 	HEIGHTSTART("<H>"),
 	/**marker < /H for height data*/
@@ -109,10 +109,10 @@ public enum Marker
 	TIMESTART("<T>"),
 	/**marker < /T for time data*/
 	TIMEEND("</T"),
-	/**marker < AK> for akku data*/
-	AKKUSTART("<AK>"),
-	/**marker < /AK for akku data*/
-	AKKUEND("</AK"),
+	/**marker < K> for akku data*/
+	AKKUSTART("<K>"),
+	/**marker < /K for akku data*/
+	AKKUEND("</K"),
 	/**marker < W> for waypoint data*/
 	WAYPOINTSTART("<W>"),
 	/**marker < /W for waypoint data*/

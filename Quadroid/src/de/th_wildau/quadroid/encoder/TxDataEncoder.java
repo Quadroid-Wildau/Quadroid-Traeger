@@ -267,19 +267,23 @@ public class TxDataEncoder
 				if(landmark.getPictureoflandmark() != null)
 				{
 					buffer.write(Marker.PICTURESTART.getMarker().getBytes());//start marker for image data
-					buffer.write((this.imageToByteArray(landmark.getPictureoflandmark(), 
-							Marker.IMAGETYPE.getMarker())));//convert buffered image to bytes and append
+					byte[] img = this.imageToByteArray(landmark.getPictureoflandmark(), Marker.IMAGETYPE.getMarker());
 					
+					CRC32 crc = new CRC32();
+					crc.update(img);//compute CRC32 Checksum
+					
+					buffer.write(img);//convert buffered image to bytes and append
 					buffer.write(Marker.PICTUREEND.getMarker().getBytes());//set endmarker for image
+					
+					buffer.write(Marker.CRCSTART.getMarker().getBytes());//start marker for crc32
+					buffer.write(String.valueOf(crc.getValue()).getBytes());//append crc32 for image
+					buffer.write(Marker.CRCEND.getMarker().getBytes());//end marker for crc32
+					
 				}	
 				
 				if(landmark.getMetaData() != null)
-				{
-					buffer.write(Marker.METADATASTART.getMarker().getBytes());//start marker for metadata
-					
+				{					
 					buffer.write(this.metadataToBytes(landmark.getMetaData()));//set metadata
-					
-					buffer.write(Marker.METADATAEND.getMarker().getBytes());//end marker for metadata
 				}
 				
 				buffer.write(Marker.LANDMARKEND.getMarker().getBytes());
@@ -320,6 +324,54 @@ public class TxDataEncoder
 	 * */
 	public byte[] metadataToBytes(MetaData metadata)
 	{
+		if(metadata != null)
+		{	
+			
+			ByteArrayOutputStream buffer = new ByteArrayOutputStream();
+			
+			try
+			{	
+				buffer.write(Marker.METADATASTART.getMarker().getBytes());
+				//marker for searching values
+				
+				if(metadata.getAirplane() != null)
+				{
+					buffer.write(this.quadroidairplaneToBytes(metadata.getAirplane()));//append data for airplane
+				}
+				
+				if(metadata.getAttitude() != null)
+				{
+					buffer.write(this.attitudeToBytes(metadata.getAttitude()));//append data for attitude
+				}
+				
+				if(metadata.getCourse() != null)
+				{
+					buffer.write(this.courseToBytes(metadata.getCourse()));//append data for course
+				}
+				
+				buffer.write(Marker.METADATAEND.getMarker().getBytes());
+				
+			}catch(Exception e)
+			{
+				logger.error("Fail-metadataToBytes: ", e);
+				return null;
+			}
+			
+			finally
+			{
+				try 
+				{
+					buffer.close();
+				} catch (IOException e) 
+				{
+					logger.error("Cant close buffer.close()", e);
+					return null;
+				}
+			}
+			logger.debug("return converted metadataToBytes");
+			return buffer.toByteArray();//return data as bytes
+		}
+		
 		return null;
 	}
 	
@@ -334,6 +386,52 @@ public class TxDataEncoder
 	 * */
 	public byte[] quadroidairplaneToBytes(QuadroidAirplane airplane)
 	{
+		if(airplane != null)
+		{	
+			
+			ByteArrayOutputStream buffer = new ByteArrayOutputStream();
+			
+			try
+			{	
+				buffer.write(Marker.AIRPLANESTART.getMarker().getBytes());
+				//marker for searching values
+				
+				if(airplane.GeoData() != null)
+				{
+					buffer.write(this.geodataToBytes(airplane.GeoData()));//append data for GNSS
+				}
+				
+					buffer.write(Marker.TIMESTART.getMarker().getBytes());//start marker for time
+					buffer.write(String.valueOf(airplane.getTime()).getBytes());//append data for time
+					buffer.write(Marker.TIMEEND.getMarker().getBytes());//start marker for time
+					
+					buffer.write(Marker.AKKUSTART.getMarker().getBytes());//start marker for akku
+					buffer.write(String.valueOf(airplane.getBatteryState()).getBytes());//append data for akku
+					buffer.write(Marker.AKKUEND.getMarker().getBytes());//start marker for akku
+				
+				buffer.write(Marker.AIRPLANEEND.getMarker().getBytes());
+				
+			}catch(Exception e)
+			{
+				logger.error("Fail-quadroidairplaneToBytes: ", e);
+				return null;
+			}
+			
+			finally
+			{
+				try 
+				{
+					buffer.close();
+				} catch (IOException e) 
+				{
+					logger.error("Cant close buffer.close()", e);
+					return null;
+				}
+			}
+			logger.debug("return converted quadroidairplaneToBytes");
+			return buffer.toByteArray();//return data as bytes
+		}
+		
 		return null;
 	}
 	
@@ -348,6 +446,65 @@ public class TxDataEncoder
 	 * */
 	public byte[] waypointToBytes(Waypoint point)
 	{
+		if(point != null)
+		{	
+			
+			ByteArrayOutputStream buffer = new ByteArrayOutputStream();
+			
+			try
+			{	
+				buffer.write(Marker.WAYPOINTSTART.getMarker().getBytes());
+				//marker for searching values
+				if(point.getPictureoflandmark() != null)
+				{
+					buffer.write(Marker.PICTURESTART.getMarker().getBytes());//start marker for image data
+					byte[] img = this.imageToByteArray(point.getPictureoflandmark(), Marker.IMAGETYPE.getMarker());
+					
+					CRC32 crc = new CRC32();
+					crc.update(img);//compute CRC32 Checksum
+					
+					buffer.write(img);//convert buffered image to bytes and append
+					buffer.write(Marker.PICTUREEND.getMarker().getBytes());//set endmarker for image
+					
+					buffer.write(Marker.CRCSTART.getMarker().getBytes());//start marker for crc32
+					buffer.write(String.valueOf(crc.getValue()).getBytes());//append crc32 for image
+					buffer.write(Marker.CRCEND.getMarker().getBytes());//end marker for crc32
+					
+				}	
+				
+				if(point.getPosition() != null)
+				{
+					buffer.write(this.geodataToBytes(point.getPosition()));//append data for GNSS
+				}
+				
+				if(point.getMetaData() != null)
+				{
+					buffer.write(this.metadataToBytes(point.getMetaData()));//set metadata
+				}
+				
+				buffer.write(Marker.WAYPOINTEND.getMarker().getBytes());
+				
+			}catch(Exception e)
+			{
+				logger.error("Fail-waypointToBytes: ", e);
+				return null;
+			}
+			
+			finally
+			{
+				try 
+				{
+					buffer.close();
+				} catch (IOException e) 
+				{
+					logger.error("Cant close buffer.close()", e);
+					return null;
+				}
+			}
+			logger.debug("return converted waypointToBytes");
+			return buffer.toByteArray();//return data as bytes
+		}
+		
 		return null;
 	}
 	
