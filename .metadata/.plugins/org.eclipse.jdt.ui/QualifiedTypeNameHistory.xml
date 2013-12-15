@@ -13,9 +13,7 @@
 <fullyQualifiedTypeName name="java.util.Iterator"/>
 <fullyQualifiedTypeName name="java.lang.Override"/>
 <fullyQualifiedTypeName name="de.th_wildau.quadroid.interfaces.AbstractTransmitter"/>
-<fullyQualifiedTypeName name="de.th_wildau.quadroid.enums.Marker"/>
 <fullyQualifiedTypeName name="java.util.StringTokenizer"/>
-<fullyQualifiedTypeName name="java.util.zip.CRC32"/>
 <fullyQualifiedTypeName name="de.th_wildau.quadroid.QuadroidMain"/>
 <fullyQualifiedTypeName name="org.slf4j.Logger"/>
 <fullyQualifiedTypeName name="de.th_wildau.quadroid.decoder.RxDataDecoder"/>
@@ -24,7 +22,6 @@
 <fullyQualifiedTypeName name="de.th_wildau.quadroid.models.Attitude"/>
 <fullyQualifiedTypeName name="de.th_wildau.quadroid.models.Course"/>
 <fullyQualifiedTypeName name="de.th_wildau.quadroid.models.GNSS"/>
-<fullyQualifiedTypeName name="de.th_wildau.quadroid.models.Landmark"/>
 <fullyQualifiedTypeName name="de.th_wildau.quadroid.models.QuadroidAirplane"/>
 <fullyQualifiedTypeName name="de.th_wildau.quadroid.encoder.TxDataEncoder"/>
 <fullyQualifiedTypeName name="de.th_wildau.quadroid.models.Waypoint"/>
@@ -33,4 +30,7 @@
 <fullyQualifiedTypeName name="javax.imageio.ImageIO"/>
 <fullyQualifiedTypeName name="java.io.File"/>
 <fullyQualifiedTypeName name="java.awt.image.BufferedImage"/>
+<fullyQualifiedTypeName name="de.th_wildau.quadroid.models.Landmark"/>
+<fullyQualifiedTypeName name="de.th_wildau.quadroid.enums.Marker"/>
+<fullyQualifiedTypeName name="java.util.zip.CRC32"/>
 </qualifiedTypeNameHistroy>

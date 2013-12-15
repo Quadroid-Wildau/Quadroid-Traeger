@@ -38,8 +38,11 @@ public class Waypoint extends Landmark{
 	public String toString() 
 	{	//print all informations
 		String result = "";
+		if(this.sollPos != null)
 		result += "Position: "+ this.sollPos.toString() + "\nMetaData: ";
+		if(this.getMetaData() != null)
 		result += this.getMetaData().toString() + "\n";
+		if(this.getPictureoflandmark() != null)
 		result += "IMG: " + this.getPictureoflandmark().getWidth() + " " 
 		+ this.getPictureoflandmark().getHeight();
 		return result;

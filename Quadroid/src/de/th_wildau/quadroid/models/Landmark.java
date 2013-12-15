@@ -62,8 +62,10 @@ public class Landmark {
 	public String toString() {
 		//print all data
 		String result = "";
-		result += "MetaData: " + this.tdata.toString() + "\nIMG: " +
-		this.pictureoflandmark.getWidth() + " " + this.pictureoflandmark.getHeight();
+		if(this.tdata != null)
+		result += "MetaData: " + this.tdata.toString();
+		if(this.pictureoflandmark != null)
+		result += "\nIMG: "+this.pictureoflandmark.getWidth() + " " + this.pictureoflandmark.getHeight();
 		return result;
 	}
 	

@@ -98,7 +98,9 @@ public class QuadroidAirplane {
 		//print all data
 		String result = "";
 		result += "Battery Power: " + this.batteryState + "\nTime: "
-				+ this.time + "\nPosition: " + this.gdata.toString();
+				+ this.time;
+		if(this.gdata != null)
+		result += "\nPosition: " + this.gdata.toString();
 		return result;
 	}
 	

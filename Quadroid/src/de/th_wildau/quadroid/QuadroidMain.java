@@ -3,6 +3,7 @@ package de.th_wildau.quadroid;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.util.zip.CRC32;
 
 import javax.imageio.ImageIO;
 
@@ -10,6 +11,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import de.th_wildau.quadroid.decoder.RxDataDecoder;
 import de.th_wildau.quadroid.encoder.TxDataEncoder;
+import de.th_wildau.quadroid.enums.Marker;
 import de.th_wildau.quadroid.models.Attitude;
 import de.th_wildau.quadroid.models.Course;
 import de.th_wildau.quadroid.models.GNSS;
@@ -48,7 +50,7 @@ public class QuadroidMain
 		Course c = new Course();
 		GNSS g = new GNSS();
 		Landmark l = new Landmark();
-		MetaData m = new MetaData();
+		//MetaData m = new MetaData();
 		QuadroidAirplane q = new QuadroidAirplane();
 		Waypoint w = new Waypoint();
 		GNSS g2 = new GNSS();
@@ -64,9 +66,9 @@ public class QuadroidMain
 		a.setYaw(32f);
 		c.setAngleReference(45f);
 		c.setSpeed(125);
-		m.setAirplane(q);
-		m.setAttitude(a);
-		m.setCourse(c);
+		//m.setAirplane(q);
+		//m.setAttitude(a);
+		//m.setCourse(c);
 		g2.setHeight(455);
 		g2.setLatitude(12.2145f);
 		g2.setLongitude(53.1547f);
@@ -79,8 +81,8 @@ public class QuadroidMain
 			e.printStackTrace();
 		}
 		
-		w.setMetaData(m);
-		w.setPosition(g2);
+		//w.setMetaData(null);
+		//w.setPosition(null);
 		w.setPictureoflandmark(img);
 		
 		String data = new String(tx.waypointToBytes(w));
@@ -88,7 +90,22 @@ public class QuadroidMain
 		
 		Waypoint newpoint = decoder.stringToWaypoint(data);
 		
-		System.out.println( newpoint.toString() );
+		int bild = (data.indexOf(Marker.PICTURESTART.getMarker()) + 3);
+		int bildend = data.indexOf(Marker.PICTUREEND.getMarker());
+		
+		int crcstart = (data.indexOf(Marker.CRCSTART.getMarker()) + 3);
+		int crcend = data.indexOf(Marker.CRCEND.getMarker());
+		
+		CRC32 crc = new CRC32();
+		byte[] da = tx.imageToByteArray(img, Marker.IMAGETYPE.getMarker());
+		
+		crc.update(da );
+		System.out.println( "Berechnetes CRC " + crc.getValue() );
+		System.out.println( "Enthalten CRC " + data.substring(crcstart, crcend) );
+		
+		
+		System.out.println(newpoint);
+		System.out.println(newpoint + "   " +  newpoint.toString() );
 	
 		
 	}

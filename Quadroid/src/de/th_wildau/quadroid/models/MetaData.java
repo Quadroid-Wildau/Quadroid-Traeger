@@ -81,9 +81,12 @@ public class MetaData {
 	public String toString() {
 		//print all data
 		String result = "";
-		result += "Course: " + this.course.toString() + 
-				"\nAirplane: " + this.airplane.toString() + 
-				"\nAttitude: " + this.attitude.toString();
+		if(this.course != null)
+		result += "Course: " + this.course.toString();
+		if(this.airplane != null)
+		result += "\nAirplane: " + this.airplane.toString();
+		if(this.attitude != null)
+		result += "\nAttitude: " + this.attitude.toString();
 		return result;
 	}
 

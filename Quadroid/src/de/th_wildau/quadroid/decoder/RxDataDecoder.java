@@ -14,6 +14,7 @@ import de.th_wildau.quadroid.enums.Marker;
 import de.th_wildau.quadroid.models.Attitude;
 import de.th_wildau.quadroid.models.Course;
 import de.th_wildau.quadroid.models.GNSS;
+import de.th_wildau.quadroid.models.Landmark;
 import de.th_wildau.quadroid.models.MetaData;
 import de.th_wildau.quadroid.models.QuadroidAirplane;
 import de.th_wildau.quadroid.models.Waypoint;
@@ -133,7 +134,9 @@ public class RxDataDecoder implements Runnable
 		if(crcdata.contains(startmarker) && crcdata.contains(endmarker) &&
 			crcdata.contains(Marker.CRCSTART.getMarker()) && 
 			crcdata.contains(Marker.CRCEND.getMarker()))
-		{	//get index position of marker for select substring, offset is needed to
+		{	
+			logger.info("all marker available!");
+			//get index position of marker for select substring, offset is needed to
 			//get right position for start-marker
 			int begindata = (crcdata.indexOf(startmarker) + OFFSET);
 			int enddata = crcdata.indexOf(endmarker);
@@ -156,7 +159,7 @@ public class RxDataDecoder implements Runnable
 			
 			CRC32 crc32 = new CRC32();
 			crc32.update(computdata);//comput crc value
-			
+			logger.info("Contain CRC " + crcvalue + " Computed CRC " + crc32.getValue());
 			if(crc32.getValue() == crcvalue)//CRC32 equals?
 			{
 				logger.debug("Equals CRC32");
@@ -331,7 +334,8 @@ public class RxDataDecoder implements Runnable
 			int tend = data.indexOf(Marker.TIMEEND.getMarker());
 			
 			//is available?
-			if(data.contains(Marker.GNSSSTART.getMarker()))
+			if(data.contains(Marker.GNSSSTART.getMarker()) && 
+					data.contains(Marker.GNSSEND.getMarker()))
 			{
 				//position of gnss data
 				int gstart = (data.indexOf(Marker.GNSSSTART.getMarker()) + OFFSET);
@@ -371,13 +375,16 @@ public class RxDataDecoder implements Runnable
 		
 		try
 		{	//is an image available?
-			if(data.contains(Marker.PICTURESTART.getMarker()))
+			if(data.contains(Marker.PICTURESTART.getMarker()) &&
+					data.contains(Marker.PICTUREEND.getMarker()))
 			{
+				logger.info("Image contains prove CRC ...");
 				//prove CRC32 Data, if check successfully go in
 				if(this.proveCRC(Marker.PICTURESTART.getMarker(), 
 						Marker.PICTUREEND.getMarker(), 
 						data.getBytes()))
 				{
+					logger.info("CRC OK convert Image");
 					//position of image data
 					int pstart = (data.indexOf(Marker.PICTURESTART.getMarker()) + OFFSET);
 					int pend = data.indexOf(Marker.PICTUREEND.getMarker());
@@ -386,21 +393,26 @@ public class RxDataDecoder implements Runnable
 							this.byteToBufferedImage(
 									data.substring(pstart, pend).getBytes()));
 				
+				}else
+				{
+					logger.info("CRC fail no convert Image");
 				}
 
 			}
-			
-			if(data.contains(Marker.METADATASTART.getMarker()))
+			//metadata available?
+			if(data.contains(Marker.METADATASTART.getMarker()) && 
+					data.contains(Marker.METADATAEND.getMarker()))
 			{	//start position of metadata
-				int mdata = (data.indexOf(Marker.METADATASTART.getMarker()) + OFFSET);
+				int mstart = (data.indexOf(Marker.METADATASTART.getMarker()) + OFFSET);
 				int mend = data.indexOf(Marker.METADATAEND.getMarker());
 				//convert und set metadata into waypoint
 				point.setMetaData(
 						this.stringToMetaData(
-								data.substring(mdata, mend)));
+								data.substring(mstart, mend)));
 			}
-			
-			if(data.contains(Marker.GNSSSTART.getMarker()))
+			//gnss data available?
+			if(data.contains(Marker.GNSSSTART.getMarker()) && 
+					data.contains(Marker.GNSSEND.getMarker()))
 			{	//position of GNSS data
 				int gstart = (data.indexOf(Marker.GNSSSTART.getMarker()) + OFFSET);
 				int gend = data.indexOf(Marker.GNSSEND.getMarker());
@@ -437,7 +449,8 @@ public class RxDataDecoder implements Runnable
 		try
 		{
 			//is airplane data available?
-			if(data.contains(Marker.AIRPLANESTART.getMarker()))
+			if(data.contains(Marker.AIRPLANESTART.getMarker()) && 
+					data.contains(Marker.AIRPLANEEND.getMarker()))
 			{	//position of airplane data
 				int astart = (data.indexOf(Marker.AIRPLANESTART.getMarker()) + OFFSET);
 				int aend = data.indexOf(Marker.AIRPLANEEND.getMarker());
@@ -448,7 +461,8 @@ public class RxDataDecoder implements Runnable
 			}
 			
 			//is attitude data available?
-			if(data.contains(Marker.ATTITUDESTART.getMarker()))
+			if(data.contains(Marker.ATTITUDESTART.getMarker()) && 
+					data.contains(Marker.ATTITUDEEND.getMarker()))
 			{	//position of attitude data
 				int astart = (data.indexOf(Marker.ATTITUDESTART.getMarker()) + OFFSET);
 				int aend = data.indexOf(Marker.ATTITUDEEND.getMarker());
@@ -458,7 +472,8 @@ public class RxDataDecoder implements Runnable
 								data.substring(astart, aend)));
 			}
 			//is course data available?
-			if(data.contains(Marker.COURSESTART.getMarker()))
+			if(data.contains(Marker.COURSESTART.getMarker()) && 
+					data.contains(Marker.COURSEEND.getMarker()))
 			{//position of course data
 				int cstart = (data.indexOf(Marker.COURSESTART.getMarker()) + OFFSET);
 				int cend = data.indexOf(Marker.COURSEEND.getMarker());
@@ -479,6 +494,68 @@ public class RxDataDecoder implements Runnable
 
 	}
 	
+	/**
+	 * this function can be use to parse an specific Data-String to
+	 * Landmark object
+	 * 
+	 * @param data - hand over an specific Data-String contains
+	 * marker for identify {@link Landmark} data see {@link Marker}
+	 * 
+	 * @return get an object of {@link Landmark} or <b>null</b> if
+	 * parsing was unsuccessfully
+	 * 
+	 * */
+	public Landmark stringToLandmark(String data)
+	{
+		Landmark lm = new Landmark();
+		
+		try
+		{
+			//is picture available?
+			if(data.contains(Marker.PICTURESTART.getMarker()) && 
+					data.contains(Marker.PICTUREEND.getMarker()))
+			{
+				logger.info("Image contains prove CRC...");
+				//prove crc32 checksum is equals parse image
+				if(this.proveCRC(Marker.PICTURESTART.getMarker(), 
+						Marker.PICTUREEND.getMarker(), 
+						data.getBytes()))
+				{
+					logger.info("CRC OK convert Image");
+					//position of picture
+					int mstart = (data.indexOf(Marker.PICTURESTART.getMarker()) + OFFSET);
+					int mend = data.indexOf(Marker.PICTUREEND.getMarker());
+					//convert and set image
+					lm.setPictureoflandmark(
+							this.byteToBufferedImage(
+									data.substring(mstart, mend).getBytes()));
+				}else
+				{
+					logger.info("CRC fail no convert Image");
+				}
+				
+			}
+			//is an metadata available?
+			if(data.contains(Marker.METADATASTART.getMarker()) && 
+					data.contains(Marker.METADATAEND.getMarker()))
+			{	//position of metadata
+				int mstart = (data.indexOf(Marker.METADATASTART.getMarker()) + OFFSET);
+				int mend = data.indexOf(Marker.METADATAEND.getMarker());
+				//convert und set metadata
+				lm.setMetaData(
+						this.stringToMetaData(
+								data.substring(mstart, mend)));
+			}
+			
+			logger.debug("Create Landmark");
+			return lm;
+		}catch(Exception e)
+		{
+			logger.error("stringToLandmark - Exception", e);
+			return null;
+		}
+		
+	}
 	
 	@Override
 	public void run() 
