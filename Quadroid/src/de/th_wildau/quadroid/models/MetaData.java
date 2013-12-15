@@ -77,6 +77,15 @@ public class MetaData {
 	
 	
 
+	@Override
+	public String toString() {
+		//print all data
+		String result = "";
+		result += "Course: " + this.course.toString() + 
+				"\nAirplane: " + this.airplane.toString() + 
+				"\nAttitude: " + this.attitude.toString();
+		return result;
+	}
 
 
 

@@ -25,8 +25,12 @@
 <fullyQualifiedTypeName name="de.th_wildau.quadroid.models.Course"/>
 <fullyQualifiedTypeName name="de.th_wildau.quadroid.models.GNSS"/>
 <fullyQualifiedTypeName name="de.th_wildau.quadroid.models.Landmark"/>
-<fullyQualifiedTypeName name="de.th_wildau.quadroid.models.MetaData"/>
 <fullyQualifiedTypeName name="de.th_wildau.quadroid.models.QuadroidAirplane"/>
-<fullyQualifiedTypeName name="de.th_wildau.quadroid.models.Waypoint"/>
 <fullyQualifiedTypeName name="de.th_wildau.quadroid.encoder.TxDataEncoder"/>
+<fullyQualifiedTypeName name="de.th_wildau.quadroid.models.Waypoint"/>
+<fullyQualifiedTypeName name="org.slf4j.Marker"/>
+<fullyQualifiedTypeName name="de.th_wildau.quadroid.models.MetaData"/>
+<fullyQualifiedTypeName name="javax.imageio.ImageIO"/>
+<fullyQualifiedTypeName name="java.io.File"/>
+<fullyQualifiedTypeName name="java.awt.image.BufferedImage"/>
 </qualifiedTypeNameHistroy>

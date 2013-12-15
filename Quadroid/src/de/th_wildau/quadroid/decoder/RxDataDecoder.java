@@ -12,7 +12,11 @@ import org.slf4j.Logger;
 import de.th_wildau.quadroid.QuadroidMain;
 import de.th_wildau.quadroid.enums.Marker;
 import de.th_wildau.quadroid.models.Attitude;
+import de.th_wildau.quadroid.models.Course;
 import de.th_wildau.quadroid.models.GNSS;
+import de.th_wildau.quadroid.models.MetaData;
+import de.th_wildau.quadroid.models.QuadroidAirplane;
+import de.th_wildau.quadroid.models.Waypoint;
 
 /**
  * this class decoded data to objects after receiving
@@ -265,6 +269,215 @@ public class RxDataDecoder implements Runnable
 		}
 	}
 	
+	/**
+	 * This function can be use to convert an specific Data-String
+	 * to Course object
+	 * 
+	 * @param data - hand over an specific string contains
+	 * marker for identifier {@link Course} data see {@link Marker}
+	 * 
+	 * @return get an object of {@link Course} or <b>null</b> if 
+	 * parsing no successfully 
+	 * 
+	 * */
+	public Course stringToCourse(String data)
+	{
+		Course course = new Course();
+		
+		try
+		{
+			//get position of angle data 
+			int astart = (data.indexOf(Marker.ANGLESTART.getMarker()) + OFFSET);
+			int aend = data.indexOf(Marker.ANGELEND.getMarker());
+			//get position of speed data 
+			int sstart = (data.indexOf(Marker.SPEEDSTART.getMarker()) + OFFSET);
+			int send = data.indexOf(Marker.SPEEDEND.getMarker());
+			
+			//convert latitude data from string to float 
+			course.setAngleReference(Float.valueOf(data.substring(astart, aend)));
+			//convert longitude data from string to float
+			course.setSpeed(Float.valueOf(data.substring(sstart, send)));
+			
+			logger.debug("Create Course");
+			return course;
+		}catch(Exception e)
+		{
+			logger.error("stringToCourse Exception: ", e);
+			return null;
+		}
+	}
+	
+	/**
+	 * this function can be use to parse an specific Data-String
+	 * to QuadroidAirplane
+	 * 
+	 * @param data - hand over an specific Data-String contains 
+	 * marker for identify QuadroidAirplane data
+	 * 
+	 * @return get an object of {@link QuadroidAirplane} or <b>null</b>
+	 * if parsing was no successfully 
+	 * 
+	 * */
+	public QuadroidAirplane stringToAirplane(String data)
+	{
+		QuadroidAirplane qa = new QuadroidAirplane();
+		
+		try
+		{	//position of battery data
+			int bstart = (data.indexOf(Marker.AKKUSTART.getMarker()) + OFFSET);
+			int bend = data.indexOf(Marker.AKKUEND.getMarker());
+			//position of time data
+			int tstart = (data.indexOf(Marker.TIMESTART.getMarker()) + OFFSET);
+			int tend = data.indexOf(Marker.TIMEEND.getMarker());
+			
+			//is available?
+			if(data.contains(Marker.GNSSSTART.getMarker()))
+			{
+				//position of gnss data
+				int gstart = (data.indexOf(Marker.GNSSSTART.getMarker()) + OFFSET);
+				int gend = data.indexOf(Marker.GNSSEND.getMarker());
+				//parse an set data from string to GNSS
+				qa.setGeoData(this.stringToGNSS(data.substring(gstart, gend)));
+			}	
+			
+			//parse and set data from string to byte
+			qa.setBatteryState(Byte.valueOf(data.substring(bstart, bend)));
+			//parse and set data from string to long
+			qa.setTime(Long.valueOf(data.substring(tstart, tend)));
+			
+			logger.debug("Create QuadroidAirplane");
+			return qa;
+		}catch(Exception e)
+		{
+			logger.error("stringToAirplane - Exception", e);
+			return null;
+		}
+	}
+
+	/**
+	 * This function can be use to parse an specific Data-String to
+	 * Waypoint model
+	 * 
+	 * @param data - hand over an specific Data-String contains 
+	 * marker to identify {@link Waypoint} data see {@link Marker}
+	 * 
+	 * @return get an object of {@link Waypoint} or <b>null</b> if
+	 * parsing was unsuccessfully
+	 * 
+	 * */
+	public Waypoint stringToWaypoint(String data)
+	{
+		Waypoint point = new Waypoint();
+		
+		try
+		{	//is an image available?
+			if(data.contains(Marker.PICTURESTART.getMarker()))
+			{
+				//prove CRC32 Data, if check successfully go in
+				if(this.proveCRC(Marker.PICTURESTART.getMarker(), 
+						Marker.PICTUREEND.getMarker(), 
+						data.getBytes()))
+				{
+					//position of image data
+					int pstart = (data.indexOf(Marker.PICTURESTART.getMarker()) + OFFSET);
+					int pend = data.indexOf(Marker.PICTUREEND.getMarker());
+					//convert data bytes to buffered image an set value into waypoint
+					point.setPictureoflandmark(
+							this.byteToBufferedImage(
+									data.substring(pstart, pend).getBytes()));
+				
+				}
+
+			}
+			
+			if(data.contains(Marker.METADATASTART.getMarker()))
+			{	//start position of metadata
+				int mdata = (data.indexOf(Marker.METADATASTART.getMarker()) + OFFSET);
+				int mend = data.indexOf(Marker.METADATAEND.getMarker());
+				//convert und set metadata into waypoint
+				point.setMetaData(
+						this.stringToMetaData(
+								data.substring(mdata, mend)));
+			}
+			
+			if(data.contains(Marker.GNSSSTART.getMarker()))
+			{	//position of GNSS data
+				int gstart = (data.indexOf(Marker.GNSSSTART.getMarker()) + OFFSET);
+				int gend = data.indexOf(Marker.GNSSEND.getMarker());
+				//convert und set data into gnss field 
+				point.setPosition(
+						this.stringToGNSS(
+								data.substring(gstart, gend)));
+			}
+			
+			logger.debug("Create Waypoint");
+			return point;
+		}catch(Exception e)
+		{
+			logger.error("stringToWaypoint - Exception",e);
+			return null;
+		}
+	}
+	
+	/**
+	 * this function can be use to parse an specific Data-String to 
+	 * MetaData object
+	 * 
+	 * @param data - hand over an specific Data-String contains
+	 * marker for identify {@link MetaData} data see {@link Marker}
+	 * 
+	 * @return get an object of {@link MetaData} or <b>null</b> if
+	 * parsing was unsuccessfully
+	 * 
+	 * */
+	public MetaData stringToMetaData(String data)
+	{
+		MetaData md = new MetaData();
+		
+		try
+		{
+			//is airplane data available?
+			if(data.contains(Marker.AIRPLANESTART.getMarker()))
+			{	//position of airplane data
+				int astart = (data.indexOf(Marker.AIRPLANESTART.getMarker()) + OFFSET);
+				int aend = data.indexOf(Marker.AIRPLANEEND.getMarker());
+				//convert and set airplane data
+				md.setAirplane(
+						this.stringToAirplane(
+								data.substring(astart, aend)));
+			}
+			
+			//is attitude data available?
+			if(data.contains(Marker.ATTITUDESTART.getMarker()))
+			{	//position of attitude data
+				int astart = (data.indexOf(Marker.ATTITUDESTART.getMarker()) + OFFSET);
+				int aend = data.indexOf(Marker.ATTITUDEEND.getMarker());
+				//convert and set attitude data
+				md.setAttitude(
+						this.stringToAttitude(
+								data.substring(astart, aend)));
+			}
+			//is course data available?
+			if(data.contains(Marker.COURSESTART.getMarker()))
+			{//position of course data
+				int cstart = (data.indexOf(Marker.COURSESTART.getMarker()) + OFFSET);
+				int cend = data.indexOf(Marker.COURSEEND.getMarker());
+				//convert and set course data
+				md.setCourse(
+						this.stringToCourse(
+								data.substring(cstart, cend)));
+			}
+			
+			logger.debug("Create MetaData");
+			return md;
+		}catch(Exception e)
+		{
+			logger.error("stringToMetaData - Exception", e);
+			return null;
+		}
+		
+
+	}
 	
 	
 	@Override

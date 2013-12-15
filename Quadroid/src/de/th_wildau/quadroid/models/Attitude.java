@@ -88,4 +88,14 @@ public class Attitude
 	public void setPitch(float pitch) {
 		this.pitch = pitch;
 	}
+	
+	@Override
+	public String toString() {
+		//print all information
+		String result = "";
+		result += "Yaw: " + this.yaw + "\nRoll: "+
+		this.roll + "\nPitch: " + this.pitch;
+		return result;
+	}
+	
 }

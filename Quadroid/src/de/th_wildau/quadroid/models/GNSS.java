@@ -81,4 +81,13 @@ public class GNSS {
 		this.height = height;
 	}
 
+	@Override
+	public String toString() {
+		//print all data
+		String result = "";
+		result += "Latitude: " + this.latitude + "\nLongitude: " + 
+		this.longitude + "\nHeight: " + this.height;
+		return result;
+	}
+	
 }

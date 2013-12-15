@@ -66,4 +66,12 @@ public class Course {
 		this.angleofnordreference = angle;
 	}
 	
+	@Override
+	public String toString() {
+		//print all data
+		return "Speed: " + this.speed + 
+				"\nAngle: " + this.angleofnordreference;
+		
+	}
+	
 }

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<workbench progressCount="68" version="2.0">
+<workbench progressCount="59" version="2.0">
 <workbenchAdvisor/>
 <window height="768" maximized="true" width="1016" x="618" y="87">
 <fastViewData fastViewLocation="1024"/>
@@ -14,14 +14,16 @@
 <coolItem id="org.eclipse.jdt.ui.JavaElementCreationActionSet" itemType="typeToolBarContribution" x="76" y="30"/>
 <coolItem id="org.eclipse.mylyn.java.actionSet.browsing" itemType="typeToolBarContribution" x="40" y="30"/>
 <coolItem id="org.eclipse.search.searchActionSet" itemType="typeToolBarContribution" x="104" y="30"/>
-<coolItem id="org.eclipse.ui.edit.text.actionSet.presentation" itemType="typeToolBarContribution" x="68" y="30"/>
+<coolItem id="org.eclipse.ui.edit.text.actionSet.presentation" itemType="typeToolBarContribution" x="152" y="30"/>
 <coolItem id="org.eclipse.wst.xml.ui.perspective.NewFileToolBar" itemType="typeToolBarContribution" x="-1" y="-1"/>
-<coolItem id="org.eclipse.wst.xml.ui.design.DesignToolBar" itemType="typeToolBarContribution" x="-1" y="-1"/>
+<coolItem id="org.eclipse.wst.xml.ui.design.DesignToolBar" itemType="typeToolBarContribution" x="68" y="30"/>
 <coolItem id="group.nav" itemType="typeGroupMarker"/>
 <coolItem id="org.eclipse.ui.workbench.navigate" itemType="typeToolBarContribution" x="184" y="30"/>
 <coolItem id="group.editor" itemType="typeGroupMarker"/>
+<coolItem id="org.eclipse.wst.xml.ui.internal.tabletree.XMLMultiPageEditorPart" itemType="typePlaceholder" x="-1" y="-1"/>
+<coolItem id="org.eclipse.jdt.ui.PropertiesFileEditor" itemType="typePlaceholder" x="-1" y="-1"/>
 <coolItem id="org.eclipse.jdt.ui.ClassFileEditor" itemType="typePlaceholder" x="-1" y="-1"/>
-<coolItem id="org.eclipse.jdt.ui.CompilationUnitEditor" itemType="typePlaceholder" x="-1" y="-1"/>
+<coolItem id="org.eclipse.jdt.ui.CompilationUnitEditor" itemType="typeToolBarContribution" x="-1" y="-1"/>
 <coolItem id="group.help" itemType="typeGroupMarker"/>
 <coolItem id="org.eclipse.ui.workbench.help" itemType="typeToolBarContribution" x="-1" y="-1"/>
 </coolbarLayout>
@@ -30,10 +32,26 @@
 <editorArea activeWorkbook="DefaultEditorWorkbook">
 <info part="DefaultEditorWorkbook">
 <folder appearance="1" expanded="2">
-<presentation id="org.eclipse.ui.presentations.WorkbenchPresentationFactory"/>
+<presentation id="org.eclipse.ui.presentations.WorkbenchPresentationFactory">
+<part id="0"/>
+<part id="1"/>
+<part id="2"/>
+</presentation>
 </folder>
 </info>
 </editorArea>
+<editor activePart="true" focus="true" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="RxDataDecoder.java" partName="RxDataDecoder.java" path="/home/c3po/workspace/GitWorkspace/Quadroid/src/de/th_wildau/quadroid/decoder/RxDataDecoder.java" title="RxDataDecoder.java" tooltip="Quadroid/src/de/th_wildau/quadroid/decoder/RxDataDecoder.java" workbook="DefaultEditorWorkbook">
+<input factoryID="org.eclipse.ui.part.FileEditorInputFactory" path="/Quadroid/src/de/th_wildau/quadroid/decoder/RxDataDecoder.java"/>
+<editorState selectionHorizontalPixel="0" selectionLength="0" selectionOffset="5076" selectionTopPixel="359"/>
+</editor>
+<editor id="org.eclipse.jdt.ui.CompilationUnitEditor" name="QuadroidMain.java" partName="QuadroidMain.java" path="/home/c3po/workspace/GitWorkspace/Quadroid/src/de/th_wildau/quadroid/QuadroidMain.java" title="QuadroidMain.java" tooltip="Quadroid/src/de/th_wildau/quadroid/QuadroidMain.java" workbook="DefaultEditorWorkbook">
+<input factoryID="org.eclipse.ui.part.FileEditorInputFactory" path="/Quadroid/src/de/th_wildau/quadroid/QuadroidMain.java"/>
+<editorState selectionHorizontalPixel="0" selectionLength="0" selectionOffset="2245" selectionTopPixel="1056"/>
+</editor>
+<editor id="org.eclipse.jdt.ui.CompilationUnitEditor" name="MetaData.java" partName="MetaData.java" path="/home/c3po/workspace/GitWorkspace/Quadroid/src/de/th_wildau/quadroid/models/MetaData.java" title="MetaData.java" tooltip="Quadroid/src/de/th_wildau/quadroid/models/MetaData.java" workbook="DefaultEditorWorkbook">
+<input factoryID="org.eclipse.ui.part.FileEditorInputFactory" path="/Quadroid/src/de/th_wildau/quadroid/models/MetaData.java"/>
+<editorState selectionHorizontalPixel="0" selectionLength="0" selectionOffset="0" selectionTopPixel="0"/>
+</editor>
 </editors>
 <views>
 <view id="org.eclipse.ui.navigator.ProjectExplorer" partName="Project Explorer">
@@ -44,6 +62,10 @@
 </view>
 <view id="org.eclipse.ui.views.ProblemView" partName="Problems">
 <viewState PRIMARY_SORT_FIELD="org.eclipse.ui.ide.severityAndDescriptionField" categoryGroup="org.eclipse.ui.ide.severity" markerContentGenerator="org.eclipse.ui.ide.problemsGenerator" partName="Problems">
+<expanded>
+<category IMemento.internal.id="Warnings"/>
+<category IMemento.internal.id="Errors"/>
+</expanded>
 <columnWidths org.eclipse.ui.ide.locationField="105" org.eclipse.ui.ide.markerType="105" org.eclipse.ui.ide.pathField="140" org.eclipse.ui.ide.resourceField="105" org.eclipse.ui.ide.severityAndDescriptionField="350"/>
 <visible IMemento.internal.id="org.eclipse.ui.ide.severityAndDescriptionField"/>
 <visible IMemento.internal.id="org.eclipse.ui.ide.resourceField"/>
@@ -67,7 +89,7 @@
 <viewState/>
 </view>
 </views>
-<perspectives activePart="org.eclipse.ui.navigator.ProjectExplorer" activePerspective="org.eclipse.pde.ui.PDEPerspective">
+<perspectives activePart="org.eclipse.jdt.ui.CompilationUnitEditor" activePerspective="org.eclipse.pde.ui.PDEPerspective">
 <perspective editorAreaTrimState="2" editorAreaVisible="1" fixed="0" version="0.016">
 <descriptor class="org.eclipse.pde.internal.ui.PDEPerspective" id="org.eclipse.pde.ui.PDEPerspective" label="Plug-in Development"/>
 <alwaysOnActionSet id="org.eclipse.mylyn.context.ui.actionSet"/>
@@ -129,7 +151,7 @@
 <fastViews>
 <view id="org.eclipse.ui.views.ContentOutline" ratio="0.3"/>
 <view id="org.eclipse.mylyn.tasks.ui.views.tasks" ratio="0.3"/>
-<view id="org.eclipse.ui.console.ConsoleView" ratio="0.5513725"/>
+<view id="org.eclipse.ui.console.ConsoleView" ratio="0.5503626"/>
 </fastViews>
 </fastViewBar>
 </fastViewBars>
@@ -188,15 +210,180 @@
 </perspective>
 </perspectives>
 <workingSets/>
-<navigationHistory/>
+<navigationHistory>
+<editors>
+<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" path="/Quadroid/src/de/th_wildau/quadroid/QuadroidMain.java"/>
+<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" path="/Quadroid/src/de/th_wildau/quadroid/models/Waypoint.java"/>
+<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" path="/Quadroid/src/de/th_wildau/quadroid/models/Attitude.java"/>
+<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" path="/Quadroid/src/de/th_wildau/quadroid/models/MetaData.java"/>
+<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" path="/Quadroid/src/de/th_wildau/quadroid/models/Landmark.java"/>
+<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" path="/Quadroid/src/de/th_wildau/quadroid/models/GNSS.java"/>
+<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" path="/Quadroid/src/de/th_wildau/quadroid/models/Course.java"/>
+<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" path="/Quadroid/src/de/th_wildau/quadroid/decoder/RxDataDecoder.java"/>
+</editors>
+<item historyLabel="QuadroidMain.java" index="0">
+<position info="not_deleted" x="1839" y="0"/>
+</item>
+<item historyLabel="MetaData.java" index="3">
+<position info="not_deleted" x="0" y="0"/>
+</item>
+<item historyLabel="QuadroidMain.java" index="0">
+<position info="not_deleted" x="1839" y="0"/>
+</item>
+<item historyLabel="Landmark.java" index="4">
+<position info="not_deleted" x="0" y="0"/>
+</item>
+<item historyLabel="Landmark.java" index="4">
+<position info="not_deleted" x="1247" y="0"/>
+</item>
+<item historyLabel="Landmark.java" index="4">
+<position info="not_deleted" x="1273" y="0"/>
+</item>
+<item historyLabel="Landmark.java" index="4">
+<position info="not_deleted" x="1309" y="0"/>
+</item>
+<item historyLabel="Landmark.java" index="4">
+<position info="not_deleted" x="1227" y="0"/>
+</item>
+<item historyLabel="QuadroidMain.java" index="0">
+<position info="not_deleted" x="1839" y="0"/>
+</item>
+<item historyLabel="GNSS.java" index="5">
+<position info="not_deleted" x="0" y="0"/>
+</item>
+<item historyLabel="GNSS.java" index="5">
+<position info="not_deleted" x="1410" y="0"/>
+</item>
+<item historyLabel="GNSS.java" index="5">
+<position info="not_deleted" x="1538" y="0"/>
+</item>
+<item historyLabel="GNSS.java" index="5">
+<position info="not_deleted" x="1470" y="0"/>
+</item>
+<item historyLabel="GNSS.java" index="5">
+<position info="not_deleted" x="1390" y="0"/>
+</item>
+<item historyLabel="QuadroidMain.java" index="0">
+<position info="not_deleted" x="1839" y="0"/>
+</item>
+<item historyLabel="Course.java" index="6">
+<position info="not_deleted" x="0" y="0"/>
+</item>
+<item historyLabel="Course.java" index="6">
+<position info="not_deleted" x="1199" y="0"/>
+</item>
+<item historyLabel="QuadroidMain.java" index="0">
+<position info="not_deleted" x="1839" y="0"/>
+</item>
+<item historyLabel="Attitude.java" index="2">
+<position info="not_deleted" x="0" y="0"/>
+</item>
+<item historyLabel="QuadroidMain.java" index="0">
+<position info="not_deleted" x="2248" y="0"/>
+</item>
+<item historyLabel="RxDataDecoder.java" index="7">
+<position info="not_deleted" x="12057" y="0"/>
+</item>
+<item historyLabel="RxDataDecoder.java" index="7">
+<position info="not_deleted" x="12631" y="0"/>
+</item>
+<item historyLabel="Waypoint.java" index="1">
+<position info="not_deleted" x="839" y="49"/>
+</item>
+<item historyLabel="QuadroidMain.java" index="0">
+<position info="not_deleted" x="2245" y="0"/>
+</item>
+<item historyLabel="RxDataDecoder.java" index="7">
+<position info="not_deleted" x="12631" y="0"/>
+</item>
+<item historyLabel="RxDataDecoder.java" index="7">
+<position info="not_deleted" x="12723" y="0"/>
+</item>
+<item historyLabel="RxDataDecoder.java" index="7">
+<position info="not_deleted" x="13964" y="0"/>
+</item>
+<item historyLabel="RxDataDecoder.java" index="7">
+<position info="not_deleted" x="14018" y="1"/>
+</item>
+<item historyLabel="RxDataDecoder.java" index="7">
+<position info="not_deleted" x="14037" y="0"/>
+</item>
+<item historyLabel="RxDataDecoder.java" index="7">
+<position info="not_deleted" x="13889" y="0"/>
+</item>
+<item historyLabel="MetaData.java" index="3">
+<position info="not_deleted" x="0" y="0"/>
+</item>
+<item historyLabel="QuadroidMain.java" index="0">
+<position info="not_deleted" x="2245" y="0"/>
+</item>
+<item historyLabel="MetaData.java" index="3">
+<position info="not_deleted" x="0" y="0"/>
+</item>
+<item historyLabel="RxDataDecoder.java" index="7">
+<position info="not_deleted" x="13889" y="0"/>
+</item>
+<item historyLabel="RxDataDecoder.java" index="7">
+<position info="not_deleted" x="12825" y="0"/>
+</item>
+<item historyLabel="RxDataDecoder.java" index="7">
+<position info="not_deleted" x="13217" y="0"/>
+</item>
+<item historyLabel="RxDataDecoder.java" index="7">
+<position info="not_deleted" x="13588" y="0"/>
+</item>
+<item historyLabel="MetaData.java" index="3">
+<position info="not_deleted" x="0" y="0"/>
+</item>
+<item historyLabel="RxDataDecoder.java" index="7">
+<position info="not_deleted" x="13588" y="0"/>
+</item>
+<item historyLabel="RxDataDecoder.java" index="7">
+<position info="not_deleted" x="12933" y="0"/>
+</item>
+<item historyLabel="RxDataDecoder.java" index="7">
+<position info="not_deleted" x="13121" y="0"/>
+</item>
+<item historyLabel="RxDataDecoder.java" index="7">
+<position info="not_deleted" x="13113" y="1"/>
+</item>
+<item historyLabel="RxDataDecoder.java" index="7">
+<position info="not_deleted" x="13218" y="0"/>
+</item>
+<item historyLabel="RxDataDecoder.java" index="7">
+<position info="not_deleted" x="13064" y="16"/>
+</item>
+<item historyLabel="RxDataDecoder.java" index="7">
+<position info="not_deleted" x="13513" y="0"/>
+</item>
+<item historyLabel="RxDataDecoder.java" index="7">
+<position info="not_deleted" x="13505" y="1"/>
+</item>
+<item historyLabel="RxDataDecoder.java" index="7">
+<position info="not_deleted" x="13482" y="0"/>
+</item>
+<item historyLabel="RxDataDecoder.java" index="7">
+<position info="not_deleted" x="13884" y="0"/>
+</item>
+<item historyLabel="RxDataDecoder.java" index="7">
+<position info="not_deleted" x="13876" y="1"/>
+</item>
+<item active="true" historyLabel="RxDataDecoder.java" index="7">
+<position info="not_deleted" x="13853" y="0"/>
+</item>
+</navigationHistory>
 <input factoryID="org.eclipse.ui.internal.model.ResourceFactory" path="/" type="8"/>
 </page>
 <workbenchWindowAdvisor/>
 <actionBarAdvisor/>
 <trimLayout>
+<trimArea IMemento.internal.id="16384">
+<trimItem IMemento.internal.id="topLeft"/>
+</trimArea>
 <trimArea IMemento.internal.id="131072">
 <trimItem IMemento.internal.id="bottomRight"/>
 <trimItem IMemento.internal.id="org.eclipse.ui.internal.ViewStack@16bdee0"/>
+<trimItem IMemento.internal.id="org.eclipse.ui.internal.ViewStack@df583e"/>
 </trimArea>
 <trimArea IMemento.internal.id="128">
 <trimItem IMemento.internal.id="org.eclipse.ui.internal.WorkbenchWindow.topBar"/>
@@ -210,11 +397,35 @@
 </trimLayout>
 </window>
 <mruList>
-<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="RxDataDecoder.java" tooltip="Quadroid/src/de/th_wildau/quadroid/decoder/RxDataDecoder.java">
-<persistable path="/Quadroid/src/de/th_wildau/quadroid/decoder/RxDataDecoder.java"/>
+<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="MetaData.java" tooltip="Quadroid/src/de/th_wildau/quadroid/models/MetaData.java">
+<persistable path="/Quadroid/src/de/th_wildau/quadroid/models/MetaData.java"/>
 </file>
-<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="Marker.java" tooltip="Quadroid/src/de/th_wildau/quadroid/enums/Marker.java">
-<persistable path="/Quadroid/src/de/th_wildau/quadroid/enums/Marker.java"/>
+<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="Waypoint.java" tooltip="Quadroid/src/de/th_wildau/quadroid/models/Waypoint.java">
+<persistable path="/Quadroid/src/de/th_wildau/quadroid/models/Waypoint.java"/>
+</file>
+<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="Attitude.java" tooltip="Quadroid/src/de/th_wildau/quadroid/models/Attitude.java">
+<persistable path="/Quadroid/src/de/th_wildau/quadroid/models/Attitude.java"/>
+</file>
+<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="Course.java" tooltip="Quadroid/src/de/th_wildau/quadroid/models/Course.java">
+<persistable path="/Quadroid/src/de/th_wildau/quadroid/models/Course.java"/>
+</file>
+<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="GNSS.java" tooltip="Quadroid/src/de/th_wildau/quadroid/models/GNSS.java">
+<persistable path="/Quadroid/src/de/th_wildau/quadroid/models/GNSS.java"/>
+</file>
+<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="Landmark.java" tooltip="Quadroid/src/de/th_wildau/quadroid/models/Landmark.java">
+<persistable path="/Quadroid/src/de/th_wildau/quadroid/models/Landmark.java"/>
+</file>
+<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="QuadroidAirplane.java" tooltip="Quadroid/src/de/th_wildau/quadroid/models/QuadroidAirplane.java">
+<persistable path="/Quadroid/src/de/th_wildau/quadroid/models/QuadroidAirplane.java"/>
+</file>
+<file factoryID="org.eclipse.jdt.ui.internal.JarEntryEditorInputFactory" id="org.eclipse.wst.xml.ui.internal.tabletree.XMLMultiPageEditorPart" name="pom.xml" tooltip="Quadroid/lib/slf4j-simple-1.7.2.jar/META-INF/maven/org.slf4j/slf4j-simple/pom.xml">
+<persistable element="=Quadroid/lib\/slf4j-simple-1.7.2.jar" path="META-INF/maven/org.slf4j/slf4j-simple/pom.xml"/>
+</file>
+<file factoryID="org.eclipse.jdt.ui.internal.JarEntryEditorInputFactory" id="org.eclipse.wst.xml.ui.internal.tabletree.XMLMultiPageEditorPart" name="pom.xml" tooltip="Quadroid/lib/slf4j-api-1.7.2.jar/META-INF/maven/org.slf4j/slf4j-api/pom.xml">
+<persistable element="=Quadroid/lib\/slf4j-api-1.7.2.jar" path="META-INF/maven/org.slf4j/slf4j-api/pom.xml"/>
+</file>
+<file factoryID="org.eclipse.jdt.ui.internal.JarEntryEditorInputFactory" id="org.eclipse.jdt.ui.PropertiesFileEditor" name="pom.properties" tooltip="Quadroid/lib/slf4j-api-1.7.2.jar/META-INF/maven/org.slf4j/slf4j-api/pom.properties">
+<persistable element="=Quadroid/lib\/slf4j-api-1.7.2.jar" path="META-INF/maven/org.slf4j/slf4j-api/pom.properties"/>
 </file>
 <file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="TxDataEncoder.java" tooltip="Quadroid/src/de/th_wildau/quadroid/encoder/TxDataEncoder.java">
 <persistable path="/Quadroid/src/de/th_wildau/quadroid/encoder/TxDataEncoder.java"/>
@@ -222,38 +433,14 @@
 <file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="QuadroidMain.java" tooltip="Quadroid/src/de/th_wildau/quadroid/QuadroidMain.java">
 <persistable path="/Quadroid/src/de/th_wildau/quadroid/QuadroidMain.java"/>
 </file>
-<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="Landmark.java" tooltip="Quadroid/src/de/th_wildau/quadroid/models/Landmark.java">
-<persistable path="/Quadroid/src/de/th_wildau/quadroid/models/Landmark.java"/>
+<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="RxDataDecoder.java" tooltip="Quadroid/src/de/th_wildau/quadroid/decoder/RxDataDecoder.java">
+<persistable path="/Quadroid/src/de/th_wildau/quadroid/decoder/RxDataDecoder.java"/>
 </file>
-<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="Waypoint.java" tooltip="Quadroid/src/de/th_wildau/quadroid/models/Waypoint.java">
-<persistable path="/Quadroid/src/de/th_wildau/quadroid/models/Waypoint.java"/>
-</file>
-<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="QuadroidAirplane.java" tooltip="Quadroid/src/de/th_wildau/quadroid/models/QuadroidAirplane.java">
-<persistable path="/Quadroid/src/de/th_wildau/quadroid/models/QuadroidAirplane.java"/>
-</file>
-<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="MetaData.java" tooltip="Quadroid/src/de/th_wildau/quadroid/models/MetaData.java">
-<persistable path="/Quadroid/src/de/th_wildau/quadroid/models/MetaData.java"/>
+<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="Marker.java" tooltip="Quadroid/src/de/th_wildau/quadroid/enums/Marker.java">
+<persistable path="/Quadroid/src/de/th_wildau/quadroid/enums/Marker.java"/>
 </file>
 <file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="GeoData.java" tooltip="Quadroid/src/de/th_wildau/quadroid/models/GeoData.java">
 <persistable path="/Quadroid/src/de/th_wildau/quadroid/models/GeoData.java"/>
-</file>
-<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="Course.java" tooltip="Quadroid/src/de/th_wildau/quadroid/models/Course.java">
-<persistable path="/Quadroid/src/de/th_wildau/quadroid/models/Course.java"/>
-</file>
-<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="Attitude.java" tooltip="Quadroid/src/de/th_wildau/quadroid/models/Attitude.java">
-<persistable path="/Quadroid/src/de/th_wildau/quadroid/models/Attitude.java"/>
-</file>
-<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="AbstractTransmitter.java" tooltip="Quadroid/src/de/th_wildau/quadroid/interfaces/AbstractTransmitter.java">
-<persistable path="/Quadroid/src/de/th_wildau/quadroid/interfaces/AbstractTransmitter.java"/>
-</file>
-<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="Attitide.java" tooltip="Quadroid/src/de/th_wildau/quadroid/models/Attitide.java">
-<persistable path="/Quadroid/src/de/th_wildau/quadroid/models/Attitide.java"/>
-</file>
-<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="AbstractReceiver.java" tooltip="Quadroid/src/de/th_wildau/quadroid/interfaces/AbstractReceiver.java">
-<persistable path="/Quadroid/src/de/th_wildau/quadroid/interfaces/AbstractReceiver.java"/>
-</file>
-<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="XBeeReceiverHandler.java" tooltip="Quadroid/src/de/th_wildau/quadroid/handler/XBeeReceiverHandler.java">
-<persistable path="/Quadroid/src/de/th_wildau/quadroid/handler/XBeeReceiverHandler.java"/>
 </file>
 </mruList>
 </workbench>

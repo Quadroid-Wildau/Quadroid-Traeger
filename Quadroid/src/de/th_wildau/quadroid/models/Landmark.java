@@ -58,4 +58,14 @@ public class Landmark {
 	}
 
 
+	@Override
+	public String toString() {
+		//print all data
+		String result = "";
+		result += "MetaData: " + this.tdata.toString() + "\nIMG: " +
+		this.pictureoflandmark.getWidth() + " " + this.pictureoflandmark.getHeight();
+		return result;
+	}
+	
+	
 }

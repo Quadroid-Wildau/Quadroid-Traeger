@@ -33,4 +33,15 @@ public class Waypoint extends Landmark{
 	public void setPosition(GNSS sollPos) {
 		this.sollPos = sollPos;
 	}
+	
+	@Override
+	public String toString() 
+	{	//print all informations
+		String result = "";
+		result += "Position: "+ this.sollPos.toString() + "\nMetaData: ";
+		result += this.getMetaData().toString() + "\n";
+		result += "IMG: " + this.getPictureoflandmark().getWidth() + " " 
+		+ this.getPictureoflandmark().getHeight();
+		return result;
+	}
 }

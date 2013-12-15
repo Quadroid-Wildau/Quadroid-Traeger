@@ -1,8 +1,13 @@
 package de.th_wildau.quadroid;
 
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
+
+import javax.imageio.ImageIO;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
 import de.th_wildau.quadroid.decoder.RxDataDecoder;
 import de.th_wildau.quadroid.encoder.TxDataEncoder;
 import de.th_wildau.quadroid.models.Attitude;
@@ -34,7 +39,9 @@ public class QuadroidMain
 	public static void main(String[] args)
 	{
 		logger = LoggerFactory.getLogger(QuadroidMain.class.getName());
+		
 		TxDataEncoder tx = new TxDataEncoder();
+		RxDataDecoder decoder = new RxDataDecoder(null);
 		QuadroidMain.logger.info("StartQuadroid");
 		
 		Attitude a = new Attitude();
@@ -44,55 +51,46 @@ public class QuadroidMain
 		MetaData m = new MetaData();
 		QuadroidAirplane q = new QuadroidAirplane();
 		Waypoint w = new Waypoint();
-		
 		GNSS g2 = new GNSS();
-		g2.setHeight(70);
-		g2.setLatitude(65);
-		g2.setLongitude(99);
 		
-		//System.out.println(new String(tx.geodataToBytes(g2)));
-		
-		g.setHeight(50);
-		g.setLatitude(100);
-		g.setLongitude(200);
-		
-		//System.out.println(new String(tx.geodataToBytes(g)));
-		
-		q.setBatteryState((byte) 0x00);
-		q.setTime(1234567890);
+		q.setBatteryState((byte) 78);
+		q.setTime(154876582);
+		g.setHeight(300.12547f);
+		g.setLatitude(52.23564f);
+		g.setLongitude(13.21546f);
 		q.setGeoData(g);
-		
-		//System.out.println(new String(tx.quadroidairplaneToBytes(q)));
-		
-		a.setPitch(1.0f);
-		a.setRoll(2.0f);
-		a.setYaw(3.0f);
-		
-		
-		RxDataDecoder decoder = new RxDataDecoder(null);
-		Attitude attitude = decoder.stringToAttitude(new String(tx.attitudeToBytes(a)));
-		System.out.println("Data: " + attitude.getPitch() + "  " 
-				+ attitude.getRoll() + "  " + attitude.getYaw());
-		
-		//System.out.println(new String(tx.attitudeToBytes(a)));
-		
-		c.setAngleReference(1.0f);
-		c.setSpeed(100);
-		
-		//System.out.println(new String(tx.courseToBytes(c)));
-		
+		a.setPitch(54f);
+		a.setRoll(65f);
+		a.setYaw(32f);
+		c.setAngleReference(45f);
+		c.setSpeed(125);
 		m.setAirplane(q);
 		m.setAttitude(a);
 		m.setCourse(c);
+		g2.setHeight(455);
+		g2.setLatitude(12.2145f);
+		g2.setLongitude(53.1547f);
 		
-		//System.out.println(new String(tx.metadataToBytes(m)));
+		BufferedImage img = null;
+		try {
+			img = ImageIO.read(new File("test.jpg"));
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
 		w.setMetaData(m);
-		w.setPictureoflandmark(null);
 		w.setPosition(g2);
+		w.setPictureoflandmark(img);
 		
+		String data = new String(tx.waypointToBytes(w));
+		System.out.println(data);
 		
-		//System.out.println( new String(tx.waypointToBytes(w)) );
+		Waypoint newpoint = decoder.stringToWaypoint(data);
+		
+		System.out.println( newpoint.toString() );
+	
+		
 	}
 
 	
