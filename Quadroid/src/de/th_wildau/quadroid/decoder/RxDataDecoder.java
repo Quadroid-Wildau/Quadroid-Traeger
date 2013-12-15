@@ -11,6 +11,8 @@ import org.apache.commons.codec.binary.Base64;
 import org.slf4j.Logger;
 import de.th_wildau.quadroid.QuadroidMain;
 import de.th_wildau.quadroid.enums.Marker;
+import de.th_wildau.quadroid.models.Attitude;
+import de.th_wildau.quadroid.models.GNSS;
 
 /**
  * this class decoded data to objects after receiving
@@ -33,6 +35,8 @@ public class RxDataDecoder implements Runnable
 	private Logger logger = QuadroidMain.logger;
 	/**offset for index of search*/
 	private static final byte OFFSET = 3;
+	/**marker for replacing substring*/
+	private static final String REPLACE = "°_^";
 	
 	/**
 	 * public constructor 
@@ -176,18 +180,120 @@ public class RxDataDecoder implements Runnable
 		return this.isdecoded;
 	}
 	
+	/**
+	 * this Function can be use to parse specific String-Data to 
+	 * Object
+	 * 
+	 * @param data - hand over the specific string contains
+	 * marker for identifier {@link Attitude}
+	 * 
+	 * @return get an object of {@link Attitude} or <b>null</b>
+	 * if parsing was unsuccessfully
+	 * 
+	 * */
+	public Attitude stringToAttitude(String data)
+	{
+		Attitude attitude = new Attitude();
+		
+		try
+		{
+			//get position of yaw data 
+			int ystart = (data.indexOf(Marker.YAWSTART.getMarker()) + OFFSET);
+			int yend = data.indexOf(Marker.YAWEND.getMarker());
+			//get position of roll data 
+			int rstart = (data.indexOf(Marker.ROLLSTART.getMarker()) + OFFSET);
+			int rend = data.indexOf(Marker.ROLLEND.getMarker());
+			//get position of pitch data 
+			int pstart = (data.indexOf(Marker.PITCHSTART.getMarker()) + OFFSET);
+			int pend = data.indexOf(Marker.PITCHEND.getMarker());
+			
+			//convert yaw data from string to float 
+			attitude.setYaw(Float.valueOf(data.substring(ystart, yend)));
+			//convert roll data from string to float
+			attitude.setRoll(Float.valueOf(data.substring(rstart, rend)));
+			//convert pitch data from string to float
+			attitude.setPitch(Float.valueOf(data.substring(pstart, pend)));
+			
+			logger.debug("Create Attitude");
+			return attitude;
+		}catch(Exception e)
+		{
+			logger.error("bytesToAttitude Exception: ", e);
+			return null;
+		}	
+	}
+	
+	/**
+	 * This function can be use to convert an specific Data-String to
+	 * GNSS object
+	 * 
+	 * @param data - hand over an specific string contains marker
+	 * for identifier GNSS data
+	 * 
+	 * @return get an object 
+	 * 
+	 * */
+	public GNSS stringToGNSS(String data)
+	{
+		GNSS geo = new GNSS();
+		
+		try
+		{
+			//get position of latitude data 
+			int lastart = (data.indexOf(Marker.LATITUDESTART.getMarker()) + OFFSET);
+			int laend = data.indexOf(Marker.LATITUDEEND.getMarker());
+			//get position of longitude data 
+			int lostart = (data.indexOf(Marker.LONGITUDESTART.getMarker()) + OFFSET);
+			int loend = data.indexOf(Marker.LONGITUDEEND.getMarker());
+			//get position of height data 
+			int hstart = (data.indexOf(Marker.HEIGHTSTART.getMarker()) + OFFSET);
+			int hend = data.indexOf(Marker.HEIGHTEND.getMarker());
+			
+			//convert latitude data from string to float 
+			geo.setLatitude(Float.valueOf(data.substring(lastart, laend)));
+			//convert longitude data from string to float
+			geo.setLongitude(Float.valueOf(data.substring(lostart, loend)));
+			//convert height data from string to float
+			geo.setHeight(Float.valueOf(data.substring(hstart, hend)));
+			
+			logger.debug("Create GNSS");
+			return geo;
+		}catch(Exception e)
+		{
+			logger.error("stringToGNSS Exception: ", e);
+			return null;
+		}
+	}
+	
 	
 	
 	@Override
 	public void run() 
 	{
+		if(this.rx == null)
+			return;//aboard 
+		
 		//decoding from base64
 		byte[] data = Base64.decodeBase64(rx);
+		
+		
+		String stringdata = new String(data);// for index and searching convert to string 
+		
+		if(stringdata.contains(Marker.METADATASTART.getMarker()))
+		{
+			int metadatastart = stringdata.indexOf(Marker.METADATASTART.getMarker() + OFFSET);
+			int metadataend = stringdata.indexOf(Marker.METADATAEND.getMarker());
+			
+			//Attitude attitude = this.stringToAttitude(stringdata.substring(metadatastart, metadataend));
+			
+			stringdata.replaceAll(Marker.METADATASTART.getMarker(), REPLACE);
+			stringdata.replaceAll(Marker.METADATAEND.getMarker(), REPLACE);
+		}
+		
+		
 		//prove CRC32 if an picture available
 		this.iscrcok = this.proveCRC(Marker.PICTURESTART.getMarker(), 
 									  Marker.PICTUREEND.getMarker(), data);
-		String stringdata = new String(data);// for index and searching convert to string 
-		
 		//go into, picture must be available and CRC32 OK!
 		if(this.iscrcok)
 		{
