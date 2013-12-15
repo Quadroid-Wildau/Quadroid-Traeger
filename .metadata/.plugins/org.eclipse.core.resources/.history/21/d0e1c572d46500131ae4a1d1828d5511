@@ -1,0 +1,10 @@
+package de.th_wildau.quadroid.models;
+
+import java.util.List;
+
+public class RxData 
+{
+
+	public List<Attitude> attitudelist = null;
+	
+}

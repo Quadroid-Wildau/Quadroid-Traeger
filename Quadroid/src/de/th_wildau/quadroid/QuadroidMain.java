@@ -1,20 +1,31 @@
 package de.th_wildau.quadroid;
 
 
+import java.awt.BorderLayout;
+import java.awt.Canvas;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import javax.imageio.ImageIO;
+import javax.swing.JFrame;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import de.th_wildau.quadroid.decoder.RxDataDecoder;
+
+import de.th_wildau.quadroid.connection.Connect;
 import de.th_wildau.quadroid.encoder.TxDataEncoder;
+import de.th_wildau.quadroid.enums.XBee;
+import de.th_wildau.quadroid.handler.ObserverHandler;
+import de.th_wildau.quadroid.handler.XBeeTransmitterHandler;
+import de.th_wildau.quadroid.interfaces.IRxListener;
 import de.th_wildau.quadroid.models.Attitude;
 import de.th_wildau.quadroid.models.Course;
 import de.th_wildau.quadroid.models.GNSS;
 import de.th_wildau.quadroid.models.MetaData;
-import de.th_wildau.quadroid.models.QuadroidAirplane;
+import de.th_wildau.quadroid.models.Airplane;
+import de.th_wildau.quadroid.models.RxData;
 import de.th_wildau.quadroid.models.Waypoint;
+import de.th_wildau.quadroid.models.XBeeRxTx;
 
 
 /**
@@ -26,22 +37,37 @@ import de.th_wildau.quadroid.models.Waypoint;
  * 
  * */
 
-public class QuadroidMain
+public class QuadroidMain implements IRxListener
 {
 	
 	
 	/**Logger for Logging with {@link org.slf4j.Logger}*/
 	public static Logger logger = null;
 	
+	private static long time = 0;
+	private Connect connection = null;
 
 
 	public static void main(String[] args) throws IOException
 	{
+		QuadroidMain main = new QuadroidMain();
 		logger = LoggerFactory.getLogger(QuadroidMain.class.getName());
 		QuadroidMain.logger.info("StartQuadroid");
 		
+		XBeeRxTx xbee = new XBeeRxTx();
+		xbee.setBaud(XBee.BAUD.getValue());
+		xbee.setDatabits(XBee.DATABITS.getValue());
+		xbee.setParity(XBee.PARITY.getValue());
+		xbee.setStopbits(XBee.STOPBITS.getValue());
+		xbee.setPort(XBee.PORT.getName());
+		xbee.setDevicename(XBee.DEVICENAME.getName());
+		
+		ObserverHandler.getReference().register(main);
+		
+		main.connection = Connect.getInstance(xbee);
+		XBeeTransmitterHandler tx = new XBeeTransmitterHandler(main.connection);
+		
 		TxDataEncoder encoder = new TxDataEncoder();
-		RxDataDecoder decoder = null;
 		
 		
 		BufferedImage img = ImageIO.read(new File("test.jpg"));
@@ -57,7 +83,7 @@ public class QuadroidMain
 		
 		Waypoint wp = new Waypoint();
 		MetaData md = new MetaData();
-		QuadroidAirplane qa = new QuadroidAirplane();
+		Airplane qa = new Airplane();
 		Course course = new Course();
 		Attitude attitude = new Attitude();
 		
@@ -97,9 +123,36 @@ public class QuadroidMain
 		data = encoder.appendBytes(data, encoder.geodataToBytes(g7));
 		data = encoder.appendBytes(data, encoder.geodataToBytes(g8));
 
-		decoder = new RxDataDecoder(data);
+		time = System.currentTimeMillis();
+		tx.transmit(data);
 		
 
+	}
+
+
+
+	@Override
+	public void rx(RxData data) 
+	{
+		this.connection.disconnect();
+		time = (System.currentTimeMillis() - time);
+		logger.info("Data Rx: " + time);
+		
+		System.out.println(data.getWaypointlist().get(0).toString());
+		
+		BufferedImage img = data.getWaypointlist().get(0).getPictureoflandmark();
+		if(img != null)
+		{
+		JFrame frame = new JFrame();
+		frame.setBounds(100, 100, img.getWidth(), img.getHeight());
+		Canvas canvas = new Canvas();
+		canvas.getGraphics().drawImage(img, 0, 0, img.getWidth(), img.getHeight(), null);
+		frame.getContentPane().add(canvas, BorderLayout.CENTER);
+		frame.setVisible(true);
+		
+		
+		
+		}
 	}
 
 	

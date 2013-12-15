@@ -1,0 +1,28 @@
+package de.th_wildau.quadroid.models;
+
+import java.util.List;
+
+/**
+ * this class contains all receiving models 
+ * in connection with IRxListener all observer will
+ * informed and obtain this model container
+ * 
+ * @author Thomas Rohde TM-12, trohde(at)th-wildau.de
+ * @version 1.0, 15.12.2013, (JDK 7)
+ * 
+ * */
+
+public class RxData 
+{
+
+	private List<Attitude> attitudelist = null;
+	private List<Course> courselist = null;
+	private List<GNSS> gnsslist = null;
+	private List<Landmark> landmarklist = null;
+	private List<MetaData> metadatalist = null;
+	private List<Waypoint> waypointlist = null;
+	private List<Airplane> airplanelist = null;
+	
+	
+	
+}

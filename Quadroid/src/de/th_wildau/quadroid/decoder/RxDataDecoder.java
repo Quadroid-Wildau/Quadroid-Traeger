@@ -11,12 +11,14 @@ import org.apache.commons.codec.binary.Base64;
 import org.slf4j.Logger;
 import de.th_wildau.quadroid.QuadroidMain;
 import de.th_wildau.quadroid.enums.Marker;
+import de.th_wildau.quadroid.handler.ObserverHandler;
 import de.th_wildau.quadroid.models.Attitude;
 import de.th_wildau.quadroid.models.Course;
 import de.th_wildau.quadroid.models.GNSS;
 import de.th_wildau.quadroid.models.Landmark;
 import de.th_wildau.quadroid.models.MetaData;
-import de.th_wildau.quadroid.models.QuadroidAirplane;
+import de.th_wildau.quadroid.models.Airplane;
+import de.th_wildau.quadroid.models.RxData;
 import de.th_wildau.quadroid.models.Waypoint;
 
 /**
@@ -34,13 +36,13 @@ public class RxDataDecoder implements Runnable
 	private byte[] rx = null;
 	/**state of decoding*/
 	private boolean isdecoded = false;
-	/**state of crc32*/
-	//private boolean iscrcok = false;
 	/**logger for logging with log4j*/
 	private Logger logger = QuadroidMain.logger;
 	/**offset for index of search*/
 	private static final byte OFFSET = 3;
-
+	/**reference of observer handler to inform all observer*/
+	private ObserverHandler observers = null;
+	
 	
 	/**
 	 * public constructor 
@@ -50,6 +52,23 @@ public class RxDataDecoder implements Runnable
 	 * */
 	public RxDataDecoder(byte[] data)
 	{
+		this.rx = data;
+		Thread decode = new Thread(this);
+		decode.start();// decode data from array
+	}
+	
+	/**
+	 * public constructor 
+	 * 
+	 * @param data - hand over received data as encoded base64 byte-array
+	 * 
+	 * @param observerhandler - hand over an observer handler if should be
+	 * inform all observer after decoding
+	 * 
+	 * */
+	public RxDataDecoder(byte[] data, ObserverHandler observerhandler)
+	{
+		this.observers = observerhandler;
 		this.rx = data;
 		Thread decode = new Thread(this);
 		decode.start();// decode data from array
@@ -117,7 +136,7 @@ public class RxDataDecoder implements Runnable
 	 * </ul>
 	 * 
 	 * */
-	public boolean proveCRC(String startmarker, String endmarker, byte[] data)
+	protected boolean proveCRC(String startmarker, String endmarker, byte[] data)
 	{
 		if(startmarker == null || endmarker == null || data == null)
 			return false;//aboard when parameters invalid
@@ -312,13 +331,13 @@ public class RxDataDecoder implements Runnable
 	 * @param data - hand over an specific String contains 
 	 * marker for identify QuadroidAirplane data
 	 * 
-	 * @return get an object of {@link QuadroidAirplane} or <b>null</b>
+	 * @return get an object of {@link Airplane} or <b>null</b>
 	 * if parsing was no successfully 
 	 * 
 	 * */
-	public QuadroidAirplane stringToAirplane(String data)
+	public Airplane stringToAirplane(String data)
 	{
-		QuadroidAirplane qa = new QuadroidAirplane();
+		Airplane qa = new Airplane();
 		
 		try
 		{	//position of battery data
@@ -564,6 +583,9 @@ public class RxDataDecoder implements Runnable
 		//String data = new String(this.rx);
 		StringBuilder data = new StringBuilder();
 		data.append(new String(this.rx));
+		
+		RxData container = new RxData();
+		
 	 do
 	  {	
 		
@@ -578,12 +600,10 @@ public class RxDataDecoder implements Runnable
 			String wpdata = data.substring(wps, wpe);
 			//pars string to waypoint data
 			Waypoint wp = this.stringToWaypoint(wpdata);
-			//append marker to remove important for determination
-			wpdata = (Marker.WAYPOINTSTART.getMarker() + 
-					wpdata + Marker.WAYPOINTEND.getMarker()); 
+			//put to container
+			container.getWaypointlist().add(wp);
 			//remove waypoint data from string (removing reduce dataset)
-			//data = (data.replaceFirst(wpdata, ""));
-			data.delete(wps - 3, wpe + 3);
+			data.delete(wps - OFFSET, wpe + OFFSET);//+OFFSET and -OFFSET for removing marker
 		}
 		//contains landmark data ?
 		if(data.substring(0).contains(Marker.LANDMARKSTART.getMarker()) && 
@@ -595,12 +615,10 @@ public class RxDataDecoder implements Runnable
 			String lmdata = data.substring(lms, lme);
 			//pars string to landmark
 			Landmark lm = this.stringToLandmark(lmdata);
-			//append marker to remove important for determination
-			lmdata = (Marker.LANDMARKSTART.getMarker() + 
-					lmdata + Marker.LANDMARKEND.getMarker());
+			//put to container
+			container.getLandmarklist().add(lm);
 			//remove landmark data from string (removing reduce dataset)
-			//data = (data.replaceFirst(lmdata, ""));
-			data.delete(lms - 3, lme + 3);
+			data.delete(lms - OFFSET, lme + OFFSET);
 		}
 		//contains metadata data?
 		if(data.substring(0).contains(Marker.METADATASTART.getMarker()) && 
@@ -613,12 +631,10 @@ public class RxDataDecoder implements Runnable
 			String mddata = data.substring(mds, mde);
 			//parse string to metadata 
 			MetaData md = this.stringToMetaData(mddata);
-			//append marker to remove important for determination
-			mddata = (Marker.METADATASTART.getMarker() + 
-					mddata + Marker.METADATAEND.getMarker());
+			//put to container
+			container.getMetadatalist().add(md);
 			//remove substring from string (removing reduce dataset)
-			//data = (data.replaceFirst(mddata, ""));
-			data.delete(mds - 3, mde + 3);
+			data.delete(mds - OFFSET, mde + OFFSET);//+ and - offset for removing marker
 		}
 		//contains QuadroidAirplane data?
 		if(data.substring(0).contains(Marker.AIRPLANESTART.getMarker()) && 
@@ -630,13 +646,11 @@ public class RxDataDecoder implements Runnable
 			//select substring with quadroidairplane data
 			String qadata = data.substring(qas, qae);
 			//parse string to quadroidairplane
-			QuadroidAirplane qa = this.stringToAirplane(qadata);
-			//append marker to remove important for determination
-			qadata = (Marker.AIRPLANESTART.getMarker() + 
-					qadata + Marker.AIRPLANEEND.getMarker());
+			Airplane qa = this.stringToAirplane(qadata);
+			//put to container
+			container.getAirplanelist().add(qa);
 			//remove substring from data string (removing reduce dataset)
-			//data = (data.replaceFirst(qadata, ""));
-			data.delete(qas - 3, qae + 3);
+			data.delete(qas - OFFSET, qae + OFFSET);
 		}
 		//contains GNSS data?
 		if(data.substring(0).contains(Marker.GNSSSTART.getMarker()) && 
@@ -648,12 +662,10 @@ public class RxDataDecoder implements Runnable
 			String gndata = data.substring(gns, gne);
 			//parse string to GNSS 
 			GNSS gnss = this.stringToGNSS(gndata);
-			//append marker to remove important for determination
-			gndata = (Marker.GNSSSTART.getMarker() + 
-					gndata + Marker.GNSSEND.getMarker());
+			//put to container
+			container.getGnsslist().add(gnss);
 			//remove substring from data string (removing reduce dataset)
-			//data = (data.replaceFirst(gndata, ""));
-			data.delete(gns - 3, gne + 3);
+			data.delete(gns - OFFSET, gne + OFFSET);//+3 and -3 for removing marker
 		}
 		//contains Course data?
 		if(data.substring(0).contains(Marker.COURSESTART.getMarker()) && 
@@ -666,12 +678,10 @@ public class RxDataDecoder implements Runnable
 			String codata = data.substring(cos, coe);
 			//parse string to course
 			Course course = this.stringToCourse(codata);
-			//append marker for remove important for determination
-			codata = (Marker.COURSESTART.getMarker() + 
-					codata + Marker.COURSEEND.getMarker());
+			//put to container
+			container.getCourselist().add(course);
 			//removsubstring from data string (removing reduce dataset)
-			//data = (data.replaceFirst(codata, ""));
-			data.delete(cos - 3, coe + 3);
+			data.delete(cos - OFFSET, coe + OFFSET);//+ and - OFFSET for removing marker
 			
 		}
 		//Contains Attitude Data?
@@ -683,19 +693,20 @@ public class RxDataDecoder implements Runnable
 			//select substring with attitude data
 			String atdata = data.substring(ats, ate);
 			Attitude attitude = this.stringToAttitude(atdata);
-			//append marker for remove important for determination
-			atdata = (Marker.ATTITUDESTART.getMarker() + 
-					atdata + Marker.ATTITUDEEND.getMarker());
+			//put to container
+			container.getAttitudelist().add(attitude);
 			//removing data from data string 
-			//data = (data.replaceFirst(atdata, ""));
-			data.delete(ats - 3, ate + 3);
+			data.delete(ats - OFFSET, ate + OFFSET); //+ and - OFFSET for removing marker
 		}
 		
 		
 	  }	while(data.length() > 6);
 	 
 	 	timetodecode = (System.currentTimeMillis() - timetodecode);
-	 	logger.info("decoded time: " + timetodecode);
+	 	logger.info("decoded time: " + timetodecode + " ms");
+	 	
+	 	this.observers.notification(container);
+	 	
 		this.isdecoded = true;
 	}
 	

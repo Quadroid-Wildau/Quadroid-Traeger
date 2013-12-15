@@ -1,0 +1,6 @@
+package de.th_wildau.quadroid.interfaces;
+
+public interface IRx 
+{
+	public void rx();
+}

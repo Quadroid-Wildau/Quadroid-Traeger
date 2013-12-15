@@ -1,0 +1,8 @@
+package de.th_wildau.quadroid.interfaces;
+
+import de.th_wildau.quadroid.models.RxData;
+
+public interface IRxListener 
+{
+	public void rx(RxData data);
+}

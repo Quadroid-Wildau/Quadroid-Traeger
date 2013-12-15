@@ -15,7 +15,7 @@ import de.th_wildau.quadroid.models.Course;
 import de.th_wildau.quadroid.models.GNSS;
 import de.th_wildau.quadroid.models.Landmark;
 import de.th_wildau.quadroid.models.MetaData;
-import de.th_wildau.quadroid.models.QuadroidAirplane;
+import de.th_wildau.quadroid.models.Airplane;
 import de.th_wildau.quadroid.models.Waypoint;
 
 
@@ -44,7 +44,7 @@ public class TxDataEncoder
 	 * @return return an byte-array contains data from given BufferedImage,
 	 * return <b>null</b> if parameters are <tt>null</tt> 
 	 * */
-	public byte[] imageToByteArray(BufferedImage bufferedimage, String type)
+	protected byte[] imageToByteArray(BufferedImage bufferedimage, String type)
 	{	//prove parameter
 		if(bufferedimage == null || type == null)
 			return null;
@@ -376,15 +376,15 @@ public class TxDataEncoder
 	}
 	
 	/**
-	 * this function convert data of type {@link QuadroidAirplane} to bytes
+	 * this function convert data of type {@link Airplane} to bytes
 	 * 
-	 * @param airplane - hand over an reference of type {@link QuadroidAirplane}
+	 * @param airplane - hand over an reference of type {@link Airplane}
 	 * 
 	 * @return an array of bytes when operation was successfully, return <b>null</b>
 	 * if input parameter are <tt>null</tt>
 	 * 
 	 * */
-	public byte[] quadroidairplaneToBytes(QuadroidAirplane airplane)
+	public byte[] quadroidairplaneToBytes(Airplane airplane)
 	{
 		if(airplane != null)
 		{	

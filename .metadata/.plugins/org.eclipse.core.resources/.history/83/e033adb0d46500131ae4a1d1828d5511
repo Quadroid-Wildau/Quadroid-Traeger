@@ -1,0 +1,16 @@
+package de.th_wildau.quadroid.models;
+
+import java.util.List;
+
+public class RxData 
+{
+
+	private List<Attitude> attitudelist = null;
+	private List<Course> attitudelist = null;
+	private List<GNSS> attitudelist = null;
+	private List<Landmark> attitudelist = null;
+	private List<MetaData> attitudelist = null;
+	private List<WayPoint> attitudelist = null;
+	private List<QuadroidAirplane> attitudelist = null;
+	
+}

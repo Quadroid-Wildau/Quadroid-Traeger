@@ -18,7 +18,7 @@ public class MetaData {
 	private Course course = null;
 	
 	/**save all relevant data to our quadroid*/
-	private QuadroidAirplane airplane = null;
+	private Airplane airplane = null;
 
 	/**
 	 * Getter Function
@@ -60,9 +60,9 @@ public class MetaData {
 	/**
 	 * Getter Function
 	 * 
-	 * @return information about quadroid airplane see {@link QuadroidAirplane} 
+	 * @return information about quadroid airplane see {@link Airplane} 
 	 */
-	public QuadroidAirplane getAirplane() {
+	public Airplane getAirplane() {
 		return airplane;
 	}
 
@@ -71,7 +71,7 @@ public class MetaData {
 	 * 
 	 * @param airplane - set net state of airplane
 	 */
-	public void setAirplane(QuadroidAirplane airplane) {
+	public void setAirplane(Airplane airplane) {
 		this.airplane = airplane;
 	}
 	

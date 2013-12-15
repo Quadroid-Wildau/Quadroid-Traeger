@@ -1,0 +1,35 @@
+package de.th_wildau.quadroid.handler;
+
+/**
+ * 
+ * 
+ * @author Thomas Rohde TM-12, trohde(at)th-wildau.de
+ * @version 1.0, 15.12.2013, (JDK 7)
+ * */
+
+public class ObserverHandler 
+{
+	/**reference of this class for singleton*/
+	private static ObserverHandler oh = null;
+	
+	/**no public constructor
+	 * for singleton*/
+	private ObserverHandler()
+	{
+		oh = this;
+	}
+	
+	public static ObserverHandler getReference()
+	{
+		if(oh == null)
+			new ObserverHandler();
+		return oh;
+	}
+	
+	
+	protected void notification()
+	{
+		
+	}
+	
+}

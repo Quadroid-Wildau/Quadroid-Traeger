@@ -48,7 +48,8 @@ public class XBeeReceiverHandler extends AbstractReceiver
 			}	
 				byte[] data = rxbase64buffer.toByteArray();
 				if(data.length >= 4)//only do if really data are available no endmarkers
-					new RxDataDecoder(data);//decoded data TODO: and notify all listener
+					new RxDataDecoder(data, ObserverHandler.getReference());//decoded data
+				
 				try 
 				{
 					rxbase64buffer.close();//close buffer

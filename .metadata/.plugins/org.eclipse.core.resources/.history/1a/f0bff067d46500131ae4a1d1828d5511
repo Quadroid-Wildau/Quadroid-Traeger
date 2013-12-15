@@ -1,0 +1,5 @@
+package de.th_wildau.quadroid.models;
+
+public class RxData {
+
+}

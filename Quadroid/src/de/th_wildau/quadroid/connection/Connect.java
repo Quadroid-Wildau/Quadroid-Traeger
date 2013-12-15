@@ -64,12 +64,12 @@ public final class Connect implements SerialPortEventListener
 	 * {@link IDevice} or {@link ConnectionContainer} device are null
 	 * 
 	 * */
-	public static Connect getInstance(IDevice device, ConnectionContainer cc)
+	public static Connect getInstance(IDevice device)
 	{
 		//if an reference null --> abort
-		if(cc == null || device == null)
+		if(device == null)
 			return null;
-		
+		ConnectionContainer cc = ConnectionContainer.getReference();
 		//if already connected return this reference
 		Connect connection = 
 				cc.getConnectionForPort(device.getPort());
