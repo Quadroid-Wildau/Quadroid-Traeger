@@ -1,5 +1,0 @@
-package de.th_wildau.quadroid.interfaces;
-
-public interface IDevice {
-
-}

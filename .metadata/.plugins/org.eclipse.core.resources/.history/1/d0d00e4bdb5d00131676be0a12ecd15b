@@ -1,6 +1,0 @@
-package de.th_wildau.quadroid.devices;
-
-public class FlightCtrl implements IDevice
-{
-
-}

@@ -18,6 +18,15 @@
 <fullyQualifiedTypeName name="java.util.zip.CRC32"/>
 <fullyQualifiedTypeName name="de.th_wildau.quadroid.QuadroidMain"/>
 <fullyQualifiedTypeName name="org.slf4j.Logger"/>
-<fullyQualifiedTypeName name="de.th_wildau.quadroid.models.MetaData"/>
 <fullyQualifiedTypeName name="de.th_wildau.quadroid.decoder.RxDataDecoder"/>
+<fullyQualifiedTypeName name="de.th_wildau.quadroid.models.GeoData"/>
+<fullyQualifiedTypeName name="java.lang.Deprecated"/>
+<fullyQualifiedTypeName name="de.th_wildau.quadroid.models.Attitude"/>
+<fullyQualifiedTypeName name="de.th_wildau.quadroid.models.Course"/>
+<fullyQualifiedTypeName name="de.th_wildau.quadroid.models.GNSS"/>
+<fullyQualifiedTypeName name="de.th_wildau.quadroid.models.Landmark"/>
+<fullyQualifiedTypeName name="de.th_wildau.quadroid.models.MetaData"/>
+<fullyQualifiedTypeName name="de.th_wildau.quadroid.models.QuadroidAirplane"/>
+<fullyQualifiedTypeName name="de.th_wildau.quadroid.models.Waypoint"/>
+<fullyQualifiedTypeName name="de.th_wildau.quadroid.encoder.TxDataEncoder"/>
 </qualifiedTypeNameHistroy>

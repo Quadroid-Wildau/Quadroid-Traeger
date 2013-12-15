@@ -3,6 +3,7 @@ package de.th_wildau.quadroid;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import de.th_wildau.quadroid.decoder.RxDataDecoder;
 import de.th_wildau.quadroid.encoder.TxDataEncoder;
 import de.th_wildau.quadroid.models.Attitude;
 import de.th_wildau.quadroid.models.Course;
@@ -49,43 +50,49 @@ public class QuadroidMain
 		g2.setLatitude(65);
 		g2.setLongitude(99);
 		
-		System.out.println(new String(tx.geodataToBytes(g2)));
+		//System.out.println(new String(tx.geodataToBytes(g2)));
 		
 		g.setHeight(50);
 		g.setLatitude(100);
 		g.setLongitude(200);
 		
-		System.out.println(new String(tx.geodataToBytes(g)));
+		//System.out.println(new String(tx.geodataToBytes(g)));
 		
 		q.setBatteryState((byte) 0x00);
 		q.setTime(1234567890);
 		q.setGeoData(g);
 		
-		System.out.println(new String(tx.quadroidairplaneToBytes(q)));
+		//System.out.println(new String(tx.quadroidairplaneToBytes(q)));
 		
 		a.setPitch(1.0f);
 		a.setRoll(2.0f);
 		a.setYaw(3.0f);
 		
-		System.out.println(new String(tx.attitudeToBytes(a)));
+		
+		RxDataDecoder decoder = new RxDataDecoder(null);
+		Attitude attitude = decoder.stringToAttitude(new String(tx.attitudeToBytes(a)));
+		System.out.println("Data: " + attitude.getPitch() + "  " 
+				+ attitude.getRoll() + "  " + attitude.getYaw());
+		
+		//System.out.println(new String(tx.attitudeToBytes(a)));
 		
 		c.setAngleReference(1.0f);
 		c.setSpeed(100);
 		
-		System.out.println(new String(tx.courseToBytes(c)));
+		//System.out.println(new String(tx.courseToBytes(c)));
 		
 		m.setAirplane(q);
 		m.setAttitude(a);
 		m.setCourse(c);
 		
-		System.out.println(new String(tx.metadataToBytes(m)));
+		//System.out.println(new String(tx.metadataToBytes(m)));
 		
 		w.setMetaData(m);
 		w.setPictureoflandmark(null);
 		w.setPosition(g2);
 		
 		
-		System.out.println( new String(tx.waypointToBytes(w)) );
+		//System.out.println( new String(tx.waypointToBytes(w)) );
 	}
 
 	
