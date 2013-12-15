@@ -1,24 +1,21 @@
 package de.th_wildau.quadroid;
 
+
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
-import java.util.zip.CRC32;
-
 import javax.imageio.ImageIO;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import de.th_wildau.quadroid.decoder.RxDataDecoder;
 import de.th_wildau.quadroid.encoder.TxDataEncoder;
-import de.th_wildau.quadroid.enums.Marker;
 import de.th_wildau.quadroid.models.Attitude;
 import de.th_wildau.quadroid.models.Course;
 import de.th_wildau.quadroid.models.GNSS;
-import de.th_wildau.quadroid.models.Landmark;
 import de.th_wildau.quadroid.models.MetaData;
 import de.th_wildau.quadroid.models.QuadroidAirplane;
 import de.th_wildau.quadroid.models.Waypoint;
+
 
 /**
  * 
@@ -38,76 +35,71 @@ public class QuadroidMain
 	
 
 
-	public static void main(String[] args)
+	public static void main(String[] args) throws IOException
 	{
 		logger = LoggerFactory.getLogger(QuadroidMain.class.getName());
-		
-		TxDataEncoder tx = new TxDataEncoder();
-		RxDataDecoder decoder = new RxDataDecoder(null);
 		QuadroidMain.logger.info("StartQuadroid");
 		
-		Attitude a = new Attitude();
-		Course c = new Course();
-		GNSS g = new GNSS();
-		Landmark l = new Landmark();
-		//MetaData m = new MetaData();
-		QuadroidAirplane q = new QuadroidAirplane();
-		Waypoint w = new Waypoint();
+		TxDataEncoder encoder = new TxDataEncoder();
+		RxDataDecoder decoder = null;
+		
+		
+		BufferedImage img = ImageIO.read(new File("test.jpg"));
+		
+		GNSS g1 = new GNSS();
 		GNSS g2 = new GNSS();
+		GNSS g3 = new GNSS();
+		GNSS g4 = new GNSS();
+		GNSS g5 = new GNSS();
+		GNSS g6 = new GNSS();
+		GNSS g7 = new GNSS();
+		GNSS g8 = new GNSS();
 		
-		q.setBatteryState((byte) 78);
-		q.setTime(154876582);
-		g.setHeight(300.12547f);
-		g.setLatitude(52.23564f);
-		g.setLongitude(13.21546f);
-		q.setGeoData(g);
-		a.setPitch(54f);
-		a.setRoll(65f);
-		a.setYaw(32f);
-		c.setAngleReference(45f);
-		c.setSpeed(125);
-		//m.setAirplane(q);
-		//m.setAttitude(a);
-		//m.setCourse(c);
-		g2.setHeight(455);
-		g2.setLatitude(12.2145f);
-		g2.setLongitude(53.1547f);
-		
-		BufferedImage img = null;
-		try {
-			img = ImageIO.read(new File("test.jpg"));
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
-		//w.setMetaData(null);
-		//w.setPosition(null);
-		w.setPictureoflandmark(img);
-		
-		String data = new String(tx.waypointToBytes(w));
-		System.out.println(data);
-		
-		Waypoint newpoint = decoder.stringToWaypoint(data);
-		
-		int bild = (data.indexOf(Marker.PICTURESTART.getMarker()) + 3);
-		int bildend = data.indexOf(Marker.PICTUREEND.getMarker());
-		
-		int crcstart = (data.indexOf(Marker.CRCSTART.getMarker()) + 3);
-		int crcend = data.indexOf(Marker.CRCEND.getMarker());
-		
-		CRC32 crc = new CRC32();
-		byte[] da = tx.imageToByteArray(img, Marker.IMAGETYPE.getMarker());
-		
-		crc.update(da );
-		System.out.println( "Berechnetes CRC " + crc.getValue() );
-		System.out.println( "Enthalten CRC " + data.substring(crcstart, crcend) );
+		Waypoint wp = new Waypoint();
+		MetaData md = new MetaData();
+		QuadroidAirplane qa = new QuadroidAirplane();
+		Course course = new Course();
+		Attitude attitude = new Attitude();
 		
 		
-		System.out.println(newpoint);
-		System.out.println(newpoint + "   " +  newpoint.toString() );
-	
 		
+		g1.setLatitude(52.1234f);
+		g1.setLongitude(13.1431f);
+		g1.setHeight(500.00f);
+		
+		g2.setHeight(45.003f);
+		g2.setLatitude(53.1114f);
+		g2.setLongitude(14.663f);
+		
+		attitude.setPitch(100.01f);
+		attitude.setRoll(245.4f);
+		attitude.setYaw(36.47f);
+		
+		course.setSpeed(45.123f);
+		course.setAngleReference(56.00f);
+		
+		qa.setBatteryState((byte) 50);
+		qa.setTime(100254);
+		qa.setGeoData(g1);
+		
+		md.setAirplane(qa);
+		md.setAttitude(attitude);
+		md.setCourse(course);
+		
+		wp.setMetaData(md);
+		wp.setPictureoflandmark(img);
+		wp.setPosition(g2);
+		byte[] data = encoder.appendBytes(encoder.geodataToBytes(g4), encoder.waypointToBytes(wp));
+		
+		data = encoder.appendBytes(data, encoder.geodataToBytes(g3));
+		data = encoder.appendBytes(data, encoder.geodataToBytes(g5));
+		data = encoder.appendBytes(data, encoder.geodataToBytes(g6));
+		data = encoder.appendBytes(data, encoder.geodataToBytes(g7));
+		data = encoder.appendBytes(data, encoder.geodataToBytes(g8));
+
+		decoder = new RxDataDecoder(data);
+		
+
 	}
 
 	

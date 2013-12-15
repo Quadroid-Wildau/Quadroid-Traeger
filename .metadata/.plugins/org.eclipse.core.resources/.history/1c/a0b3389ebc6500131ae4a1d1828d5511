@@ -1,0 +1,66 @@
+package de.th_wildau.quadroid;
+
+
+import javax.imageio.ImageIO;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import de.th_wildau.quadroid.decoder.RxDataDecoder;
+import de.th_wildau.quadroid.encoder.TxDataEncoder;
+import de.th_wildau.quadroid.models.Attitude;
+import de.th_wildau.quadroid.models.Course;
+import de.th_wildau.quadroid.models.GNSS;
+import de.th_wildau.quadroid.models.MetaData;
+import de.th_wildau.quadroid.models.QuadroidAirplane;
+import de.th_wildau.quadroid.models.Waypoint;
+
+
+/**
+ * 
+ * Main Method for quadroid project
+ * 
+ * @author Thomas Rohde, trohde@th-wildau.de
+ * @version 1.0 28.11.2013 (JDK 7) 
+ * 
+ * */
+
+public class QuadroidMain
+{
+	
+	
+	/**Logger for Logging with {@link org.slf4j.Logger}*/
+	public static Logger logger = null;
+	
+
+
+	public static void main(String[] args)
+	{
+		logger = LoggerFactory.getLogger(QuadroidMain.class.getName());
+		QuadroidMain.logger.info("StartQuadroid");
+		
+		TxDataEncoder encoder = new TxDataEncoder();
+		RxDataDecoder decoder = new RxDataDecoder(null);
+		
+		
+		BufferedImage img = ImageIO.read(new File());
+		
+		GNSS g1 = new GNSS();
+		GNSS g2 = new GNSS();
+		GNSS g3 = new GNSS();
+		GNSS g4 = new GNSS();
+		GNSS g5 = new GNSS();
+		GNSS g6 = new GNSS();
+		GNSS g7 = new GNSS();
+		GNSS g8 = new GNSS();
+		
+		Waypoint wp = new Waypoint();
+		MetaData md = new MetaData();
+		QuadroidAirplane qa = new QuadroidAirplane();
+		Course course = new Course();
+		Attitude attitude = new Attitude();
+		
+		
+	}
+
+	
+}

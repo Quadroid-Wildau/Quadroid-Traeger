@@ -1,6 +1,5 @@
 package de.th_wildau.quadroid.handler;
 
-import org.apache.commons.codec.binary.Base64;
 import org.slf4j.Logger;
 import de.th_wildau.quadroid.QuadroidMain;
 import de.th_wildau.quadroid.connection.Connect;
@@ -45,14 +44,11 @@ public class XBeeTransmitterHandler extends AbstractTransmitter
 	{
 		if(msg == null)
 			return;
-		//encode data
-		byte[] tx = Base64.encodeBase64(msg);
-		logger.debug("EncodeBase64");
 		
 	  try
 	  {	
-		super.getConnection().getOutputStream().write(tx);//send data
-		super.getConnection().getOutputStream().write("<<<".getBytes());//send end marker
+		super.getConnection().getOutputStream().write(msg);//send data
+		super.getConnection().getOutputStream().write("|||".getBytes());//send end marker
 		super.getConnection().getOutputStream().flush();//flush pipe
 		logger.debug("Transmit Data");
 	  }catch(Exception e)

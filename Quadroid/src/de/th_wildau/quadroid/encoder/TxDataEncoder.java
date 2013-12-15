@@ -5,8 +5,8 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.nio.ByteBuffer;
 import java.util.zip.CRC32;
-
 import javax.imageio.ImageIO;
+import org.apache.commons.codec.binary.Base64;
 import org.slf4j.Logger;
 import de.th_wildau.quadroid.QuadroidMain;
 import de.th_wildau.quadroid.enums.Marker;
@@ -76,7 +76,7 @@ public class TxDataEncoder
 			}
 		}	
 		
-		return bos.toByteArray();
+		return Base64.encodeBase64(bos.toByteArray());
 	}
 	/**
 	 * this function convert data of type {@link Attitude} to bytes
@@ -505,6 +505,50 @@ public class TxDataEncoder
 			return buffer.toByteArray();//return data as bytes
 		}
 		
+		return null;
+	}
+	
+	/**
+	 * This function can be use to combine two different byte arrays
+	 * 
+	 * @param field - hand over an main array for appending data from other array
+	 * hand over <b>null</b> return value are <b>null</b>
+	 * 
+	 * @param append - hand over an second array to append at the first
+	 * hand over <b>null</b> return <b>null</b>
+	 * 
+	 * @return get an array contains data at first array and additional 
+	 * data from second array return <b>null</b> if appending was unsuccessfully
+	 * or input was <b>null</b>
+	 * */
+	public byte[] appendBytes(byte[] field, byte[] append)
+	{
+		ByteArrayOutputStream baos = new ByteArrayOutputStream();
+		
+		try
+		{
+			baos.write(field);//write data
+			baos.write(append);//append data
+			
+		}catch(Exception e)
+		{
+			logger.error("appendBytes - Exception", e);
+		}
+		
+		finally
+		{
+			try 
+			{
+				baos.close();
+				//return all data operation successfully 
+				return baos.toByteArray();
+			} catch (IOException e) 
+			{
+				logger.error("Cant close baos",e);
+			}
+		}
+		
+		//abort unsuccessfully 
 		return null;
 	}
 	

@@ -2,6 +2,8 @@ package de.th_wildau.quadroid.enums;
 
 /**
  * This enum contains marker for transmissions
+ * 
+ * 
  * <ul>
  * <li>Picture bytes</li>
  * <li>GNSS position</li>
@@ -25,10 +27,10 @@ package de.th_wildau.quadroid.enums;
 
 public enum Marker 
 {
-	/**marker ||> for picture values*/
-	PICTURESTART("||>"), 
-	/**marker < || for picture values*/
-	PICTUREEND("<||"),
+	/**marker < 0> for picture values*/
+	PICTURESTART("<0>"), 
+	/**marker < /0 for picture values*/
+	PICTUREEND("</0"),
 	/**marker ##> for GNSS data*/
 	GNSSSTART("##>"), 
 	/**marker < ## for GNSS data*/

@@ -35,13 +35,12 @@ public class RxDataDecoder implements Runnable
 	/**state of decoding*/
 	private boolean isdecoded = false;
 	/**state of crc32*/
-	private boolean iscrcok = false;
+	//private boolean iscrcok = false;
 	/**logger for logging with log4j*/
 	private Logger logger = QuadroidMain.logger;
 	/**offset for index of search*/
 	private static final byte OFFSET = 3;
-	/**marker for replacing substring*/
-	private static final String REPLACE = "°_^";
+
 	
 	/**
 	 * public constructor 
@@ -65,12 +64,14 @@ public class RxDataDecoder implements Runnable
 	 * if <tt>imagedata null</tt> return <b>null</b> 
 	 * 
 	 * */
-	public BufferedImage byteToBufferedImage(byte[] imagedata)
+	protected BufferedImage byteToBufferedImage(byte[] imagedata)
 	{
 		if(imagedata == null)
 			return null;
 		//hand over data to stream
-		ByteArrayInputStream bais = new ByteArrayInputStream(imagedata);
+		//decoded from base64 
+		byte[] decodedbase64img = Base64.decodeBase64(imagedata);
+		ByteArrayInputStream bais = new ByteArrayInputStream(decodedbase64img);
 		BufferedImage bufferedimage = null;
 		try 
 		{	//create new BufferedImage object with given data from Stream
@@ -97,7 +98,7 @@ public class RxDataDecoder implements Runnable
 	}
 
 	/**
-	 * prove contained crc32 value
+	 * prove contain crc32 value
 	 * 
 	 * @param startmarker - 
 	 * hand over startmarker for begin of computing crc
@@ -135,7 +136,6 @@ public class RxDataDecoder implements Runnable
 			crcdata.contains(Marker.CRCSTART.getMarker()) && 
 			crcdata.contains(Marker.CRCEND.getMarker()))
 		{	
-			logger.info("all marker available!");
 			//get index position of marker for select substring, offset is needed to
 			//get right position for start-marker
 			int begindata = (crcdata.indexOf(startmarker) + OFFSET);
@@ -151,7 +151,6 @@ public class RxDataDecoder implements Runnable
 			try
 			{//try to cast to long 
 				crcvalue = Long.valueOf(crcval);
-				logger.debug("Cast CRCVal to Long...");
 			}catch(Exception e)
 			{
 				logger.error("Cast Exception Long.valueOf(crcval): ", e);
@@ -159,7 +158,6 @@ public class RxDataDecoder implements Runnable
 			
 			CRC32 crc32 = new CRC32();
 			crc32.update(computdata);//comput crc value
-			logger.info("Contain CRC " + crcvalue + " Computed CRC " + crc32.getValue());
 			if(crc32.getValue() == crcvalue)//CRC32 equals?
 			{
 				logger.debug("Equals CRC32");
@@ -188,10 +186,10 @@ public class RxDataDecoder implements Runnable
 	}
 	
 	/**
-	 * this Function can be use to parse specific String-Data to 
+	 * this Function can be use to parse specific Byte-Data to 
 	 * Object
 	 * 
-	 * @param data - hand over the specific string contains
+	 * @param data - hand over the specific String contains
 	 * marker for identifier {@link Attitude}
 	 * 
 	 * @return get an object of {@link Attitude} or <b>null</b>
@@ -201,7 +199,6 @@ public class RxDataDecoder implements Runnable
 	public Attitude stringToAttitude(String data)
 	{
 		Attitude attitude = new Attitude();
-		
 		try
 		{
 			//get position of yaw data 
@@ -231,19 +228,18 @@ public class RxDataDecoder implements Runnable
 	}
 	
 	/**
-	 * This function can be use to convert an specific Data-String to
+	 * This function can be use to convert an specific String to
 	 * GNSS object
 	 * 
-	 * @param data - hand over an specific string contains marker
+	 * @param data - hand over an specific String contains marker
 	 * for identifier GNSS data
 	 * 
-	 * @return get an object 
+	 * @return get an object of type {@link GNSS}
 	 * 
 	 * */
 	public GNSS stringToGNSS(String data)
 	{
 		GNSS geo = new GNSS();
-		
 		try
 		{
 			//get position of latitude data 
@@ -273,10 +269,10 @@ public class RxDataDecoder implements Runnable
 	}
 	
 	/**
-	 * This function can be use to convert an specific Data-String
+	 * This function can be use to convert an specific String
 	 * to Course object
 	 * 
-	 * @param data - hand over an specific string contains
+	 * @param data - hand over an specific String contains
 	 * marker for identifier {@link Course} data see {@link Marker}
 	 * 
 	 * @return get an object of {@link Course} or <b>null</b> if 
@@ -284,9 +280,8 @@ public class RxDataDecoder implements Runnable
 	 * 
 	 * */
 	public Course stringToCourse(String data)
-	{
+	{	
 		Course course = new Course();
-		
 		try
 		{
 			//get position of angle data 
@@ -311,10 +306,10 @@ public class RxDataDecoder implements Runnable
 	}
 	
 	/**
-	 * this function can be use to parse an specific Data-String
+	 * this function can be use to parse an specific String
 	 * to QuadroidAirplane
 	 * 
-	 * @param data - hand over an specific Data-String contains 
+	 * @param data - hand over an specific String contains 
 	 * marker for identify QuadroidAirplane data
 	 * 
 	 * @return get an object of {@link QuadroidAirplane} or <b>null</b>
@@ -341,7 +336,9 @@ public class RxDataDecoder implements Runnable
 				int gstart = (data.indexOf(Marker.GNSSSTART.getMarker()) + OFFSET);
 				int gend = data.indexOf(Marker.GNSSEND.getMarker());
 				//parse an set data from string to GNSS
-				qa.setGeoData(this.stringToGNSS(data.substring(gstart, gend)));
+				qa.setGeoData(
+						this.stringToGNSS(
+								data.substring(gstart, gend)));
 			}	
 			
 			//parse and set data from string to byte
@@ -359,10 +356,10 @@ public class RxDataDecoder implements Runnable
 	}
 
 	/**
-	 * This function can be use to parse an specific Data-String to
+	 * This function can be use to parse an specific String to
 	 * Waypoint model
 	 * 
-	 * @param data - hand over an specific Data-String contains 
+	 * @param data - hand over an specific String contains 
 	 * marker to identify {@link Waypoint} data see {@link Marker}
 	 * 
 	 * @return get an object of {@link Waypoint} or <b>null</b> if
@@ -378,13 +375,13 @@ public class RxDataDecoder implements Runnable
 			if(data.contains(Marker.PICTURESTART.getMarker()) &&
 					data.contains(Marker.PICTUREEND.getMarker()))
 			{
-				logger.info("Image contains prove CRC ...");
+				logger.info("Image found prove crc ...");
 				//prove CRC32 Data, if check successfully go in
 				if(this.proveCRC(Marker.PICTURESTART.getMarker(), 
 						Marker.PICTUREEND.getMarker(), 
 						data.getBytes()))
 				{
-					logger.info("CRC OK convert Image");
+					logger.info("convert image..");
 					//position of image data
 					int pstart = (data.indexOf(Marker.PICTURESTART.getMarker()) + OFFSET);
 					int pend = data.indexOf(Marker.PICTUREEND.getMarker());
@@ -395,7 +392,7 @@ public class RxDataDecoder implements Runnable
 				
 				}else
 				{
-					logger.info("CRC fail no convert Image");
+					logger.info("CRC fail unvalid image");
 				}
 
 			}
@@ -432,10 +429,10 @@ public class RxDataDecoder implements Runnable
 	}
 	
 	/**
-	 * this function can be use to parse an specific Data-String to 
+	 * this function can be use to parse an specific String to 
 	 * MetaData object
 	 * 
-	 * @param data - hand over an specific Data-String contains
+	 * @param data - hand over an specific String contains
 	 * marker for identify {@link MetaData} data see {@link Marker}
 	 * 
 	 * @return get an object of {@link MetaData} or <b>null</b> if
@@ -445,7 +442,6 @@ public class RxDataDecoder implements Runnable
 	public MetaData stringToMetaData(String data)
 	{
 		MetaData md = new MetaData();
-		
 		try
 		{
 			//is airplane data available?
@@ -495,10 +491,10 @@ public class RxDataDecoder implements Runnable
 	}
 	
 	/**
-	 * this function can be use to parse an specific Data-String to
+	 * this function can be use to parse an specific String to
 	 * Landmark object
 	 * 
-	 * @param data - hand over an specific Data-String contains
+	 * @param data - hand over an specific String contains
 	 * marker for identify {@link Landmark} data see {@link Marker}
 	 * 
 	 * @return get an object of {@link Landmark} or <b>null</b> if
@@ -508,7 +504,7 @@ public class RxDataDecoder implements Runnable
 	public Landmark stringToLandmark(String data)
 	{
 		Landmark lm = new Landmark();
-		
+
 		try
 		{
 			//is picture available?
@@ -560,41 +556,146 @@ public class RxDataDecoder implements Runnable
 	@Override
 	public void run() 
 	{
+		logger.info("start decoding...");
+		long timetodecode = System.currentTimeMillis();
+		
 		if(this.rx == null)
-			return;//aboard 
+			return;//aboard
+		//String data = new String(this.rx);
+		StringBuilder data = new StringBuilder();
+		data.append(new String(this.rx));
+	 do
+	  {	
 		
-		//decoding from base64
-		byte[] data = Base64.decodeBase64(rx);
-		
-		
-		String stringdata = new String(data);// for index and searching convert to string 
-		
-		if(stringdata.contains(Marker.METADATASTART.getMarker()))
+		//contains waypoint data?
+		if(data.substring(0).contains(Marker.WAYPOINTSTART.getMarker()) && 
+			data.substring(0).contains(Marker.WAYPOINTEND.getMarker()))
 		{
-			int metadatastart = stringdata.indexOf(Marker.METADATASTART.getMarker() + OFFSET);
-			int metadataend = stringdata.indexOf(Marker.METADATAEND.getMarker());
+			//position of waypoint data
+			int wps = (data.indexOf(Marker.WAYPOINTSTART.getMarker()) + OFFSET);
+			int wpe = data.indexOf(Marker.WAYPOINTEND.getMarker());
+			//select substring with waypoint data
+			String wpdata = data.substring(wps, wpe);
+			//pars string to waypoint data
+			Waypoint wp = this.stringToWaypoint(wpdata);
+			//append marker to remove important for determination
+			wpdata = (Marker.WAYPOINTSTART.getMarker() + 
+					wpdata + Marker.WAYPOINTEND.getMarker()); 
+			//remove waypoint data from string (removing reduce dataset)
+			//data = (data.replaceFirst(wpdata, ""));
+			data.delete(wps - 3, wpe + 3);
+		}
+		//contains landmark data ?
+		if(data.substring(0).contains(Marker.LANDMARKSTART.getMarker()) && 
+				data.substring(0).contains(Marker.LANDMARKEND.getMarker()))
+		{	//position of landmark data 
+			int lms = (data.indexOf(Marker.LANDMARKSTART.getMarker()) + OFFSET);
+			int lme = data.indexOf(Marker.LANDMARKEND.getMarker());
+			//select substring with landmark data
+			String lmdata = data.substring(lms, lme);
+			//pars string to landmark
+			Landmark lm = this.stringToLandmark(lmdata);
+			//append marker to remove important for determination
+			lmdata = (Marker.LANDMARKSTART.getMarker() + 
+					lmdata + Marker.LANDMARKEND.getMarker());
+			//remove landmark data from string (removing reduce dataset)
+			//data = (data.replaceFirst(lmdata, ""));
+			data.delete(lms - 3, lme + 3);
+		}
+		//contains metadata data?
+		if(data.substring(0).contains(Marker.METADATASTART.getMarker()) && 
+				data.substring(0).contains(Marker.METADATAEND.getMarker()))
+		{
+			//position of metadata data
+			int mds = (data.indexOf(Marker.METADATASTART.getMarker()) + OFFSET);
+			int mde = data.indexOf(Marker.METADATAEND.getMarker());
+			//select substring with metadata data
+			String mddata = data.substring(mds, mde);
+			//parse string to metadata 
+			MetaData md = this.stringToMetaData(mddata);
+			//append marker to remove important for determination
+			mddata = (Marker.METADATASTART.getMarker() + 
+					mddata + Marker.METADATAEND.getMarker());
+			//remove substring from string (removing reduce dataset)
+			//data = (data.replaceFirst(mddata, ""));
+			data.delete(mds - 3, mde + 3);
+		}
+		//contains QuadroidAirplane data?
+		if(data.substring(0).contains(Marker.AIRPLANESTART.getMarker()) && 
+				data.substring(0).contains(Marker.AIRPLANEEND.getMarker()))
+		{
+			//position of quadroidairplane data
+			int qas = (data.indexOf(Marker.AIRPLANESTART.getMarker()) + OFFSET);
+			int qae = data.indexOf(Marker.AIRPLANEEND.getMarker());
+			//select substring with quadroidairplane data
+			String qadata = data.substring(qas, qae);
+			//parse string to quadroidairplane
+			QuadroidAirplane qa = this.stringToAirplane(qadata);
+			//append marker to remove important for determination
+			qadata = (Marker.AIRPLANESTART.getMarker() + 
+					qadata + Marker.AIRPLANEEND.getMarker());
+			//remove substring from data string (removing reduce dataset)
+			//data = (data.replaceFirst(qadata, ""));
+			data.delete(qas - 3, qae + 3);
+		}
+		//contains GNSS data?
+		if(data.substring(0).contains(Marker.GNSSSTART.getMarker()) && 
+				data.substring(0).contains(Marker.GNSSEND.getMarker()))
+		{	//position of GNSS data
+			int gns = (data.indexOf(Marker.GNSSSTART.getMarker()) + OFFSET);
+			int gne = data.indexOf(Marker.GNSSEND.getMarker());
+			//select substring with GNSS data
+			String gndata = data.substring(gns, gne);
+			//parse string to GNSS 
+			GNSS gnss = this.stringToGNSS(gndata);
+			//append marker to remove important for determination
+			gndata = (Marker.GNSSSTART.getMarker() + 
+					gndata + Marker.GNSSEND.getMarker());
+			//remove substring from data string (removing reduce dataset)
+			//data = (data.replaceFirst(gndata, ""));
+			data.delete(gns - 3, gne + 3);
+		}
+		//contains Course data?
+		if(data.substring(0).contains(Marker.COURSESTART.getMarker()) && 
+				data.substring(0).contains(Marker.COURSEEND.getMarker()))
+		{
+			//startposition of course data
+			int cos = (data.indexOf(Marker.COURSESTART.getMarker()) + OFFSET);
+			int coe = data.indexOf(Marker.COURSEEND.getMarker());
+			//select substring with data for course
+			String codata = data.substring(cos, coe);
+			//parse string to course
+			Course course = this.stringToCourse(codata);
+			//append marker for remove important for determination
+			codata = (Marker.COURSESTART.getMarker() + 
+					codata + Marker.COURSEEND.getMarker());
+			//removsubstring from data string (removing reduce dataset)
+			//data = (data.replaceFirst(codata, ""));
+			data.delete(cos - 3, coe + 3);
 			
-			//Attitude attitude = this.stringToAttitude(stringdata.substring(metadatastart, metadataend));
-			
-			stringdata.replaceAll(Marker.METADATASTART.getMarker(), REPLACE);
-			stringdata.replaceAll(Marker.METADATAEND.getMarker(), REPLACE);
+		}
+		//Contains Attitude Data?
+		if(data.substring(0).contains(Marker.ATTITUDESTART.getMarker()) && 
+				data.substring(0).contains(Marker.ATTITUDEEND.getMarker()))
+		{//position of Attitude data
+			int ats = (data.indexOf(Marker.ATTITUDESTART.getMarker()) + OFFSET);
+			int ate = data.indexOf(Marker.ATTITUDEEND.getMarker());
+			//select substring with attitude data
+			String atdata = data.substring(ats, ate);
+			Attitude attitude = this.stringToAttitude(atdata);
+			//append marker for remove important for determination
+			atdata = (Marker.ATTITUDESTART.getMarker() + 
+					atdata + Marker.ATTITUDEEND.getMarker());
+			//removing data from data string 
+			//data = (data.replaceFirst(atdata, ""));
+			data.delete(ats - 3, ate + 3);
 		}
 		
 		
-		//prove CRC32 if an picture available
-		this.iscrcok = this.proveCRC(Marker.PICTURESTART.getMarker(), 
-									  Marker.PICTUREEND.getMarker(), data);
-		//go into, picture must be available and CRC32 OK!
-		if(this.iscrcok)
-		{
-			int startpicture = (stringdata.indexOf(Marker.PICTURESTART.getMarker()) + OFFSET); // get start index of image
-			int endpicture = stringdata.indexOf(Marker.PICTUREEND.getMarker()); // get end index of image
-			// select only image data and convert to bytes
-			BufferedImage imgdata = this.byteToBufferedImage(stringdata.substring(startpicture, endpicture).getBytes());
-		}
-		
-		//TODO: decoding other data here
-		
+	  }	while(data.length() > 6);
+	 
+	 	timetodecode = (System.currentTimeMillis() - timetodecode);
+	 	logger.info("decoded time: " + timetodecode);
 		this.isdecoded = true;
 	}
 	

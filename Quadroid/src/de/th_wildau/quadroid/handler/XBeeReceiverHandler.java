@@ -38,7 +38,7 @@ public class XBeeReceiverHandler extends AbstractReceiver
 				while((rx = istream.read()) != -1)
 				{
 					byte b = (byte)rx;
-					if((char)b == '<')//end marker 
+					if((char)b == '|')//end marker 
 						break;
 					rxbase64buffer.write(b);//save data into bytestream
 				}
