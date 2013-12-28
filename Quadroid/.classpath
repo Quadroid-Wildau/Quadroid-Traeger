@@ -10,5 +10,6 @@
 	<classpathentry kind="lib" path="lib/slf4j-api-1.7.2.jar"/>
 	<classpathentry kind="lib" path="lib/slf4j-simple-1.7.2.jar"/>
 	<classpathentry kind="lib" path="lib/commons-codec-1.8.jar"/>
+	<classpathentry kind="lib" path="D:/Data/Dropbox/Master/Semester 3/TP/Software/OpenCV/opencv-245.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

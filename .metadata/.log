@@ -2618,3 +2618,349 @@ Java Model Exception: Java Model Status [Timed out while retrieving the attached
 	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:54)
 !SUBENTRY 1 org.eclipse.jdt.core 4 1012 2013-12-16 00:21:52.733
 !MESSAGE Timed out while retrieving the attached javadoc for jar [in jar.class [in sun.tools.jar.resources [in /opt/jdk1.7.0_25/jre/lib/rt.jar]]] 
+!SESSION 2013-12-24 13:06:56.878 -----------------------------------------------
+eclipse.buildId=M20090211-1700
+java.version=1.7.0_45
+java.vendor=Oracle Corporation
+BootLoader constants: OS=win32, ARCH=x86, WS=win32, NL=de_DE
+Command-line arguments:  -os win32 -ws win32 -arch x86
+
+!ENTRY org.eclipse.ui 4 0 2013-12-24 13:07:13.088
+!MESSAGE Problems occurred restoring workbench.
+!SUBENTRY 1 org.eclipse.ui 0 0 2013-12-24 13:07:13.088
+!MESSAGE 
+!SUBENTRY 1 org.eclipse.core.runtime 0 0 2013-12-24 13:07:13.088
+!MESSAGE OK
+!SUBENTRY 1 org.eclipse.core.runtime 0 0 2013-12-24 13:07:13.088
+!MESSAGE OK
+!SUBENTRY 1 org.eclipse.core.runtime 0 0 2013-12-24 13:07:13.088
+!MESSAGE OK
+!SUBENTRY 1 org.eclipse.ui 4 0 2013-12-24 13:07:13.088
+!MESSAGE Unable to restore perspective: Workspace - Java.
+!SUBENTRY 2 org.eclipse.ui 0 0 2013-12-24 13:07:13.088
+!MESSAGE Problems occurred restoring perspective.
+!SUBENTRY 3 org.eclipse.ui 0 0 2013-12-24 13:07:13.088
+!MESSAGE 
+!SUBENTRY 2 org.eclipse.ui 0 0 2013-12-24 13:07:13.088
+!MESSAGE 
+!SUBENTRY 2 org.eclipse.ui 0 0 2013-12-24 13:07:13.088
+!MESSAGE 
+!SUBENTRY 2 org.eclipse.ui 0 0 2013-12-24 13:07:13.088
+!MESSAGE 
+!SUBENTRY 2 org.eclipse.ui 0 0 2013-12-24 13:07:13.089
+!MESSAGE 
+!SUBENTRY 2 org.eclipse.ui 4 4 2013-12-24 13:07:13.089
+!MESSAGE Could not create view: org.eclipse.dltk.debug.ui.ScriptDisplayView
+!STACK 1
+org.eclipse.ui.PartInitException: Could not create view: org.eclipse.dltk.debug.ui.ScriptDisplayView
+	at org.eclipse.ui.internal.ViewFactory.createView(ViewFactory.java:157)
+	at org.eclipse.ui.internal.Perspective.createReferences(Perspective.java:1177)
+	at org.eclipse.ui.internal.Perspective.restoreState(Perspective.java:1147)
+	at org.eclipse.ui.internal.WorkbenchPage$16.runWithException(WorkbenchPage.java:3168)
+	at org.eclipse.ui.internal.StartupThreading$StartupRunnable.run(StartupThreading.java:31)
+	at org.eclipse.swt.widgets.RunnableLock.run(RunnableLock.java:35)
+	at org.eclipse.swt.widgets.Synchronizer.runAsyncMessages(Synchronizer.java:133)
+	at org.eclipse.swt.widgets.Display.runAsyncMessages(Display.java:3800)
+	at org.eclipse.swt.widgets.Display.readAndDispatch(Display.java:3425)
+	at org.eclipse.ui.application.WorkbenchAdvisor.openWindows(WorkbenchAdvisor.java:803)
+	at org.eclipse.ui.internal.Workbench$27.runWithException(Workbench.java:1363)
+	at org.eclipse.ui.internal.StartupThreading$StartupRunnable.run(StartupThreading.java:31)
+	at org.eclipse.swt.widgets.RunnableLock.run(RunnableLock.java:35)
+	at org.eclipse.swt.widgets.Synchronizer.runAsyncMessages(Synchronizer.java:133)
+	at org.eclipse.swt.widgets.Display.runAsyncMessages(Display.java:3800)
+	at org.eclipse.swt.widgets.Display.readAndDispatch(Display.java:3425)
+	at org.eclipse.ui.internal.Workbench.runUI(Workbench.java:2295)
+	at org.eclipse.ui.internal.Workbench.access$4(Workbench.java:2200)
+	at org.eclipse.ui.internal.Workbench$5.run(Workbench.java:495)
+	at org.eclipse.core.databinding.observable.Realm.runWithDefault(Realm.java:288)
+	at org.eclipse.ui.internal.Workbench.createAndRunWorkbench(Workbench.java:490)
+	at org.eclipse.ui.PlatformUI.createAndRunWorkbench(PlatformUI.java:149)
+	at org.eclipse.ui.internal.ide.application.IDEApplication.start(IDEApplication.java:113)
+	at org.eclipse.equinox.internal.app.EclipseAppHandle.run(EclipseAppHandle.java:193)
+	at org.eclipse.core.runtime.internal.adaptor.EclipseAppLauncher.runApplication(EclipseAppLauncher.java:110)
+	at org.eclipse.core.runtime.internal.adaptor.EclipseAppLauncher.start(EclipseAppLauncher.java:79)
+	at org.eclipse.core.runtime.adaptor.EclipseStarter.run(EclipseStarter.java:386)
+	at org.eclipse.core.runtime.adaptor.EclipseStarter.run(EclipseStarter.java:179)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(Unknown Source)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(Unknown Source)
+	at java.lang.reflect.Method.invoke(Unknown Source)
+	at org.eclipse.equinox.launcher.Main.invokeFramework(Main.java:549)
+	at org.eclipse.equinox.launcher.Main.basicRun(Main.java:504)
+	at org.eclipse.equinox.launcher.Main.run(Main.java:1236)
+!SUBENTRY 3 org.eclipse.ui 4 0 2013-12-24 13:07:13.090
+!MESSAGE Could not create view: org.eclipse.dltk.debug.ui.ScriptDisplayView
+!SUBENTRY 2 org.eclipse.ui 4 4 2013-12-24 13:07:13.090
+!MESSAGE Could not create view: org.eclipse.cdt.debug.ui.executablesView
+!STACK 1
+org.eclipse.ui.PartInitException: Could not create view: org.eclipse.cdt.debug.ui.executablesView
+	at org.eclipse.ui.internal.ViewFactory.createView(ViewFactory.java:157)
+	at org.eclipse.ui.internal.Perspective.createReferences(Perspective.java:1177)
+	at org.eclipse.ui.internal.Perspective.restoreState(Perspective.java:1147)
+	at org.eclipse.ui.internal.WorkbenchPage$16.runWithException(WorkbenchPage.java:3168)
+	at org.eclipse.ui.internal.StartupThreading$StartupRunnable.run(StartupThreading.java:31)
+	at org.eclipse.swt.widgets.RunnableLock.run(RunnableLock.java:35)
+	at org.eclipse.swt.widgets.Synchronizer.runAsyncMessages(Synchronizer.java:133)
+	at org.eclipse.swt.widgets.Display.runAsyncMessages(Display.java:3800)
+	at org.eclipse.swt.widgets.Display.readAndDispatch(Display.java:3425)
+	at org.eclipse.ui.application.WorkbenchAdvisor.openWindows(WorkbenchAdvisor.java:803)
+	at org.eclipse.ui.internal.Workbench$27.runWithException(Workbench.java:1363)
+	at org.eclipse.ui.internal.StartupThreading$StartupRunnable.run(StartupThreading.java:31)
+	at org.eclipse.swt.widgets.RunnableLock.run(RunnableLock.java:35)
+	at org.eclipse.swt.widgets.Synchronizer.runAsyncMessages(Synchronizer.java:133)
+	at org.eclipse.swt.widgets.Display.runAsyncMessages(Display.java:3800)
+	at org.eclipse.swt.widgets.Display.readAndDispatch(Display.java:3425)
+	at org.eclipse.ui.internal.Workbench.runUI(Workbench.java:2295)
+	at org.eclipse.ui.internal.Workbench.access$4(Workbench.java:2200)
+	at org.eclipse.ui.internal.Workbench$5.run(Workbench.java:495)
+	at org.eclipse.core.databinding.observable.Realm.runWithDefault(Realm.java:288)
+	at org.eclipse.ui.internal.Workbench.createAndRunWorkbench(Workbench.java:490)
+	at org.eclipse.ui.PlatformUI.createAndRunWorkbench(PlatformUI.java:149)
+	at org.eclipse.ui.internal.ide.application.IDEApplication.start(IDEApplication.java:113)
+	at org.eclipse.equinox.internal.app.EclipseAppHandle.run(EclipseAppHandle.java:193)
+	at org.eclipse.core.runtime.internal.adaptor.EclipseAppLauncher.runApplication(EclipseAppLauncher.java:110)
+	at org.eclipse.core.runtime.internal.adaptor.EclipseAppLauncher.start(EclipseAppLauncher.java:79)
+	at org.eclipse.core.runtime.adaptor.EclipseStarter.run(EclipseStarter.java:386)
+	at org.eclipse.core.runtime.adaptor.EclipseStarter.run(EclipseStarter.java:179)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(Unknown Source)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(Unknown Source)
+	at java.lang.reflect.Method.invoke(Unknown Source)
+	at org.eclipse.equinox.launcher.Main.invokeFramework(Main.java:549)
+	at org.eclipse.equinox.launcher.Main.basicRun(Main.java:504)
+	at org.eclipse.equinox.launcher.Main.run(Main.java:1236)
+!SUBENTRY 3 org.eclipse.ui 4 0 2013-12-24 13:07:13.090
+!MESSAGE Could not create view: org.eclipse.cdt.debug.ui.executablesView
+!SUBENTRY 2 org.eclipse.ui 4 4 2013-12-24 13:07:13.090
+!MESSAGE Could not create view: org.eclipse.debug.ui.PHPDebugOutput
+!STACK 1
+org.eclipse.ui.PartInitException: Could not create view: org.eclipse.debug.ui.PHPDebugOutput
+	at org.eclipse.ui.internal.ViewFactory.createView(ViewFactory.java:157)
+	at org.eclipse.ui.internal.Perspective.createReferences(Perspective.java:1177)
+	at org.eclipse.ui.internal.Perspective.restoreState(Perspective.java:1147)
+	at org.eclipse.ui.internal.WorkbenchPage$16.runWithException(WorkbenchPage.java:3168)
+	at org.eclipse.ui.internal.StartupThreading$StartupRunnable.run(StartupThreading.java:31)
+	at org.eclipse.swt.widgets.RunnableLock.run(RunnableLock.java:35)
+	at org.eclipse.swt.widgets.Synchronizer.runAsyncMessages(Synchronizer.java:133)
+	at org.eclipse.swt.widgets.Display.runAsyncMessages(Display.java:3800)
+	at org.eclipse.swt.widgets.Display.readAndDispatch(Display.java:3425)
+	at org.eclipse.ui.application.WorkbenchAdvisor.openWindows(WorkbenchAdvisor.java:803)
+	at org.eclipse.ui.internal.Workbench$27.runWithException(Workbench.java:1363)
+	at org.eclipse.ui.internal.StartupThreading$StartupRunnable.run(StartupThreading.java:31)
+	at org.eclipse.swt.widgets.RunnableLock.run(RunnableLock.java:35)
+	at org.eclipse.swt.widgets.Synchronizer.runAsyncMessages(Synchronizer.java:133)
+	at org.eclipse.swt.widgets.Display.runAsyncMessages(Display.java:3800)
+	at org.eclipse.swt.widgets.Display.readAndDispatch(Display.java:3425)
+	at org.eclipse.ui.internal.Workbench.runUI(Workbench.java:2295)
+	at org.eclipse.ui.internal.Workbench.access$4(Workbench.java:2200)
+	at org.eclipse.ui.internal.Workbench$5.run(Workbench.java:495)
+	at org.eclipse.core.databinding.observable.Realm.runWithDefault(Realm.java:288)
+	at org.eclipse.ui.internal.Workbench.createAndRunWorkbench(Workbench.java:490)
+	at org.eclipse.ui.PlatformUI.createAndRunWorkbench(PlatformUI.java:149)
+	at org.eclipse.ui.internal.ide.application.IDEApplication.start(IDEApplication.java:113)
+	at org.eclipse.equinox.internal.app.EclipseAppHandle.run(EclipseAppHandle.java:193)
+	at org.eclipse.core.runtime.internal.adaptor.EclipseAppLauncher.runApplication(EclipseAppLauncher.java:110)
+	at org.eclipse.core.runtime.internal.adaptor.EclipseAppLauncher.start(EclipseAppLauncher.java:79)
+	at org.eclipse.core.runtime.adaptor.EclipseStarter.run(EclipseStarter.java:386)
+	at org.eclipse.core.runtime.adaptor.EclipseStarter.run(EclipseStarter.java:179)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(Unknown Source)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(Unknown Source)
+	at java.lang.reflect.Method.invoke(Unknown Source)
+	at org.eclipse.equinox.launcher.Main.invokeFramework(Main.java:549)
+	at org.eclipse.equinox.launcher.Main.basicRun(Main.java:504)
+	at org.eclipse.equinox.launcher.Main.run(Main.java:1236)
+!SUBENTRY 3 org.eclipse.ui 4 0 2013-12-24 13:07:13.091
+!MESSAGE Could not create view: org.eclipse.debug.ui.PHPDebugOutput
+!SUBENTRY 2 org.eclipse.ui 4 4 2013-12-24 13:07:13.091
+!MESSAGE Could not create view: org.eclipse.debug.ui.PHPBrowserOutput
+!STACK 1
+org.eclipse.ui.PartInitException: Could not create view: org.eclipse.debug.ui.PHPBrowserOutput
+	at org.eclipse.ui.internal.ViewFactory.createView(ViewFactory.java:157)
+	at org.eclipse.ui.internal.Perspective.createReferences(Perspective.java:1177)
+	at org.eclipse.ui.internal.Perspective.restoreState(Perspective.java:1147)
+	at org.eclipse.ui.internal.WorkbenchPage$16.runWithException(WorkbenchPage.java:3168)
+	at org.eclipse.ui.internal.StartupThreading$StartupRunnable.run(StartupThreading.java:31)
+	at org.eclipse.swt.widgets.RunnableLock.run(RunnableLock.java:35)
+	at org.eclipse.swt.widgets.Synchronizer.runAsyncMessages(Synchronizer.java:133)
+	at org.eclipse.swt.widgets.Display.runAsyncMessages(Display.java:3800)
+	at org.eclipse.swt.widgets.Display.readAndDispatch(Display.java:3425)
+	at org.eclipse.ui.application.WorkbenchAdvisor.openWindows(WorkbenchAdvisor.java:803)
+	at org.eclipse.ui.internal.Workbench$27.runWithException(Workbench.java:1363)
+	at org.eclipse.ui.internal.StartupThreading$StartupRunnable.run(StartupThreading.java:31)
+	at org.eclipse.swt.widgets.RunnableLock.run(RunnableLock.java:35)
+	at org.eclipse.swt.widgets.Synchronizer.runAsyncMessages(Synchronizer.java:133)
+	at org.eclipse.swt.widgets.Display.runAsyncMessages(Display.java:3800)
+	at org.eclipse.swt.widgets.Display.readAndDispatch(Display.java:3425)
+	at org.eclipse.ui.internal.Workbench.runUI(Workbench.java:2295)
+	at org.eclipse.ui.internal.Workbench.access$4(Workbench.java:2200)
+	at org.eclipse.ui.internal.Workbench$5.run(Workbench.java:495)
+	at org.eclipse.core.databinding.observable.Realm.runWithDefault(Realm.java:288)
+	at org.eclipse.ui.internal.Workbench.createAndRunWorkbench(Workbench.java:490)
+	at org.eclipse.ui.PlatformUI.createAndRunWorkbench(PlatformUI.java:149)
+	at org.eclipse.ui.internal.ide.application.IDEApplication.start(IDEApplication.java:113)
+	at org.eclipse.equinox.internal.app.EclipseAppHandle.run(EclipseAppHandle.java:193)
+	at org.eclipse.core.runtime.internal.adaptor.EclipseAppLauncher.runApplication(EclipseAppLauncher.java:110)
+	at org.eclipse.core.runtime.internal.adaptor.EclipseAppLauncher.start(EclipseAppLauncher.java:79)
+	at org.eclipse.core.runtime.adaptor.EclipseStarter.run(EclipseStarter.java:386)
+	at org.eclipse.core.runtime.adaptor.EclipseStarter.run(EclipseStarter.java:179)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(Unknown Source)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(Unknown Source)
+	at java.lang.reflect.Method.invoke(Unknown Source)
+	at org.eclipse.equinox.launcher.Main.invokeFramework(Main.java:549)
+	at org.eclipse.equinox.launcher.Main.basicRun(Main.java:504)
+	at org.eclipse.equinox.launcher.Main.run(Main.java:1236)
+!SUBENTRY 3 org.eclipse.ui 4 0 2013-12-24 13:07:13.091
+!MESSAGE Could not create view: org.eclipse.debug.ui.PHPBrowserOutput
+!SUBENTRY 2 org.eclipse.ui 4 4 2013-12-24 13:07:13.091
+!MESSAGE Could not create view: org.eclipse.wst.server.ui.ServersView
+!STACK 1
+org.eclipse.ui.PartInitException: Could not create view: org.eclipse.wst.server.ui.ServersView
+	at org.eclipse.ui.internal.ViewFactory.createView(ViewFactory.java:157)
+	at org.eclipse.ui.internal.Perspective.createReferences(Perspective.java:1177)
+	at org.eclipse.ui.internal.Perspective.restoreState(Perspective.java:1147)
+	at org.eclipse.ui.internal.WorkbenchPage$16.runWithException(WorkbenchPage.java:3168)
+	at org.eclipse.ui.internal.StartupThreading$StartupRunnable.run(StartupThreading.java:31)
+	at org.eclipse.swt.widgets.RunnableLock.run(RunnableLock.java:35)
+	at org.eclipse.swt.widgets.Synchronizer.runAsyncMessages(Synchronizer.java:133)
+	at org.eclipse.swt.widgets.Display.runAsyncMessages(Display.java:3800)
+	at org.eclipse.swt.widgets.Display.readAndDispatch(Display.java:3425)
+	at org.eclipse.ui.application.WorkbenchAdvisor.openWindows(WorkbenchAdvisor.java:803)
+	at org.eclipse.ui.internal.Workbench$27.runWithException(Workbench.java:1363)
+	at org.eclipse.ui.internal.StartupThreading$StartupRunnable.run(StartupThreading.java:31)
+	at org.eclipse.swt.widgets.RunnableLock.run(RunnableLock.java:35)
+	at org.eclipse.swt.widgets.Synchronizer.runAsyncMessages(Synchronizer.java:133)
+	at org.eclipse.swt.widgets.Display.runAsyncMessages(Display.java:3800)
+	at org.eclipse.swt.widgets.Display.readAndDispatch(Display.java:3425)
+	at org.eclipse.ui.internal.Workbench.runUI(Workbench.java:2295)
+	at org.eclipse.ui.internal.Workbench.access$4(Workbench.java:2200)
+	at org.eclipse.ui.internal.Workbench$5.run(Workbench.java:495)
+	at org.eclipse.core.databinding.observable.Realm.runWithDefault(Realm.java:288)
+	at org.eclipse.ui.internal.Workbench.createAndRunWorkbench(Workbench.java:490)
+	at org.eclipse.ui.PlatformUI.createAndRunWorkbench(PlatformUI.java:149)
+	at org.eclipse.ui.internal.ide.application.IDEApplication.start(IDEApplication.java:113)
+	at org.eclipse.equinox.internal.app.EclipseAppHandle.run(EclipseAppHandle.java:193)
+	at org.eclipse.core.runtime.internal.adaptor.EclipseAppLauncher.runApplication(EclipseAppLauncher.java:110)
+	at org.eclipse.core.runtime.internal.adaptor.EclipseAppLauncher.start(EclipseAppLauncher.java:79)
+	at org.eclipse.core.runtime.adaptor.EclipseStarter.run(EclipseStarter.java:386)
+	at org.eclipse.core.runtime.adaptor.EclipseStarter.run(EclipseStarter.java:179)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(Unknown Source)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(Unknown Source)
+	at java.lang.reflect.Method.invoke(Unknown Source)
+	at org.eclipse.equinox.launcher.Main.invokeFramework(Main.java:549)
+	at org.eclipse.equinox.launcher.Main.basicRun(Main.java:504)
+	at org.eclipse.equinox.launcher.Main.run(Main.java:1236)
+!SUBENTRY 3 org.eclipse.ui 4 0 2013-12-24 13:07:13.115
+!MESSAGE Could not create view: org.eclipse.wst.server.ui.ServersView
+!SUBENTRY 2 org.eclipse.ui 0 0 2013-12-24 13:07:13.115
+!MESSAGE 
+!SUBENTRY 2 org.eclipse.ui 0 0 2013-12-24 13:07:13.115
+!MESSAGE 
+!SUBENTRY 2 org.eclipse.ui 0 0 2013-12-24 13:07:13.115
+!MESSAGE 
+!SUBENTRY 2 org.eclipse.ui 0 0 2013-12-24 13:07:13.115
+!MESSAGE 
+!SUBENTRY 2 org.eclipse.ui 0 0 2013-12-24 13:07:13.115
+!MESSAGE 
+!SUBENTRY 2 org.eclipse.ui 0 0 2013-12-24 13:07:13.115
+!MESSAGE 
+!SUBENTRY 1 org.eclipse.core.runtime 0 0 2013-12-24 13:07:13.115
+!MESSAGE OK
+
+!ENTRY org.eclipse.emf.mint 4 0 2013-12-24 14:12:05.744
+!MESSAGE Could not decorate element.
+!STACK 1
+Java Model Exception: Java Model Status [AbstractColorOperator.java [in de.th_wildau.quadroid.landmark [in src [in Quadroid]]] does not exist]
+	at org.eclipse.jdt.internal.core.JavaElement.newJavaModelException(JavaElement.java:501)
+	at org.eclipse.jdt.internal.core.Openable.generateInfos(Openable.java:245)
+	at org.eclipse.jdt.internal.core.JavaElement.openWhenClosed(JavaElement.java:514)
+	at org.eclipse.jdt.internal.core.JavaElement.getElementInfo(JavaElement.java:251)
+	at org.eclipse.jdt.internal.core.JavaElement.getElementInfo(JavaElement.java:237)
+	at org.eclipse.jdt.internal.core.JavaElement.getChildren(JavaElement.java:192)
+	at org.eclipse.jdt.internal.core.JavaElement.getChildrenOfType(JavaElement.java:206)
+	at org.eclipse.jdt.internal.core.CompilationUnit.getTypes(CompilationUnit.java:906)
+	at org.eclipse.emf.mint.internal.ui.source.GeneratedElementDecorator.decorate(GeneratedElementDecorator.java:69)
+	at org.eclipse.ui.internal.decorators.LightweightDecoratorDefinition.decorate(LightweightDecoratorDefinition.java:269)
+	at org.eclipse.ui.internal.decorators.LightweightDecoratorManager$LightweightRunnable.run(LightweightDecoratorManager.java:72)
+	at org.eclipse.core.runtime.SafeRunner.run(SafeRunner.java:37)
+	at org.eclipse.ui.internal.decorators.LightweightDecoratorManager.decorate(LightweightDecoratorManager.java:356)
+	at org.eclipse.ui.internal.decorators.LightweightDecoratorManager.getDecorations(LightweightDecoratorManager.java:338)
+	at org.eclipse.ui.internal.decorators.DecorationScheduler$1.ensureResultCached(DecorationScheduler.java:374)
+	at org.eclipse.ui.internal.decorators.DecorationScheduler$1.run(DecorationScheduler.java:334)
+	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:55)
+!SUBENTRY 1 org.eclipse.jdt.core 4 969 2013-12-24 14:12:05.744
+!MESSAGE AbstractColorOperator.java [in de.th_wildau.quadroid.landmark [in src [in Quadroid]]] does not exist
+
+!ENTRY org.eclipse.emf.mint 4 0 2013-12-24 14:12:05.745
+!MESSAGE Could not decorate element.
+!STACK 1
+Java Model Exception: Java Model Status [AbstractOperator.java [in de.th_wildau.quadroid.landmark [in src [in Quadroid]]] does not exist]
+	at org.eclipse.jdt.internal.core.JavaElement.newJavaModelException(JavaElement.java:501)
+	at org.eclipse.jdt.internal.core.Openable.generateInfos(Openable.java:245)
+	at org.eclipse.jdt.internal.core.JavaElement.openWhenClosed(JavaElement.java:514)
+	at org.eclipse.jdt.internal.core.JavaElement.getElementInfo(JavaElement.java:251)
+	at org.eclipse.jdt.internal.core.JavaElement.getElementInfo(JavaElement.java:237)
+	at org.eclipse.jdt.internal.core.JavaElement.getChildren(JavaElement.java:192)
+	at org.eclipse.jdt.internal.core.JavaElement.getChildrenOfType(JavaElement.java:206)
+	at org.eclipse.jdt.internal.core.CompilationUnit.getTypes(CompilationUnit.java:906)
+	at org.eclipse.emf.mint.internal.ui.source.GeneratedElementDecorator.decorate(GeneratedElementDecorator.java:69)
+	at org.eclipse.ui.internal.decorators.LightweightDecoratorDefinition.decorate(LightweightDecoratorDefinition.java:269)
+	at org.eclipse.ui.internal.decorators.LightweightDecoratorManager$LightweightRunnable.run(LightweightDecoratorManager.java:72)
+	at org.eclipse.core.runtime.SafeRunner.run(SafeRunner.java:37)
+	at org.eclipse.ui.internal.decorators.LightweightDecoratorManager.decorate(LightweightDecoratorManager.java:356)
+	at org.eclipse.ui.internal.decorators.LightweightDecoratorManager.getDecorations(LightweightDecoratorManager.java:338)
+	at org.eclipse.ui.internal.decorators.DecorationScheduler$1.ensureResultCached(DecorationScheduler.java:374)
+	at org.eclipse.ui.internal.decorators.DecorationScheduler$1.run(DecorationScheduler.java:334)
+	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:55)
+!SUBENTRY 1 org.eclipse.jdt.core 4 969 2013-12-24 14:12:05.745
+!MESSAGE AbstractOperator.java [in de.th_wildau.quadroid.landmark [in src [in Quadroid]]] does not exist
+
+!ENTRY org.eclipse.emf.mint 4 0 2013-12-24 14:12:11.048
+!MESSAGE Could not decorate element.
+!STACK 1
+Java Model Exception: Java Model Status [Operator.java [in de.th_wildau.quadroid.landmark [in src [in Quadroid]]] does not exist]
+	at org.eclipse.jdt.internal.core.JavaElement.newJavaModelException(JavaElement.java:501)
+	at org.eclipse.jdt.internal.core.Openable.generateInfos(Openable.java:245)
+	at org.eclipse.jdt.internal.core.JavaElement.openWhenClosed(JavaElement.java:514)
+	at org.eclipse.jdt.internal.core.JavaElement.getElementInfo(JavaElement.java:251)
+	at org.eclipse.jdt.internal.core.JavaElement.getElementInfo(JavaElement.java:237)
+	at org.eclipse.jdt.internal.core.JavaElement.getChildren(JavaElement.java:192)
+	at org.eclipse.jdt.internal.core.JavaElement.getChildrenOfType(JavaElement.java:206)
+	at org.eclipse.jdt.internal.core.CompilationUnit.getTypes(CompilationUnit.java:906)
+	at org.eclipse.emf.mint.internal.ui.source.GeneratedElementDecorator.decorate(GeneratedElementDecorator.java:69)
+	at org.eclipse.ui.internal.decorators.LightweightDecoratorDefinition.decorate(LightweightDecoratorDefinition.java:269)
+	at org.eclipse.ui.internal.decorators.LightweightDecoratorManager$LightweightRunnable.run(LightweightDecoratorManager.java:72)
+	at org.eclipse.core.runtime.SafeRunner.run(SafeRunner.java:37)
+	at org.eclipse.ui.internal.decorators.LightweightDecoratorManager.decorate(LightweightDecoratorManager.java:356)
+	at org.eclipse.ui.internal.decorators.LightweightDecoratorManager.getDecorations(LightweightDecoratorManager.java:338)
+	at org.eclipse.ui.internal.decorators.DecorationScheduler$1.ensureResultCached(DecorationScheduler.java:374)
+	at org.eclipse.ui.internal.decorators.DecorationScheduler$1.run(DecorationScheduler.java:334)
+	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:55)
+!SUBENTRY 1 org.eclipse.jdt.core 4 969 2013-12-24 14:12:11.048
+!MESSAGE Operator.java [in de.th_wildau.quadroid.landmark [in src [in Quadroid]]] does not exist
+
+!ENTRY org.eclipse.emf.mint 4 0 2013-12-24 14:21:11.816
+!MESSAGE Could not decorate element.
+!STACK 1
+Java Model Exception: Java Model Status [TestLandmark.java [in de.th_wildau.quadroid.landmark [in src [in Quadroid]]] does not exist]
+	at org.eclipse.jdt.internal.core.JavaElement.newJavaModelException(JavaElement.java:501)
+	at org.eclipse.jdt.internal.core.Openable.generateInfos(Openable.java:245)
+	at org.eclipse.jdt.internal.core.JavaElement.openWhenClosed(JavaElement.java:514)
+	at org.eclipse.jdt.internal.core.JavaElement.getElementInfo(JavaElement.java:251)
+	at org.eclipse.jdt.internal.core.JavaElement.getElementInfo(JavaElement.java:237)
+	at org.eclipse.jdt.internal.core.JavaElement.getChildren(JavaElement.java:192)
+	at org.eclipse.jdt.internal.core.JavaElement.getChildrenOfType(JavaElement.java:206)
+	at org.eclipse.jdt.internal.core.CompilationUnit.getTypes(CompilationUnit.java:906)
+	at org.eclipse.emf.mint.internal.ui.source.GeneratedElementDecorator.decorate(GeneratedElementDecorator.java:69)
+	at org.eclipse.ui.internal.decorators.LightweightDecoratorDefinition.decorate(LightweightDecoratorDefinition.java:269)
+	at org.eclipse.ui.internal.decorators.LightweightDecoratorManager$LightweightRunnable.run(LightweightDecoratorManager.java:72)
+	at org.eclipse.core.runtime.SafeRunner.run(SafeRunner.java:37)
+	at org.eclipse.ui.internal.decorators.LightweightDecoratorManager.decorate(LightweightDecoratorManager.java:356)
+	at org.eclipse.ui.internal.decorators.LightweightDecoratorManager.getDecorations(LightweightDecoratorManager.java:338)
+	at org.eclipse.ui.internal.decorators.DecorationScheduler$1.ensureResultCached(DecorationScheduler.java:374)
+	at org.eclipse.ui.internal.decorators.DecorationScheduler$1.run(DecorationScheduler.java:334)
+	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:55)
+!SUBENTRY 1 org.eclipse.jdt.core 4 969 2013-12-24 14:21:11.816
+!MESSAGE TestLandmark.java [in de.th_wildau.quadroid.landmark [in src [in Quadroid]]] does not exist
