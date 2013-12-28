@@ -5,10 +5,5 @@
 *.war
 *.ear
 *.metadata
-
-# Unix Driver #
 *.so
-
-# Images #
 *.jpg
-*.png
