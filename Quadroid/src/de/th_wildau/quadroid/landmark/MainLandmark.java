@@ -15,7 +15,7 @@ public class MainLandmark implements Runnable{
 	}
 	
 	public boolean checkLandmark(BufferedImage img){
-		System.loadLibrary("opencv_java245");
+		//System.loadLibrary("opencv_java245");
 		img = convertSourceImage(img);
 		
 		Raster src = img.getRaster();

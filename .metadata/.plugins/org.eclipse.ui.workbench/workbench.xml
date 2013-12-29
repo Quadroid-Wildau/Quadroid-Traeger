@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<workbench progressCount="28" version="2.0">
+<workbench progressCount="66" version="2.0">
 <workbenchAdvisor/>
 <window height="768" maximized="true" width="1016" x="618" y="87">
 <fastViewData fastViewLocation="1024"/>
@@ -35,43 +35,13 @@
 <folder appearance="1" expanded="2">
 <presentation id="org.eclipse.ui.presentations.WorkbenchPresentationFactory">
 <part id="0"/>
-<part id="1"/>
-<part id="2"/>
-<part id="3"/>
-<part id="4"/>
-<part id="5"/>
-<part id="6"/>
 </presentation>
 </folder>
 </info>
 </editorArea>
-<editor id="org.eclipse.jdt.ui.CompilationUnitEditor" name="TestLM.java" partName="TestLM.java" path="/home/c3po/workspace/GitWorkspace/Quadroid/src/de/th_wildau/quadroid/landmark/TestLM.java" title="TestLM.java" tooltip="Quadroid/src/de/th_wildau/quadroid/landmark/TestLM.java" workbook="DefaultEditorWorkbook">
-<input factoryID="org.eclipse.ui.part.FileEditorInputFactory" path="/Quadroid/src/de/th_wildau/quadroid/landmark/TestLM.java"/>
-<editorState selectionHorizontalPixel="0" selectionLength="0" selectionOffset="249" selectionTopPixel="0"/>
-</editor>
-<editor id="org.eclipse.jdt.ui.CompilationUnitEditor" name="QuadroidMain.java" partName="QuadroidMain.java" path="/home/c3po/workspace/GitWorkspace/Quadroid/src/de/th_wildau/quadroid/QuadroidMain.java" title="QuadroidMain.java" tooltip="Quadroid/src/de/th_wildau/quadroid/QuadroidMain.java" workbook="DefaultEditorWorkbook">
+<editor activePart="true" focus="true" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="QuadroidMain.java" partName="QuadroidMain.java" path="/home/c3po/workspace/GitWorkspace/Quadroid/src/de/th_wildau/quadroid/QuadroidMain.java" title="QuadroidMain.java" tooltip="Quadroid/src/de/th_wildau/quadroid/QuadroidMain.java" workbook="DefaultEditorWorkbook">
 <input factoryID="org.eclipse.ui.part.FileEditorInputFactory" path="/Quadroid/src/de/th_wildau/quadroid/QuadroidMain.java"/>
-<editorState selectionHorizontalPixel="0" selectionLength="0" selectionOffset="4112" selectionTopPixel="1700"/>
-</editor>
-<editor activePart="true" focus="true" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="OpCheckLandmark.java" partName="OpCheckLandmark.java" path="/home/c3po/workspace/GitWorkspace/Quadroid/src/de/th_wildau/quadroid/landmark/OpCheckLandmark.java" title="OpCheckLandmark.java" tooltip="Quadroid/src/de/th_wildau/quadroid/landmark/OpCheckLandmark.java" workbook="DefaultEditorWorkbook">
-<input factoryID="org.eclipse.ui.part.FileEditorInputFactory" path="/Quadroid/src/de/th_wildau/quadroid/landmark/OpCheckLandmark.java"/>
-<editorState selectionHorizontalPixel="0" selectionLength="0" selectionOffset="2958" selectionTopPixel="1686"/>
-</editor>
-<editor id="org.eclipse.jdt.ui.CompilationUnitEditor" name="MainLandmark.java" partName="MainLandmark.java" path="/home/c3po/workspace/GitWorkspace/Quadroid/src/de/th_wildau/quadroid/landmark/MainLandmark.java" title="MainLandmark.java" tooltip="Quadroid/src/de/th_wildau/quadroid/landmark/MainLandmark.java" workbook="DefaultEditorWorkbook">
-<input factoryID="org.eclipse.ui.part.FileEditorInputFactory" path="/Quadroid/src/de/th_wildau/quadroid/landmark/MainLandmark.java"/>
-<editorState selectionHorizontalPixel="0" selectionLength="0" selectionOffset="549" selectionTopPixel="0"/>
-</editor>
-<editor id="org.eclipse.jdt.ui.CompilationUnitEditor" name="Morphology.java" partName="Morphology.java" path="/home/c3po/workspace/GitWorkspace/Quadroid/src/de/th_wildau/quadroid/landmark/Morphology.java" title="Morphology.java" tooltip="Quadroid/src/de/th_wildau/quadroid/landmark/Morphology.java" workbook="DefaultEditorWorkbook">
-<input factoryID="org.eclipse.ui.part.FileEditorInputFactory" path="/Quadroid/src/de/th_wildau/quadroid/landmark/Morphology.java"/>
-<editorState selectionHorizontalPixel="0" selectionLength="0" selectionOffset="8206" selectionTopPixel="3758"/>
-</editor>
-<editor id="org.eclipse.jdt.ui.CompilationUnitEditor" name="OpenCvConverter.java" partName="OpenCvConverter.java" path="/home/c3po/workspace/GitWorkspace/Quadroid/src/de/th_wildau/quadroid/landmark/OpenCvConverter.java" title="OpenCvConverter.java" tooltip="Quadroid/src/de/th_wildau/quadroid/landmark/OpenCvConverter.java" workbook="DefaultEditorWorkbook">
-<input factoryID="org.eclipse.ui.part.FileEditorInputFactory" path="/Quadroid/src/de/th_wildau/quadroid/landmark/OpenCvConverter.java"/>
-<editorState selectionHorizontalPixel="0" selectionLength="0" selectionOffset="880" selectionTopPixel="1701"/>
-</editor>
-<editor id="org.eclipse.jdt.ui.ClassFileEditor" name="Imgproc.class" partName="Imgproc.class" title="Imgproc.class" tooltip="org.opencv.imgproc.Imgproc" workbook="DefaultEditorWorkbook">
-<input factoryID="org.eclipse.jdt.ui.ClassFileEditorInputFactory" org.eclipse.jdt.ui.ClassFileIdentifier="=Quadroid/lib\/opencv-245.jar&lt;org.opencv.imgproc(Imgproc.class"/>
-<editorState selectionHorizontalPixel="0" selectionLength="0" selectionOffset="164089" selectionTopPixel="73681"/>
+<editorState selectionHorizontalPixel="0" selectionLength="0" selectionOffset="5726" selectionTopPixel="564"/>
 </editor>
 </editors>
 <views>
@@ -100,7 +70,8 @@
 <view id="org.eclipse.ui.views.ProblemView" partName="Problems">
 <viewState PRIMARY_SORT_FIELD="org.eclipse.ui.ide.severityAndDescriptionField" categoryGroup="org.eclipse.ui.ide.severity" markerContentGenerator="org.eclipse.ui.ide.problemsGenerator" partName="Problems">
 <expanded>
-<category IMemento.internal.id="Errors (2 items)"/>
+<category IMemento.internal.id="Warnings (15 items)"/>
+<category IMemento.internal.id="Warnings"/>
 <category IMemento.internal.id="Errors"/>
 </expanded>
 <columnWidths org.eclipse.ui.ide.locationField="105" org.eclipse.ui.ide.markerType="553" org.eclipse.ui.ide.pathField="140" org.eclipse.ui.ide.resourceField="105" org.eclipse.ui.ide.severityAndDescriptionField="350"/>
@@ -136,7 +107,7 @@
 <view id="org.eclipse.jdt.ui.JavadocView" partName="Javadoc"/>
 <view id="org.eclipse.wst.server.ui.ServersView" partName="Servers"/>
 </views>
-<perspectives activePart="org.eclipse.ui.navigator.ProjectExplorer" activePerspective="org.eclipse.jdt.ui.JavaPerspective">
+<perspectives activePart="org.eclipse.jdt.ui.CompilationUnitEditor" activePerspective="org.eclipse.jdt.ui.JavaPerspective">
 <perspective editorAreaTrimState="1" editorAreaVisible="1" fixed="0" version="0.016">
 <descriptor class="org.eclipse.pde.internal.ui.PDEPerspective" id="org.eclipse.pde.ui.PDEPerspective" label="Plug-in Development"/>
 <alwaysOnActionSet id="org.eclipse.mylyn.context.ui.actionSet"/>
@@ -309,32 +280,23 @@
 <view id="org.eclipse.wst.server.ui.ServersView"/>
 <view id="org.eclipse.ui.views.ContentOutline"/>
 <fastViewBars/>
-<layout>
-<mainWindow>
-<info folder="true" part="org.eclipse.debug.internal.ui.NavigatorFolderView">
-<folder activePageID="org.eclipse.debug.ui.DebugView" appearance="2" expanded="2">
-<page content="org.eclipse.debug.ui.DebugView" label="Debug"/>
+<layout>&#x0A;<mainWindow>&#x0A;<info folder="true" part="org.eclipse.debug.internal.ui.NavigatorFolderView">&#x0A;<folder activePageID="org.eclipse.debug.ui.DebugView" appearance="2" expanded="2">&#x0A;<page content="org.eclipse.debug.ui.DebugView" label="Debug"/>
 <page content="org.eclipse.wst.server.ui.ServersView" label="Servers"/>
 <page content="org.eclipse.ui.views.ResourceNavigator" label="LabelNotFound"/>
 <page content="org.eclipse.dltk.ui.ScriptExplorer" label="LabelNotFound"/>
 <page content="org.eclipse.jdt.ui.PackageExplorer" label="LabelNotFound"/>
 <page content="org.eclipse.jdt.ui.TypeHierarchy" label="LabelNotFound"/>
-<presentation id="org.eclipse.ui.presentations.WorkbenchPresentationFactory">
-<part id="0"/>
+<presentation id="org.eclipse.ui.presentations.WorkbenchPresentationFactory">&#x0A;<part id="0"/>
 <part id="1"/>
 </presentation>
 </folder>
 </info>
-<info folder="true" part="stickyFolderRight" ratio="0.74939567" ratioLeft="930" ratioRight="311" relationship="2" relative="org.eclipse.debug.internal.ui.NavigatorFolderView">
-<folder appearance="2" expanded="2">
-<page content="org.eclipse.help.ui.HelpView" label="LabelNotFound"/>
+<info folder="true" part="stickyFolderRight" ratio="0.74939567" ratioLeft="930" ratioRight="311" relationship="2" relative="org.eclipse.debug.internal.ui.NavigatorFolderView">&#x0A;<folder appearance="2" expanded="2">&#x0A;<page content="org.eclipse.help.ui.HelpView" label="LabelNotFound"/>
 <page content="org.eclipse.ui.internal.introview" label="LabelNotFound"/>
 <page content="org.eclipse.ui.cheatsheets.views.CheatSheetView" label="LabelNotFound"/>
 </folder>
 </info>
-<info folder="true" part="org.eclipse.debug.internal.ui.ConsoleFolderView" ratio="0.74922603" ratioLeft="484" ratioRight="162" relationship="4" relative="org.eclipse.debug.internal.ui.NavigatorFolderView">
-<folder activePageID="org.eclipse.ui.console.ConsoleView" appearance="2" expanded="2">
-<page content="org.eclipse.ui.console.ConsoleView" label="Console"/>
+<info folder="true" part="org.eclipse.debug.internal.ui.ConsoleFolderView" ratio="0.74922603" ratioLeft="484" ratioRight="162" relationship="4" relative="org.eclipse.debug.internal.ui.NavigatorFolderView">&#x0A;<folder activePageID="org.eclipse.ui.console.ConsoleView" appearance="2" expanded="2">&#x0A;<page content="org.eclipse.ui.console.ConsoleView" label="Console"/>
 <page content="org.eclipse.ui.views.TaskList" label="Tasks"/>
 <page content="org.eclipse.ui.views.ProblemView" label="Problems"/>
 <page content="org.eclipse.cdt.debug.ui.executablesView" label="Executables"/>
@@ -347,8 +309,7 @@
 <page content="org.eclipse.jdt.debug.ui.DisplayView" label="LabelNotFound"/>
 <page content="org.eclipse.search.SearchResultView" label="LabelNotFound"/>
 <page content="org.eclipse.wst.xsl.jaxp.debug.ui.view1" label="LabelNotFound"/>
-<presentation id="org.eclipse.ui.presentations.WorkbenchPresentationFactory">
-<part id="0"/>
+<presentation id="org.eclipse.ui.presentations.WorkbenchPresentationFactory">&#x0A;<part id="0"/>
 <part id="1"/>
 <part id="2"/>
 <part id="3"/>
@@ -358,20 +319,15 @@
 </folder>
 </info>
 <info part="org.eclipse.ui.editorss" ratio="0.59414226" ratioLeft="284" ratioRight="194" relationship="4" relative="org.eclipse.debug.internal.ui.NavigatorFolderView"/>
-<info folder="true" part="org.eclipse.debug.internal.ui.OutlineFolderView" ratio="0.74939567" ratioLeft="930" ratioRight="311" relationship="2" relative="org.eclipse.ui.editorss">
-<folder activePageID="org.eclipse.ui.views.ContentOutline" appearance="2" expanded="2">
-<page content="org.eclipse.ui.views.ContentOutline" label="Outline"/>
+<info folder="true" part="org.eclipse.debug.internal.ui.OutlineFolderView" ratio="0.74939567" ratioLeft="930" ratioRight="311" relationship="2" relative="org.eclipse.ui.editorss">&#x0A;<folder activePageID="org.eclipse.ui.views.ContentOutline" appearance="2" expanded="2">&#x0A;<page content="org.eclipse.ui.views.ContentOutline" label="Outline"/>
 <page content="org.eclipse.ant.ui.views.AntView" label="LabelNotFound"/>
 <page content="org.eclipse.cdt.dsf.gdb.ui.tracecontrol.view" label="LabelNotFound"/>
 <page content="org.eclipse.cdt.dsf.debug.ui.disassembly.view" label="LabelNotFound"/>
-<presentation id="org.eclipse.ui.presentations.WorkbenchPresentationFactory">
-<part id="0"/>
+<presentation id="org.eclipse.ui.presentations.WorkbenchPresentationFactory">&#x0A;<part id="0"/>
 </presentation>
 </folder>
 </info>
-<info folder="true" part="org.eclipse.debug.internal.ui.ToolsFolderView" ratio="0.4995971" ratioLeft="620" ratioRight="621" relationship="2" relative="org.eclipse.debug.internal.ui.NavigatorFolderView">
-<folder activePageID="org.eclipse.debug.ui.VariableView" appearance="2" expanded="2">
-<page content="org.eclipse.debug.ui.VariableView" label="Variables"/>
+<info folder="true" part="org.eclipse.debug.internal.ui.ToolsFolderView" ratio="0.4995971" ratioLeft="620" ratioRight="621" relationship="2" relative="org.eclipse.debug.internal.ui.NavigatorFolderView">&#x0A;<folder activePageID="org.eclipse.debug.ui.VariableView" appearance="2" expanded="2">&#x0A;<page content="org.eclipse.debug.ui.VariableView" label="Variables"/>
 <page content="org.eclipse.debug.ui.BreakpointView" label="Breakpoints"/>
 <page content="org.eclipse.debug.ui.ExpressionView" label="Expressions"/>
 <page content="org.eclipse.dltk.debug.ui.ScriptDisplayView" label="Interactive Console"/>
@@ -379,8 +335,7 @@
 <page content="org.eclipse.cdt.debug.ui.SignalsView" label="LabelNotFound"/>
 <page content="org.eclipse.debug.ui.ModuleView" label="LabelNotFound"/>
 <page content="org.eclipse.debug.ui.PHPStackView" label="LabelNotFound"/>
-<presentation id="org.eclipse.ui.presentations.WorkbenchPresentationFactory">
-<part id="0"/>
+<presentation id="org.eclipse.ui.presentations.WorkbenchPresentationFactory">&#x0A;<part id="0"/>
 <part id="1"/>
 <part id="2"/>
 <part id="3"/>
@@ -390,7 +345,7 @@
 </mainWindow>
 </layout>
 </perspective>
-<perspective editorAreaTrimState="2" editorAreaVisible="1" fixed="0" version="0.016">
+<perspective editorAreaTrimState="1" editorAreaVisible="1" fixed="0" version="0.016">
 <descriptor class="org.eclipse.jdt.internal.ui.JavaPerspectiveFactory" id="org.eclipse.jdt.ui.JavaPerspective" label="Java"/>
 <alwaysOnActionSet id="org.eclipse.mylyn.context.ui.actionSet"/>
 <alwaysOnActionSet id="org.eclipse.mylyn.doc.actionSet"/>
@@ -450,28 +405,43 @@
 <perspective_action id="org.eclipse.wst.jsdt.ui.JavaPerspective"/>
 <hide_toolbar_item_id id="org.eclipse.jdt.ui.actions.OpenProjectWizard"/>
 <hide_toolbar_item_id id="org.eclipse.ui.edit.text.toggleShowSelectedElementOnly"/>
-<view id="org.eclipse.ui.navigator.ProjectExplorer"/>
-<view id="org.eclipse.ui.views.ProblemView"/>
-<view id="org.eclipse.jdt.ui.JavadocView"/>
-<view id="org.eclipse.jdt.ui.SourceView"/>
-<view id="org.eclipse.ui.console.ConsoleView"/>
-<view id="org.eclipse.mylyn.tasks.ui.views.tasks"/>
-<view id="org.eclipse.ui.views.ContentOutline"/>
-<fastViewBars/>
+<fastViewBars>
+<fastViewBar fastViewLocation="131072" id="org.eclipse.ui.internal.ViewStack@c6d581" orientation="512" selectedTabId="org.eclipse.mylyn.tasks.ui.views.tasks" style="1">
+<fastViews>
+<view id="org.eclipse.mylyn.tasks.ui.views.tasks" ratio="0.3"/>
+</fastViews>
+</fastViewBar>
+<fastViewBar fastViewLocation="131072" id="bottom" orientation="256" selectedTabId="org.eclipse.ui.console.ConsoleView" style="1">
+<fastViews>
+<view id="org.eclipse.ui.views.ProblemView" ratio="0.3"/>
+<view id="org.eclipse.jdt.ui.JavadocView" ratio="0.3"/>
+<view id="org.eclipse.jdt.ui.SourceView" ratio="0.3"/>
+<view id="org.eclipse.ui.console.ConsoleView" ratio="0.29958245"/>
+</fastViews>
+</fastViewBar>
+<fastViewBar fastViewLocation="16384" id="left" orientation="512" selectedTabId="org.eclipse.ui.navigator.ProjectExplorer" style="1">
+<fastViews>
+<view id="org.eclipse.ui.navigator.ProjectExplorer" ratio="0.3"/>
+</fastViews>
+</fastViewBar>
+<fastViewBar fastViewLocation="131072" id="right" orientation="512" selectedTabId="org.eclipse.ui.views.ContentOutline" style="1">
+<fastViews>
+<view id="org.eclipse.ui.views.ContentOutline" ratio="0.3"/>
+</fastViews>
+</fastViewBar>
+</fastViewBars>
 <layout>
 <mainWindow>
 <info folder="true" part="left">
-<folder activePageID="org.eclipse.ui.navigator.ProjectExplorer" appearance="2" expanded="2">
-<page content="org.eclipse.ui.navigator.ProjectExplorer" label="Project Explorer"/>
+<folder appearance="2" expanded="0">
+<page content="org.eclipse.ui.navigator.ProjectExplorer" label="LabelNotFound"/>
 <page content="org.eclipse.jdt.ui.PackageExplorer" label="LabelNotFound"/>
 <page content="org.eclipse.jdt.ui.TypeHierarchy" label="LabelNotFound"/>
 <page content="org.eclipse.ui.views.ResourceNavigator" label="LabelNotFound"/>
 <page content="org.eclipse.jdt.junit.ResultView" label="LabelNotFound"/>
 <page content="org.eclipse.wb.core.StructureView" label="LabelNotFound"/>
 <page content="org.eclipse.wb.core.PaletteView" label="LabelNotFound"/>
-<presentation id="org.eclipse.ui.presentations.WorkbenchPresentationFactory">
-<part id="0"/>
-</presentation>
+<presentation id="org.eclipse.ui.presentations.WorkbenchPresentationFactory"/>
 </folder>
 </info>
 <info folder="true" part="stickyFolderRight" ratio="0.749427" ratioLeft="981" ratioRight="328" relationship="2" relative="left">
@@ -483,38 +453,29 @@
 </info>
 <info part="org.eclipse.ui.editorss" ratio="0.24980901" ratioLeft="327" ratioRight="982" relationship="2" relative="left"/>
 <info folder="true" part="bottom" ratio="0.57387245" ratioLeft="369" ratioRight="274" relationship="4" relative="org.eclipse.ui.editorss">
-<folder activePageID="org.eclipse.ui.console.ConsoleView" appearance="2" expanded="2">
-<page content="org.eclipse.ui.views.ProblemView" label="Problems"/>
-<page content="org.eclipse.jdt.ui.JavadocView" label="Javadoc"/>
-<page content="org.eclipse.jdt.ui.SourceView" label="Declaration"/>
-<page content="org.eclipse.ui.console.ConsoleView" label="Console"/>
+<folder appearance="2" expanded="0">
+<page content="org.eclipse.ui.views.ProblemView" label="LabelNotFound"/>
+<page content="org.eclipse.jdt.ui.JavadocView" label="LabelNotFound"/>
+<page content="org.eclipse.jdt.ui.SourceView" label="LabelNotFound"/>
+<page content="org.eclipse.ui.console.ConsoleView" label="LabelNotFound"/>
 <page content="org.eclipse.search.ui.views.SearchView" label="LabelNotFound"/>
 <page content="org.eclipse.ui.views.BookmarkView" label="LabelNotFound"/>
 <page content="org.eclipse.ui.views.ProgressView" label="LabelNotFound"/>
-<presentation id="org.eclipse.ui.presentations.WorkbenchPresentationFactory">
-<part id="0"/>
-<part id="1"/>
-<part id="2"/>
-<part id="3"/>
-</presentation>
+<presentation id="org.eclipse.ui.presentations.WorkbenchPresentationFactory"/>
 </folder>
 </info>
 <info folder="true" part="org.eclipse.ui.internal.ViewStack@c6d581" ratio="0.74949086" ratioLeft="736" ratioRight="246" relationship="2" relative="org.eclipse.ui.editorss">
-<folder activePageID="org.eclipse.mylyn.tasks.ui.views.tasks" appearance="2" expanded="2">
-<page content="org.eclipse.mylyn.tasks.ui.views.tasks" label="Task List"/>
-<presentation id="org.eclipse.ui.presentations.WorkbenchPresentationFactory">
-<part id="0"/>
-</presentation>
+<folder appearance="2" expanded="0">
+<page content="org.eclipse.mylyn.tasks.ui.views.tasks" label="LabelNotFound"/>
+<presentation id="org.eclipse.ui.presentations.WorkbenchPresentationFactory"/>
 </folder>
 </info>
 <info folder="true" part="right" ratio="0.5" ratioLeft="242" ratioRight="242" relationship="4" relative="org.eclipse.ui.internal.ViewStack@c6d581">
-<folder activePageID="org.eclipse.ui.views.ContentOutline" appearance="2" expanded="2">
-<page content="org.eclipse.ui.views.ContentOutline" label="Outline"/>
+<folder appearance="2" expanded="0">
+<page content="org.eclipse.ui.views.ContentOutline" label="LabelNotFound"/>
 <page content="org.eclipse.ui.texteditor.TemplatesView" label="LabelNotFound"/>
 <page content="org.eclipse.ant.ui.views.AntView" label="LabelNotFound"/>
-<presentation id="org.eclipse.ui.presentations.WorkbenchPresentationFactory">
-<part id="0"/>
-</presentation>
+<presentation id="org.eclipse.ui.presentations.WorkbenchPresentationFactory"/>
 </folder>
 </info>
 <info part="org.eclipse.egit.ui.RepositoriesView" ratio="0.5990712" ratioLeft="387" ratioRight="259" relationship="4" relative="left"/>
@@ -525,163 +486,166 @@
 <workingSets/>
 <navigationHistory>
 <editors>
+<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" path="/Quadroid/src/de/th_wildau/quadroid/landmark/MainLandmark.java"/>
 <editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" path="/Quadroid/src/de/th_wildau/quadroid/QuadroidMain.java"/>
+<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" path="/Quadroid/src/de/th_wildau/quadroid/connection/Connect.java"/>
+<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" path="/Quadroid/src/de/th_wildau/quadroid/connection/ConnectionContainer.java"/>
+<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.PropertiesFileEditor" path="/Quadroid/log4j.properties"/>
+<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.ui.DefaultTextEditor" path="/Quadroid/log.txt"/>
 <editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" path="/Quadroid/src/de/th_wildau/quadroid/landmark/TestLM.java"/>
 <editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" path="/Quadroid/src/de/th_wildau/quadroid/landmark/MainLandmark.java"/>
-<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" path="/Quadroid/src/de/th_wildau/quadroid/landmark/Morphology.java"/>
 <editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" path="/Quadroid/src/de/th_wildau/quadroid/landmark/OpCheckLandmark.java"/>
-<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" path="/Quadroid/src/de/th_wildau/quadroid/landmark/OpenCvConverter.java"/>
-<editor factoryID="org.eclipse.jdt.ui.ClassFileEditorInputFactory" id="org.eclipse.jdt.ui.ClassFileEditor" org.eclipse.jdt.ui.ClassFileIdentifier="=Quadroid/lib\/opencv-245.jar&lt;org.opencv.imgproc(Imgproc.class"/>
+<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" path="/Quadroid/src/de/th_wildau/quadroid/models/FlightCtrl.java"/>
 </editors>
-<item historyLabel="QuadroidMain.java" index="0">
-<position info="not_deleted" x="2520" y="0"/>
+<item historyLabel="MainLandmark.java" index="0">
+<position info="not_deleted" x="548" y="2"/>
 </item>
-<item historyLabel="QuadroidMain.java" index="0">
-<position info="not_deleted" x="2941" y="0"/>
+<item historyLabel="QuadroidMain.java" index="1">
+<position info="not_deleted" x="1558" y="0"/>
 </item>
-<item historyLabel="QuadroidMain.java" index="0">
-<position info="not_deleted" x="2632" y="39"/>
+<item historyLabel="QuadroidMain.java" index="1">
+<position info="not_deleted" x="2567" y="0"/>
 </item>
-<item historyLabel="QuadroidMain.java" index="0">
-<position info="not_deleted" x="2525" y="0"/>
+<item historyLabel="QuadroidMain.java" index="1">
+<position/>
 </item>
-<item historyLabel="QuadroidMain.java" index="0">
-<position info="not_deleted" x="2525" y="0"/>
+<item historyLabel="Connect.java" index="2">
+<position info="not_deleted" x="2361" y="0"/>
 </item>
-<item historyLabel="QuadroidMain.java" index="0">
-<position info="not_deleted" x="3420" y="0"/>
+<item historyLabel="ConnectionContainer.java" index="3">
+<position info="not_deleted" x="1853" y="0"/>
 </item>
-<item historyLabel="QuadroidMain.java" index="0">
-<position info="not_deleted" x="4587" y="0"/>
+<item historyLabel="Connect.java" index="2">
+<position info="not_deleted" x="3896" y="0"/>
 </item>
-<item historyLabel="TestLM.java" index="1">
-<position info="not_deleted" x="337" y="0"/>
+<item historyLabel="QuadroidMain.java" index="1">
+<position/>
 </item>
-<item historyLabel="MainLandmark.java" index="2">
-<position info="not_deleted" x="561" y="0"/>
+<item historyLabel="QuadroidMain.java" index="1">
+<position/>
 </item>
-<item historyLabel="TestLM.java" index="1">
-<position info="not_deleted" x="207" y="0"/>
+<item historyLabel="QuadroidMain.java" index="1">
+<position info="not_deleted" x="2249" y="0"/>
 </item>
-<item historyLabel="Morphology.java" index="3">
-<position info="not_deleted" x="248" y="0"/>
+<item historyLabel="QuadroidMain.java" index="1">
+<position info="not_deleted" x="3375" y="0"/>
 </item>
-<item historyLabel="TestLM.java" index="1">
-<position info="not_deleted" x="255" y="343"/>
+<item historyLabel="QuadroidMain.java" index="1">
+<position info="not_deleted" x="2866" y="8"/>
 </item>
-<item historyLabel="QuadroidMain.java" index="0">
+<item historyLabel="QuadroidMain.java" index="1">
+<position info="not_deleted" x="3364" y="0"/>
+</item>
+<item historyLabel="QuadroidMain.java" index="1">
+<position info="not_deleted" x="2936" y="0"/>
+</item>
+<item historyLabel="QuadroidMain.java" index="1">
+<position info="not_deleted" x="3140" y="0"/>
+</item>
+<item historyLabel="QuadroidMain.java" index="1">
+<position info="not_deleted" x="3324" y="0"/>
+</item>
+<item historyLabel="QuadroidMain.java" index="1">
+<position info="not_deleted" x="3323" y="0"/>
+</item>
+<item historyLabel="QuadroidMain.java" index="1">
+<position info="not_deleted" x="3357" y="0"/>
+</item>
+<item historyLabel="QuadroidMain.java" index="1">
+<position info="not_deleted" x="3500" y="0"/>
+</item>
+<item historyLabel="QuadroidMain.java" index="1">
+<position info="not_deleted" x="3500" y="0"/>
+</item>
+<item historyLabel="QuadroidMain.java" index="1">
+<position info="not_deleted" x="3511" y="0"/>
+</item>
+<item historyLabel="log4j.properties" index="4">
+<position info="not_deleted" x="631" y="0"/>
+</item>
+<item historyLabel="QuadroidMain.java" index="1">
+<position info="not_deleted" x="3511" y="0"/>
+</item>
+<item historyLabel="QuadroidMain.java" index="1">
+<position info="not_deleted" x="3642" y="0"/>
+</item>
+<item historyLabel="QuadroidMain.java" index="1">
+<position info="not_deleted" x="3708" y="0"/>
+</item>
+<item historyLabel="log.txt" index="5">
+<position/>
+</item>
+<item historyLabel="QuadroidMain.java" index="1">
+<position info="not_deleted" x="3708" y="0"/>
+</item>
+<item historyLabel="log4j.properties" index="4">
+<position info="not_deleted" x="678" y="0"/>
+</item>
+<item historyLabel="QuadroidMain.java" index="1">
+<position info="not_deleted" x="3708" y="0"/>
+</item>
+<item historyLabel="TestLM.java" index="6">
+<position/>
+</item>
+<item historyLabel="log.txt" index="5">
+<position info="not_deleted" x="1770" y="0"/>
+</item>
+<item historyLabel="TestLM.java" index="6">
+<position/>
+</item>
+<item historyLabel="QuadroidMain.java" index="1">
+<position info="not_deleted" x="7855" y="0"/>
+</item>
+<item historyLabel="MainLandmark.java" index="7">
+<position info="not_deleted" x="386" y="0"/>
+</item>
+<item historyLabel="QuadroidMain.java" index="1">
+<position info="not_deleted" x="7855" y="0"/>
+</item>
+<item historyLabel="MainLandmark.java" index="7">
+<position info="not_deleted" x="386" y="0"/>
+</item>
+<item historyLabel="TestLM.java" index="6">
+<position info="not_deleted" x="533" y="0"/>
+</item>
+<item historyLabel="MainLandmark.java" index="7">
+<position info="not_deleted" x="643" y="0"/>
+</item>
+<item historyLabel="OpCheckLandmark.java" index="8">
+<position info="not_deleted" x="979" y="6"/>
+</item>
+<item historyLabel="OpCheckLandmark.java" index="8">
+<position info="not_deleted" x="3949" y="0"/>
+</item>
+<item historyLabel="OpCheckLandmark.java" index="8">
+<position info="not_deleted" x="1199" y="18"/>
+</item>
+<item historyLabel="MainLandmark.java" index="7">
+<position info="not_deleted" x="386" y="0"/>
+</item>
+<item historyLabel="QuadroidMain.java" index="1">
+<position info="not_deleted" x="3728" y="0"/>
+</item>
+<item historyLabel="FlightCtrl.java" index="9">
 <position info="not_deleted" x="0" y="0"/>
 </item>
-<item historyLabel="QuadroidMain.java" index="0">
-<position info="not_deleted" x="3879" y="0"/>
+<item historyLabel="QuadroidMain.java" index="1">
+<position info="not_deleted" x="3728" y="0"/>
 </item>
-<item historyLabel="OpCheckLandmark.java" index="4">
-<position info="not_deleted" x="5489" y="53"/>
+<item historyLabel="QuadroidMain.java" index="1">
+<position info="not_deleted" x="3806" y="10"/>
 </item>
-<item historyLabel="OpCheckLandmark.java" index="4">
-<position info="not_deleted" x="2735" y="26"/>
+<item historyLabel="QuadroidMain.java" index="1">
+<position info="not_deleted" x="3799" y="0"/>
 </item>
-<item historyLabel="MainLandmark.java" index="2">
-<position info="not_deleted" x="549" y="28"/>
+<item historyLabel="QuadroidMain.java" index="1">
+<position info="not_deleted" x="3864" y="11"/>
 </item>
-<item historyLabel="QuadroidMain.java" index="0">
-<position info="not_deleted" x="4054" y="0"/>
+<item historyLabel="QuadroidMain.java" index="1">
+<position info="not_deleted" x="1739" y="0"/>
 </item>
-<item historyLabel="MainLandmark.java" index="2">
-<position info="not_deleted" x="549" y="28"/>
-</item>
-<item historyLabel="OpCheckLandmark.java" index="4">
-<position info="not_deleted" x="2735" y="26"/>
-</item>
-<item historyLabel="OpCheckLandmark.java" index="4">
-<position info="not_deleted" x="3294" y="0"/>
-</item>
-<item historyLabel="MainLandmark.java" index="2">
-<position info="not_deleted" x="549" y="28"/>
-</item>
-<item historyLabel="Morphology.java" index="3">
-<position info="not_deleted" x="8206" y="0"/>
-</item>
-<item historyLabel="QuadroidMain.java" index="0">
-<position info="not_deleted" x="3876" y="0"/>
-</item>
-<item historyLabel="OpCheckLandmark.java" index="4">
-<position info="not_deleted" x="175" y="0"/>
-</item>
-<item historyLabel="OpenCvConverter.java" index="5">
-<position info="not_deleted" x="880" y="0"/>
-</item>
-<item historyLabel="TestLM.java" index="1">
-<position info="not_deleted" x="249" y="0"/>
-</item>
-<item historyLabel="QuadroidMain.java" index="0">
-<position info="not_deleted" x="3876" y="0"/>
-</item>
-<item historyLabel="QuadroidMain.java" index="0">
-<position info="not_deleted" x="3808" y="0"/>
-</item>
-<item historyLabel="QuadroidMain.java" index="0">
-<position info="not_deleted" x="3804" y="0"/>
-</item>
-<item historyLabel="QuadroidMain.java" index="0">
-<position info="not_deleted" x="3848" y="0"/>
-</item>
-<item historyLabel="QuadroidMain.java" index="0">
-<position info="not_deleted" x="3880" y="0"/>
-</item>
-<item historyLabel="QuadroidMain.java" index="0">
-<position info="not_deleted" x="3933" y="0"/>
-</item>
-<item historyLabel="QuadroidMain.java" index="0">
-<position info="not_deleted" x="4064" y="0"/>
-</item>
-<item historyLabel="QuadroidMain.java" index="0">
-<position info="not_deleted" x="4112" y="0"/>
-</item>
-<item historyLabel="MainLandmark.java" index="2">
-<position info="not_deleted" x="365" y="0"/>
-</item>
-<item historyLabel="MainLandmark.java" index="2">
-<position info="not_deleted" x="401" y="0"/>
-</item>
-<item historyLabel="MainLandmark.java" index="2">
-<position info="not_deleted" x="436" y="0"/>
-</item>
-<item historyLabel="MainLandmark.java" index="2">
-<position info="not_deleted" x="487" y="0"/>
-</item>
-<item historyLabel="MainLandmark.java" index="2">
-<position info="not_deleted" x="549" y="0"/>
-</item>
-<item historyLabel="OpCheckLandmark.java" index="4">
-<position info="not_deleted" x="1071" y="0"/>
-</item>
-<item historyLabel="OpCheckLandmark.java" index="4">
-<position info="not_deleted" x="1093" y="0"/>
-</item>
-<item historyLabel="OpCheckLandmark.java" index="4">
-<position info="not_deleted" x="1119" y="0"/>
-</item>
-<item historyLabel="OpCheckLandmark.java" index="4">
-<position info="not_deleted" x="2735" y="0"/>
-</item>
-<item historyLabel="OpCheckLandmark.java" index="4">
-<position info="not_deleted" x="5222" y="0"/>
-</item>
-<item historyLabel="OpCheckLandmark.java" index="4">
-<position info="not_deleted" x="5244" y="0"/>
-</item>
-<item historyLabel="OpCheckLandmark.java" index="4">
-<position info="not_deleted" x="5275" y="0"/>
-</item>
-<item historyLabel="OpCheckLandmark.java" index="4">
-<position info="not_deleted" x="5429" y="0"/>
-</item>
-<item active="true" historyLabel="OpCheckLandmark.java" index="4">
-<position info="not_deleted" x="5489" y="0"/>
-</item>
-<item historyLabel="Imgproc.class" index="6">
-<position info="not_deleted" x="164089" y="0"/>
+<item active="true" historyLabel="QuadroidMain.java" index="1">
+<position info="not_deleted" x="1819" y="0"/>
 </item>
 </navigationHistory>
 <input factoryID="org.eclipse.ui.internal.model.ResourceFactory" path="/" type="8"/>
@@ -709,6 +673,33 @@
 </trimLayout>
 </window>
 <mruList>
+<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="FlightCtrl.java" tooltip="Quadroid/src/de/th_wildau/quadroid/models/FlightCtrl.java">
+<persistable path="/Quadroid/src/de/th_wildau/quadroid/models/FlightCtrl.java"/>
+</file>
+<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="OpCheckLandmark.java" tooltip="Quadroid/src/de/th_wildau/quadroid/landmark/OpCheckLandmark.java">
+<persistable path="/Quadroid/src/de/th_wildau/quadroid/landmark/OpCheckLandmark.java"/>
+</file>
+<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="TestLM.java" tooltip="Quadroid/src/de/th_wildau/quadroid/landmark/TestLM.java">
+<persistable path="/Quadroid/src/de/th_wildau/quadroid/landmark/TestLM.java"/>
+</file>
+<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="MainLandmark.java" tooltip="Quadroid/src/de/th_wildau/quadroid/landmark/MainLandmark.java">
+<persistable path="/Quadroid/src/de/th_wildau/quadroid/landmark/MainLandmark.java"/>
+</file>
+<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="QuadroidMain.java" tooltip="Quadroid/src/de/th_wildau/quadroid/QuadroidMain.java">
+<persistable path="/Quadroid/src/de/th_wildau/quadroid/QuadroidMain.java"/>
+</file>
+<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.ui.DefaultTextEditor" name="log.txt" tooltip="Quadroid/log.txt">
+<persistable path="/Quadroid/log.txt"/>
+</file>
+<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.PropertiesFileEditor" name="log4j.properties" tooltip="Quadroid/log4j.properties">
+<persistable path="/Quadroid/log4j.properties"/>
+</file>
+<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="ConnectionContainer.java" tooltip="Quadroid/src/de/th_wildau/quadroid/connection/ConnectionContainer.java">
+<persistable path="/Quadroid/src/de/th_wildau/quadroid/connection/ConnectionContainer.java"/>
+</file>
+<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="Connect.java" tooltip="Quadroid/src/de/th_wildau/quadroid/connection/Connect.java">
+<persistable path="/Quadroid/src/de/th_wildau/quadroid/connection/Connect.java"/>
+</file>
 <file factoryID="org.eclipse.jdt.ui.ClassFileEditorInputFactory" id="org.eclipse.jdt.ui.ClassFileEditor" name="Imgproc.class" tooltip="org.opencv.imgproc.Imgproc">
 <persistable org.eclipse.jdt.ui.ClassFileIdentifier="=Quadroid/lib\/opencv-245.jar&lt;org.opencv.imgproc(Imgproc.class"/>
 </file>
@@ -718,41 +709,14 @@
 <file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="Morphology.java" tooltip="Quadroid/src/de/th_wildau/quadroid/landmark/Morphology.java">
 <persistable path="/Quadroid/src/de/th_wildau/quadroid/landmark/Morphology.java"/>
 </file>
-<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="MainLandmark.java" tooltip="Quadroid/src/de/th_wildau/quadroid/landmark/MainLandmark.java">
-<persistable path="/Quadroid/src/de/th_wildau/quadroid/landmark/MainLandmark.java"/>
-</file>
-<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="OpCheckLandmark.java" tooltip="Quadroid/src/de/th_wildau/quadroid/landmark/OpCheckLandmark.java">
-<persistable path="/Quadroid/src/de/th_wildau/quadroid/landmark/OpCheckLandmark.java"/>
-</file>
-<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="QuadroidMain.java" tooltip="Quadroid/src/de/th_wildau/quadroid/QuadroidMain.java">
-<persistable path="/Quadroid/src/de/th_wildau/quadroid/QuadroidMain.java"/>
-</file>
-<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="TestLM.java" tooltip="Quadroid/src/de/th_wildau/quadroid/landmark/TestLM.java">
-<persistable path="/Quadroid/src/de/th_wildau/quadroid/landmark/TestLM.java"/>
-</file>
 <file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.ui.systemExternalEditor" name="test1.jpg" tooltip="Quadroid/test1.jpg">
 <persistable path="/Quadroid/test1.jpg"/>
-</file>
-<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="Connect.java" tooltip="Quadroid/src/de/th_wildau/quadroid/connection/Connect.java">
-<persistable path="/Quadroid/src/de/th_wildau/quadroid/connection/Connect.java"/>
-</file>
-<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="ConnectionContainer.java" tooltip="Quadroid/src/de/th_wildau/quadroid/connection/ConnectionContainer.java">
-<persistable path="/Quadroid/src/de/th_wildau/quadroid/connection/ConnectionContainer.java"/>
 </file>
 <file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.PropertiesFileEditor" name="log4j.properties" tooltip="Quadroid/src/log4j.properties">
 <persistable path="/Quadroid/src/log4j.properties"/>
 </file>
 <file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.ui.DefaultTextEditor" name="Quadroid_log.txt" tooltip="Quadroid/~/Quadroid_log.txt">
 <persistable path="/Quadroid/~/Quadroid_log.txt"/>
-</file>
-<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="RxDataDecoder.java" tooltip="Quadroid/src/de/th_wildau/quadroid/decoder/RxDataDecoder.java">
-<persistable path="/Quadroid/src/de/th_wildau/quadroid/decoder/RxDataDecoder.java"/>
-</file>
-<file factoryID="org.eclipse.jdt.ui.internal.JarEntryEditorInputFactory" id="org.eclipse.wst.xml.ui.internal.tabletree.XMLMultiPageEditorPart" name="pom.xml" tooltip="Quadroid/lib/slf4j-api-1.7.2.jar/META-INF/maven/org.slf4j/slf4j-api/pom.xml">
-<persistable element="=Quadroid/lib\/slf4j-api-1.7.2.jar" path="META-INF/maven/org.slf4j/slf4j-api/pom.xml"/>
-</file>
-<file factoryID="org.eclipse.jdt.ui.internal.JarEntryEditorInputFactory" id="org.eclipse.wst.xml.ui.internal.tabletree.XMLMultiPageEditorPart" name="pom.xml" tooltip="Quadroid/lib/slf4j-log4j12.jar/META-INF/maven/org.slf4j/slf4j-log4j12/pom.xml">
-<persistable element="=Quadroid/lib\/slf4j-log4j12.jar" path="META-INF/maven/org.slf4j/slf4j-log4j12/pom.xml"/>
 </file>
 </mruList>
 </workbench>

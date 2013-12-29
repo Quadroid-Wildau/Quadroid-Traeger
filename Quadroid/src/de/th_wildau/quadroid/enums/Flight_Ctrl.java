@@ -8,7 +8,7 @@ package de.th_wildau.quadroid.enums;
  * 
  * */
 
-public enum FlightCtrl {
+public enum Flight_Ctrl {
 
 	//TODO: set communication parameter for Flight-Ctrl 2.5
 	BAUD(-1), //transmission speed
@@ -30,7 +30,7 @@ public enum FlightCtrl {
 	 * no public Constructor
 	 * @param value hand over an parameter for define the communication with Flight-Ctrl
 	 * */
-	private FlightCtrl(int value)
+	private Flight_Ctrl(int value)
 	{
 		this.value = value;
 	}
@@ -39,7 +39,7 @@ public enum FlightCtrl {
 	 * no public Constructor
 	 * @param value hand over an name for communication port of name of device 
 	 * */
-	private FlightCtrl(String name)
+	private Flight_Ctrl(String name)
 	{
 		this.name = name;
 	}

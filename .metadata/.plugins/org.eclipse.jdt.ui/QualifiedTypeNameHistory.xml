@@ -51,4 +51,10 @@
 <fullyQualifiedTypeName name="javax.swing.JLabel"/>
 <fullyQualifiedTypeName name="javax.swing.ImageIcon"/>
 <fullyQualifiedTypeName name="java.awt.Image"/>
+<fullyQualifiedTypeName name="gnu.io.CommPortIdentifier"/>
+<fullyQualifiedTypeName name="java.util.Enumeration"/>
+<fullyQualifiedTypeName name="gnu.io.CommPort"/>
+<fullyQualifiedTypeName name="org.apache.log4j.PropertyConfigurator"/>
+<fullyQualifiedTypeName name="de.th_wildau.quadroid.models.FlightCtrl"/>
+<fullyQualifiedTypeName name="de.th_wildau.quadroid.enums.Flight_Ctrl"/>
 </qualifiedTypeNameHistroy>

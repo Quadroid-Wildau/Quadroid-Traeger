@@ -1,28 +1,18 @@
 package de.th_wildau.quadroid;
 
-
-import gnu.io.CommPort;
 import gnu.io.CommPortIdentifier;
-
-import java.awt.BorderLayout;
-import java.awt.Canvas;
 import java.awt.Image;
 import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
 import java.util.Enumeration;
-
-import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-
 import org.apache.log4j.PropertyConfigurator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
 import de.th_wildau.quadroid.connection.Connect;
 import de.th_wildau.quadroid.encoder.TxDataEncoder;
+import de.th_wildau.quadroid.enums.Flight_Ctrl;
 import de.th_wildau.quadroid.enums.XBee;
 import de.th_wildau.quadroid.handler.ObserverHandler;
 import de.th_wildau.quadroid.handler.XBeeReceiverHandler;
@@ -31,6 +21,7 @@ import de.th_wildau.quadroid.interfaces.IRxListener;
 import de.th_wildau.quadroid.landmark.MainLandmark;
 import de.th_wildau.quadroid.models.Attitude;
 import de.th_wildau.quadroid.models.Course;
+import de.th_wildau.quadroid.models.FlightCtrl;
 import de.th_wildau.quadroid.models.GNSS;
 import de.th_wildau.quadroid.models.MetaData;
 import de.th_wildau.quadroid.models.Airplane;
@@ -54,17 +45,18 @@ public class QuadroidMain implements IRxListener
 	
 	/**Logger for Logging with {@link org.slf4j.Logger}*/
 	public static Logger logger = null;
+	/**describe the properties file for log4j logging*/
 	private static final String LOGGERPROPERTIES = "log4j.properties";
 	/**operation time*/
 	private static long time = 0;
 	/**save xbee connection*/
-	private Connect connection = null;
+	private Connect xbeeconnection = null;
+	/**save flight ctrl connection*/
+	private Connect flightctrlconnection = null;
 	/**save handler reference for transmission*/
 	private XBeeTransmitterHandler tx = null;
 	/**instance for encoder*/
 	private TxDataEncoder encoder = null;
-	
-	
 	
 	/**
 	 * Init the xBee connection to given port,
@@ -84,7 +76,7 @@ public class QuadroidMain implements IRxListener
 		
 		while(true)// wait for xbee device
 		{
-			if(this.connection == null)// try to connect only if no connection available
+			if(this.xbeeconnection == null)// try to connect only if no connection available
 			{	// get all available ports to prove if xbee are connected
 				Enumeration<?> commports = CommPortIdentifier.getPortIdentifiers();
 				
@@ -96,9 +88,9 @@ public class QuadroidMain implements IRxListener
 					   port.getPortType() == CommPortIdentifier.PORT_SERIAL &&// prove port type
 					   !port.isCurrentlyOwned())// prove if port already in use
 					{
-						this.connection = Connect.getInstance(xbee);// connect device to port 
+						this.xbeeconnection = Connect.getInstance(xbee);// connect device to port 
 						// connection successfully?
-						if(this.connection != null)
+						if(this.xbeeconnection != null)
 							return;// exit While-Loop
 					}
 				}
@@ -114,8 +106,55 @@ public class QuadroidMain implements IRxListener
 
 	}
 	
+	/**
+	 * Init the Flight-Ctrl connection to given port,
+	 * this method wait for Flight-Ctrl device until 
+	 * an connection are available
+	 * 
+	 * */
+	private void initFlight_Ctrl()
+	{
+		FlightCtrl flightctrl = new FlightCtrl();// create an new device
+		flightctrl.setBaud(Flight_Ctrl.BAUD.getValue());// set baudrate for communication speed
+		flightctrl.setDatabits(Flight_Ctrl.DATABITS.getValue());// set number of databits
+		flightctrl.setParity(Flight_Ctrl.PARITY.getValue());// set parity type
+		flightctrl.setStopbits(Flight_Ctrl.STOPBITS.getValue());// set number of stopbits
+		flightctrl.setPort(Flight_Ctrl.PORT.getName());// set port for connection
+		flightctrl.setDevicename(Flight_Ctrl.DEVICENAME.getName());// set an device name
+		
+		while(true)// wait for FlightCtrl device
+		{
+			if(this.flightctrlconnection == null)// try to connect only if no connection available
+			{	// get all available ports to prove if FlightCtrl are connected
+				Enumeration<?> commports = CommPortIdentifier.getPortIdentifiers();
+				
+				while(commports.hasMoreElements())
+				{
+					CommPortIdentifier port = (CommPortIdentifier) commports.nextElement();
+					
+					if(port.getName().equals(flightctrl.getPort()) && // only connect to specific port
+					   port.getPortType() == CommPortIdentifier.PORT_SERIAL &&// prove port type
+					   !port.isCurrentlyOwned())// prove if port already in use
+					{
+						this.flightctrlconnection = Connect.getInstance(flightctrl);// connect device to port 
+						// connection successfully?
+						if(this.flightctrlconnection != null)
+							return;// exit While-Loop
+					}
+				}
+				
+			}
+			logger.warn("Wait for Flight-Ctrl Device");
+			
+			try 
+			{
+				Thread.sleep(1000);
+			} catch (InterruptedException e) {}
+		}
 
-	public static void main(String[] args) throws IOException
+	}
+	
+	public static void main(String[] args)
 	{
 		// init logger
 		PropertyConfigurator.configure(LOGGERPROPERTIES);
@@ -129,11 +168,13 @@ public class QuadroidMain implements IRxListener
 		// init xbee
 		main.initxBee();
 		logger.info("Init xBee device");
+		//main.initFlight_Ctrl();
+		//logger.info("Init Flight-Ctrl device");
 		// registered rx handler
-		main.connection.addSerialPortEventListener(new XBeeReceiverHandler());
+		main.xbeeconnection.addSerialPortEventListener(new XBeeReceiverHandler());
 		logger.info("Registered Rx handler");
 		// registered tx handler
-		main.tx = new XBeeTransmitterHandler(main.connection);
+		main.tx = new XBeeTransmitterHandler(main.xbeeconnection);
 		logger.info("Registered Tx handler");
 		// registered observer
 		ObserverHandler.getReference().register(main);
@@ -211,12 +252,10 @@ public class QuadroidMain implements IRxListener
 
 	}
 
-
-
 	@Override
 	public void rx(RxData data) 
 	{
-		this.connection.disconnect();
+		this.xbeeconnection.disconnect();
 		time = (System.currentTimeMillis() - time);
 		logger.info("Data Rx: " + time);
 		
