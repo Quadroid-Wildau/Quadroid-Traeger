@@ -1,17 +1,23 @@
 package de.th_wildau.quadroid;
 
 
+import gnu.io.CommPort;
+import gnu.io.CommPortIdentifier;
+
 import java.awt.BorderLayout;
 import java.awt.Canvas;
 import java.awt.Image;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.util.Enumeration;
+
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 
+import org.apache.log4j.PropertyConfigurator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -48,37 +54,100 @@ public class QuadroidMain implements IRxListener
 	
 	/**Logger for Logging with {@link org.slf4j.Logger}*/
 	public static Logger logger = null;
-	
+	private static final String LOGGERPROPERTIES = "log4j.properties";
+	/**operation time*/
 	private static long time = 0;
+	/**save xbee connection*/
 	private Connect connection = null;
+	/**save handler reference for transmission*/
+	private XBeeTransmitterHandler tx = null;
+	/**instance for encoder*/
+	private TxDataEncoder encoder = null;
+	
+	
+	
+	/**
+	 * Init the xBee connection to given port,
+	 * this method wait for xBee device until 
+	 * an connection are available
+	 * 
+	 * */
+	private void initxBee()
+	{
+		XBeeRxTx xbee = new XBeeRxTx();// create an new device
+		xbee.setBaud(XBee.BAUD.getValue());// set baudrate for communication speed
+		xbee.setDatabits(XBee.DATABITS.getValue());// set number of databits
+		xbee.setParity(XBee.PARITY.getValue());// set parity type
+		xbee.setStopbits(XBee.STOPBITS.getValue());// set number of stopbits
+		xbee.setPort(XBee.PORT.getName());// set port for connection
+		xbee.setDevicename(XBee.DEVICENAME.getName());// set an device name
+		
+		while(true)// wait for xbee device
+		{
+			if(this.connection == null)// try to connect only if no connection available
+			{	// get all available ports to prove if xbee are connected
+				Enumeration<?> commports = CommPortIdentifier.getPortIdentifiers();
+				
+				while(commports.hasMoreElements())
+				{
+					CommPortIdentifier port = (CommPortIdentifier) commports.nextElement();
+					
+					if(port.getName().equals(xbee.getPort()) && // only connect to specific port
+					   port.getPortType() == CommPortIdentifier.PORT_SERIAL &&// prove port type
+					   !port.isCurrentlyOwned())// prove if port already in use
+					{
+						this.connection = Connect.getInstance(xbee);// connect device to port 
+						// connection successfully?
+						if(this.connection != null)
+							return;// exit While-Loop
+					}
+				}
+				
+			}
+			logger.warn("Wait for xBee Device");
+			
+			try 
+			{
+				Thread.sleep(1000);
+			} catch (InterruptedException e) {}
+		}
 
+	}
+	
 
 	public static void main(String[] args) throws IOException
 	{
-		/*
-		QuadroidMain main = new QuadroidMain();
+		// init logger
+		PropertyConfigurator.configure(LOGGERPROPERTIES);
 		logger = LoggerFactory.getLogger(QuadroidMain.class.getName());
+		logger.info("Init Logger");
+		// load library
+		System.loadLibrary("opencv_java245");
+		logger.info("Load OpenCV library");
+		// instance of this class
+		QuadroidMain main = new QuadroidMain();
+		// init xbee
+		main.initxBee();
+		logger.info("Init xBee device");
+		// registered rx handler
+		main.connection.addSerialPortEventListener(new XBeeReceiverHandler());
+		logger.info("Registered Rx handler");
+		// registered tx handler
+		main.tx = new XBeeTransmitterHandler(main.connection);
+		logger.info("Registered Tx handler");
+		// registered observer
+		ObserverHandler.getReference().register(main);
+		logger.info("Registered Rx observer");
+		// additional things
+		main.encoder = new TxDataEncoder();
+		// 
 		QuadroidMain.logger.info("StartQuadroid");
 		
-		XBeeRxTx xbee = new XBeeRxTx();
-		xbee.setBaud(XBee.BAUD.getValue());
-		xbee.setDatabits(XBee.DATABITS.getValue());
-		xbee.setParity(XBee.PARITY.getValue());
-		xbee.setStopbits(XBee.STOPBITS.getValue());
-		xbee.setPort(XBee.PORT.getName());
-		xbee.setDevicename(XBee.DEVICENAME.getName());
-		
-		ObserverHandler.getReference().register(main);
-		
-		main.connection = Connect.getInstance(xbee);
-		
-		main.connection.addSerialPortEventListener(new XBeeReceiverHandler());
-		
-		XBeeTransmitterHandler tx = new XBeeTransmitterHandler(main.connection);
-		
-		TxDataEncoder encoder = new TxDataEncoder();
 		
 		
+		
+		
+		/*
 		BufferedImage img = ImageIO.read(new File("test.jpg"));
 		
 		GNSS g1 = new GNSS();
@@ -137,20 +206,8 @@ public class QuadroidMain implements IRxListener
 		*/
 
 		
-		System.loadLibrary("opencv_java245");
-		BufferedImage test = null;
 		
-		File file = new File("test1.jpg"); 
-        try { 
-            test = ImageIO.read(file); 
-        } catch (IOException ex) { 
-            ex.printStackTrace(); 
-        } 
-        
-        MainLandmark asdf = new MainLandmark();
-        boolean erg = asdf.checkLandmark(test);
 
-        System.out.println(erg);
 
 	}
 

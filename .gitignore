@@ -11,4 +11,8 @@
 
 # Images #
 *.jpg
+*.JPG
 *.png
+
+# Log Files #
+*.txt
