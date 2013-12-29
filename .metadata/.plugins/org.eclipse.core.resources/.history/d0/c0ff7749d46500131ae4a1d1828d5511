@@ -1,6 +1,0 @@
-package de.th_wildau.quadroid.interfaces;
-
-public interface IRxListener 
-{
-	public void rx();
-}

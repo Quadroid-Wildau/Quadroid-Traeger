@@ -22,6 +22,7 @@ import de.th_wildau.quadroid.handler.ObserverHandler;
 import de.th_wildau.quadroid.handler.XBeeReceiverHandler;
 import de.th_wildau.quadroid.handler.XBeeTransmitterHandler;
 import de.th_wildau.quadroid.interfaces.IRxListener;
+import de.th_wildau.quadroid.landmark.MainLandmark;
 import de.th_wildau.quadroid.models.Attitude;
 import de.th_wildau.quadroid.models.Course;
 import de.th_wildau.quadroid.models.GNSS;
@@ -54,6 +55,7 @@ public class QuadroidMain implements IRxListener
 
 	public static void main(String[] args) throws IOException
 	{
+		/*
 		QuadroidMain main = new QuadroidMain();
 		logger = LoggerFactory.getLogger(QuadroidMain.class.getName());
 		QuadroidMain.logger.info("StartQuadroid");
@@ -132,7 +134,23 @@ public class QuadroidMain implements IRxListener
 
 		time = System.currentTimeMillis();
 		tx.transmit(data);
+		*/
+
 		
+		System.loadLibrary("opencv_java245");
+		BufferedImage test = null;
+		
+		File file = new File("test1.jpg"); 
+        try { 
+            test = ImageIO.read(file); 
+        } catch (IOException ex) { 
+            ex.printStackTrace(); 
+        } 
+        
+        MainLandmark asdf = new MainLandmark();
+        boolean erg = asdf.checkLandmark(test);
+
+        System.out.println(erg);
 
 	}
 
