@@ -9,13 +9,9 @@
 	</classpathentry>
 	<classpathentry kind="lib" path="lib/slf4j-api-1.7.2.jar"/>
 	<classpathentry kind="lib" path="lib/commons-codec-1.8.jar"/>
-	<classpathentry kind="lib" path="D:/Data/Dropbox/Master/Semester 3/TP/Software/GitWorkspace/Quadroid-Traeger/Quadroid/lib/opencv-245.jar">
-		<attributes>
-			<attribute name="org.eclipse.jdt.launching.CLASSPATH_ATTR_LIBRARY_PATH_ENTRY" value="D:/Data/Dropbox/Master/Semester 3/TP/Software/GitWorkspace/Quadroid-Traeger/Quadroid/lib/win-x86"/>
-		</attributes>
-	</classpathentry>
-	<classpathentry kind="lib" path="D:/Data/Dropbox/Master/Semester 3/TP/Software/GitWorkspace/Quadroid-Traeger/Quadroid/lib/slf4j-log4j12-1.6.4.jar"/>
-	<classpathentry kind="lib" path="D:/Data/Dropbox/Master/Semester 3/TP/Software/GitWorkspace/Quadroid-Traeger/Quadroid/lib/log4j-1.2.17.jar"/>
-	<classpathentry kind="lib" path="D:/Data/Dropbox/Master/Semester 3/TP/Software/WebCam/libs/webcam-capture-0.3.10-RC6.jar"/>
+	<classpathentry kind="lib" path="lib/log4j-1.2.17.jar"/>
+	<classpathentry kind="lib" path="lib/opencv-245.jar"/>
+	<classpathentry kind="lib" path="lib/slf4j-log4j12-1.6.4.jar"/>
+	<classpathentry kind="lib" path="lib/webcam-capture-0.3.10-RC6.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

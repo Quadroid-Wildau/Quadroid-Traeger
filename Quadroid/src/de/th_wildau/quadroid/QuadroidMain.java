@@ -19,10 +19,13 @@ import de.th_wildau.quadroid.handler.XBeeReceiverHandler;
 import de.th_wildau.quadroid.handler.XBeeTransmitterHandler;
 import de.th_wildau.quadroid.interfaces.IRxListener;
 import de.th_wildau.quadroid.landmark.MainLandmark;
+import de.th_wildau.quadroid.landmark.TestLM;
+import de.th_wildau.quadroid.landmark.UsbCamHandler;
 import de.th_wildau.quadroid.models.Attitude;
 import de.th_wildau.quadroid.models.Course;
 import de.th_wildau.quadroid.models.FlightCtrl;
 import de.th_wildau.quadroid.models.GNSS;
+import de.th_wildau.quadroid.models.Landmark;
 import de.th_wildau.quadroid.models.MetaData;
 import de.th_wildau.quadroid.models.Airplane;
 import de.th_wildau.quadroid.models.RxData;
@@ -57,6 +60,8 @@ public class QuadroidMain implements IRxListener
 	private XBeeTransmitterHandler tx = null;
 	/**instance for encoder*/
 	private TxDataEncoder encoder = null;
+	/**lock for landmarktransmission*/
+	private boolean lock_lm = false;
 	
 	/**
 	 * Init the xBee connection to given port,
@@ -277,5 +282,60 @@ public class QuadroidMain implements IRxListener
 		}
 	}
 
+	public class LandmarkDetection implements Runnable{
+
+		public LandmarkDetection(){
+			Thread thread = new Thread(this);
+			thread.start();
+		}
+		
+		@Override
+		public void run() {
+			Landmark landmark = new Landmark();
+			BufferedImage bimg = null;
+			long t1 = 0;
+			long t2 = 0;
+			boolean lmcheck = false;
+			TxDataEncoder encoder = new TxDataEncoder();
+			byte[] bytedata;
+			
+			PropertyConfigurator.configure("log4j.properties");
+			MainLandmark lm = new MainLandmark();
+			Logger logger = null;
+			logger = LoggerFactory.getLogger(TestLM.class.getName());
+			logger.info("Init Logger");
+			UsbCamHandler usbcamera = UsbCamHandler.getInstance(logger);
+			while(true){
+				t1 = System.currentTimeMillis();
+				bimg = usbcamera.getImage();
+				lmcheck = lm.checkLandmark(bimg);
+				if(lmcheck == true){
+					landmark.setPictureoflandmark(bimg);
+					// TODO add Metadata to Landmark
+					lock_lm = true;
+					bytedata = encoder.landmarkToBytes(landmark);
+					tx.transmit(bytedata);
+					
+//					do{
+//						Thread.sleep(50);
+//					}while (tx.isTransmit== true);
+					lock_lm = false;
+					
+				}else{
+					t2 = System.currentTimeMillis();
+					try {
+						Thread.sleep(500-(t2-t1));
+					} catch (InterruptedException e) {
+						e.printStackTrace();
+					}
+				}
+				
+				
+			}
+			
+		}
+		
+	}
+	
 	
 }
