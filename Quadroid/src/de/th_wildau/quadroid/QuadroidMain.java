@@ -62,6 +62,8 @@ public class QuadroidMain implements IRxListener
 	private TxDataEncoder encoder = null;
 	/**lock for landmarktransmission*/
 	private boolean lock_lm = false;
+	/**save instance of webcam handler*/
+	private UsbCamHandler cam = null;
 	
 	/**
 	 * Init the xBee connection to given port,
@@ -183,6 +185,8 @@ public class QuadroidMain implements IRxListener
 		logger.info("Init xBee device");
 		//main.initFlight_Ctrl();
 		//logger.info("Init Flight-Ctrl device");
+		main.cam = UsbCamHandler.getInstance(logger);
+		logger.info("Init USB Cam");
 		// registered rx handler
 		main.xbeeconnection.addSerialPortEventListener(new XBeeReceiverHandler());
 		logger.info("Registered Rx handler");
@@ -202,7 +206,10 @@ public class QuadroidMain implements IRxListener
 		
 		
 		//BufferedImage img = ImageIO.read(new File("test.jpg"));
-		
+		while(true){
+			
+			BufferedImage img = main.cam.getImage();
+			
 		GNSS g1 = new GNSS();
 		GNSS g2 = new GNSS();
 		GNSS g3 = new GNSS();
@@ -244,7 +251,7 @@ public class QuadroidMain implements IRxListener
 		md.setCourse(course);
 		
 		wp.setMetaData(md);
-		wp.setPictureoflandmark(null);
+		wp.setPictureoflandmark(img);
 		wp.setPosition(g2);
 		byte[] data = main.encoder.appendBytes(main.encoder.geodataToBytes(g4), main.encoder.waypointToBytes(wp));
 		
@@ -256,7 +263,7 @@ public class QuadroidMain implements IRxListener
 
 		time = System.currentTimeMillis();
 		
-		while(true){
+		
 		main.tx.transmit(data);
 		try {
 			Thread.sleep(200);
@@ -275,7 +282,8 @@ public class QuadroidMain implements IRxListener
 	@Override
 	public void rx(RxData data) 
 	{
-		this.xbeeconnection.disconnect();/*
+		this.xbeeconnection.disconnect();
+		/*
 		time = (System.currentTimeMillis() - time);
 		logger.info("Data Rx: " + time);
 		
@@ -294,6 +302,15 @@ public class QuadroidMain implements IRxListener
 		
 		
 		}*/
+	/*	
+		if(data != null)
+		{
+			for(Waypoint w : data.getWaypointlist())
+			{
+				System.out.println(w.toString());
+			}
+		}
+	*/	
 	}
 
 	public class LandmarkDetection implements Runnable{

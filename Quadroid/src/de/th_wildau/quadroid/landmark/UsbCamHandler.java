@@ -56,11 +56,12 @@ public class UsbCamHandler
 	 * @param logger instance of {@link org.slf4j.Logger}
 	 * */
 	private UsbCamHandler(Logger logger)
-	{
+	{		
+		this.logger = logger;
 		//set reference
-				UsbCamHandler.usbcamerahandler = this;
-				//start camera
-				this.usbcam = this.connectToCamera(RESOLUTION);
+		UsbCamHandler.usbcamerahandler = this;
+		//start camera
+		this.usbcam = this.connectToCamera(RESOLUTION);
 	}
 	
 	
@@ -96,7 +97,7 @@ public class UsbCamHandler
 	 * */
 	private Webcam connectToCamera(Dimension resolution)
 	{
-		Webcam camera =  Webcam.getDefault();
+		Webcam camera =  Webcam.getWebcams().get(0);//Webcam.getDefault();
 		
 		
 		if(camera == null || camera.isOpen())
