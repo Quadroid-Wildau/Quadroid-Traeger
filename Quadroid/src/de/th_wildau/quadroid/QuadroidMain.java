@@ -194,8 +194,7 @@ public class QuadroidMain implements IRxListener
 		
 		
 		
-		/*
-		BufferedImage img = ImageIO.read(new File("test.jpg"));
+		//BufferedImage img = ImageIO.read(new File("test.jpg"));
 		
 		GNSS g1 = new GNSS();
 		GNSS g2 = new GNSS();
@@ -238,19 +237,27 @@ public class QuadroidMain implements IRxListener
 		md.setCourse(course);
 		
 		wp.setMetaData(md);
-		wp.setPictureoflandmark(img);
+		wp.setPictureoflandmark(null);
 		wp.setPosition(g2);
-		byte[] data = encoder.appendBytes(encoder.geodataToBytes(g4), encoder.waypointToBytes(wp));
+		byte[] data = main.encoder.appendBytes(main.encoder.geodataToBytes(g4), main.encoder.waypointToBytes(wp));
 		
-		data = encoder.appendBytes(data, encoder.geodataToBytes(g3));
-		data = encoder.appendBytes(data, encoder.geodataToBytes(g5));
-		data = encoder.appendBytes(data, encoder.geodataToBytes(g6));
-		data = encoder.appendBytes(data, encoder.geodataToBytes(g7));
-		data = encoder.appendBytes(data, encoder.geodataToBytes(g8));
+		data = main.encoder.appendBytes(data, main.encoder.geodataToBytes(g3));
+		data = main.encoder.appendBytes(data, main.encoder.geodataToBytes(g5));
+		data = main.encoder.appendBytes(data, main.encoder.geodataToBytes(g6));
+		data = main.encoder.appendBytes(data, main.encoder.geodataToBytes(g7));
+		data = main.encoder.appendBytes(data, main.encoder.geodataToBytes(g8));
 
 		time = System.currentTimeMillis();
-		tx.transmit(data);
-		*/
+		
+		while(true){
+		main.tx.transmit(data);
+		try {
+			Thread.sleep(200);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		}
 
 		
 		
@@ -261,7 +268,7 @@ public class QuadroidMain implements IRxListener
 	@Override
 	public void rx(RxData data) 
 	{
-		this.xbeeconnection.disconnect();
+		this.xbeeconnection.disconnect();/*
 		time = (System.currentTimeMillis() - time);
 		logger.info("Data Rx: " + time);
 		
@@ -279,7 +286,7 @@ public class QuadroidMain implements IRxListener
 		
 		
 		
-		}
+		}*/
 	}
 
 	public class LandmarkDetection implements Runnable{
