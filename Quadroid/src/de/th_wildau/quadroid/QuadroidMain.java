@@ -188,7 +188,7 @@ public class QuadroidMain implements IRxListener
 		logger.info("Init xBee device");
 		//main.initFlight_Ctrl();
 		//logger.info("Init Flight-Ctrl device");
-		main.cam = UsbCamHandler.getInstance(logger);
+		//main.cam = UsbCamHandler.getInstance(logger);
 		logger.info("Init USB Cam");
 		// registered rx handler
 		main.xbeeconnection.addSerialPortEventListener(new XBeeReceiverHandler());
@@ -204,23 +204,7 @@ public class QuadroidMain implements IRxListener
 		// 
 		QuadroidMain.logger.info("StartQuadroid");
 		
-		
-		try {
-			main.xbeeconnection.getSerialPort().setFlowControlMode((SerialPort.FLOWCONTROL_XONXOFF_OUT | 
-					SerialPort.FLOWCONTROL_RTSCTS_OUT));
-			main.xbeeconnection.getSerialPort().notifyOnBreakInterrupt(true);
-			main.xbeeconnection.getSerialPort().notifyOnCarrierDetect(true);
-			main.xbeeconnection.getSerialPort().notifyOnCTS(true);
-			main.xbeeconnection.getSerialPort().notifyOnDSR(true);
-			main.xbeeconnection.getSerialPort().notifyOnOutputEmpty(true);
-			
-			
-		} catch (UnsupportedCommOperationException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}
-		
-		
+	/*	
 		//BufferedImage img = ImageIO.read(new File("test.jpg"));
 		while(true){
 			
@@ -281,10 +265,10 @@ public class QuadroidMain implements IRxListener
 		
 		
 		main.tx.transmit(data);
-		try {
-			
-			//while(main.xbeeconnection.getSerialPort().i);
-			Thread.sleep(1000);
+		try 
+		{
+			Thread.sleep(1000 * 60);
+		
 		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -293,14 +277,14 @@ public class QuadroidMain implements IRxListener
 
 		
 		
-
+*/
 
 	}
 
 	@Override
 	public void rx(RxData data) 
 	{
-		this.xbeeconnection.disconnect();
+		//this.xbeeconnection.disconnect();
 		/*
 		time = (System.currentTimeMillis() - time);
 		logger.info("Data Rx: " + time);
@@ -320,7 +304,7 @@ public class QuadroidMain implements IRxListener
 		
 		
 		}*/
-	/*	
+	
 		if(data != null)
 		{
 			for(Waypoint w : data.getWaypointlist())
@@ -328,7 +312,7 @@ public class QuadroidMain implements IRxListener
 				System.out.println(w.toString());
 			}
 		}
-	*/	
+	
 	}
 
 	public class LandmarkDetection implements Runnable{
