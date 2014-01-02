@@ -17,5 +17,6 @@
 	</classpathentry>
 	<classpathentry kind="lib" path="lib/slf4j-log4j12-1.6.4.jar"/>
 	<classpathentry kind="lib" path="lib/webcam-capture-0.3.10-RC6.jar"/>
+	<classpathentry kind="lib" path="lib/bridj-0.7-20131007.003529-54.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

@@ -266,7 +266,7 @@ public class QuadroidMain implements IRxListener
 		
 		main.tx.transmit(data);
 		try {
-			Thread.sleep(200);
+			Thread.sleep(1000);
 		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
