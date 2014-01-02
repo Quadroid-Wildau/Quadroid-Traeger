@@ -1,6 +1,9 @@
 package de.th_wildau.quadroid;
 
 import gnu.io.CommPortIdentifier;
+import gnu.io.SerialPort;
+import gnu.io.UnsupportedCommOperationException;
+
 import java.awt.Image;
 import java.awt.image.BufferedImage;
 import java.util.Enumeration;
@@ -202,7 +205,20 @@ public class QuadroidMain implements IRxListener
 		QuadroidMain.logger.info("StartQuadroid");
 		
 		
-		
+		try {
+			main.xbeeconnection.getSerialPort().setFlowControlMode((SerialPort.FLOWCONTROL_XONXOFF_OUT | 
+					SerialPort.FLOWCONTROL_RTSCTS_OUT));
+			main.xbeeconnection.getSerialPort().notifyOnBreakInterrupt(true);
+			main.xbeeconnection.getSerialPort().notifyOnCarrierDetect(true);
+			main.xbeeconnection.getSerialPort().notifyOnCTS(true);
+			main.xbeeconnection.getSerialPort().notifyOnDSR(true);
+			main.xbeeconnection.getSerialPort().notifyOnOutputEmpty(true);
+			
+			
+		} catch (UnsupportedCommOperationException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
 		
 		
 		//BufferedImage img = ImageIO.read(new File("test.jpg"));
@@ -266,6 +282,8 @@ public class QuadroidMain implements IRxListener
 		
 		main.tx.transmit(data);
 		try {
+			
+			//while(main.xbeeconnection.getSerialPort().i);
 			Thread.sleep(1000);
 		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block

@@ -26,10 +26,11 @@ public class XBeeReceiverHandler extends AbstractReceiver
 	public void serialEvent(SerialPortEvent evnt, SerialPort port, 
 			InputStream istream, OutputStream ostream, Logger logger) 
 	{
+		logger.info("xBee evnt: "+ evnt.getEventType());
 		//if data available get in
 		if(evnt.getEventType() == SerialPortEvent.DATA_AVAILABLE)
 		{	
-			logger.info("DataAvailable");
+			
 			//buffer for input data
 			ByteArrayOutputStream rxbase64buffer =  new ByteArrayOutputStream();
 			int rx = 0;
