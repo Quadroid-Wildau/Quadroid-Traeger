@@ -10,6 +10,8 @@ import org.apache.log4j.PropertyConfigurator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import de.th_wildau.quadroid.connection.USBCamConnection;
+
 
 public class TestLM {
 
@@ -25,7 +27,7 @@ public class TestLM {
 		Logger logger = null;
 		logger = LoggerFactory.getLogger(TestLM.class.getName());
 		logger.info("Init Logger");
-		UsbCamHandler usbcamera = UsbCamHandler.getInstance(logger);
+		USBCamConnection usbcamera = USBCamConnection.getInstance(logger);
 		while(true){
 			
 			BufferedImage qwer = usbcamera.getImage();

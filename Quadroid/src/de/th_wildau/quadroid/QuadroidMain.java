@@ -11,6 +11,7 @@ import org.apache.log4j.PropertyConfigurator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import de.th_wildau.quadroid.connection.Connect;
+import de.th_wildau.quadroid.connection.USBCamConnection;
 import de.th_wildau.quadroid.encoder.TxDataEncoder;
 import de.th_wildau.quadroid.enums.Flight_Ctrl;
 import de.th_wildau.quadroid.enums.XBee;
@@ -20,9 +21,13 @@ import de.th_wildau.quadroid.handler.XBeeTransmitterHandler;
 import de.th_wildau.quadroid.interfaces.IRxListener;
 import de.th_wildau.quadroid.landmark.MainLandmark;
 import de.th_wildau.quadroid.landmark.TestLM;
-import de.th_wildau.quadroid.landmark.UsbCamHandler;
+import de.th_wildau.quadroid.models.Airplane;
+import de.th_wildau.quadroid.models.Attitude;
+import de.th_wildau.quadroid.models.Course;
 import de.th_wildau.quadroid.models.FlightCtrl;
+import de.th_wildau.quadroid.models.GNSS;
 import de.th_wildau.quadroid.models.Landmark;
+import de.th_wildau.quadroid.models.MetaData;
 import de.th_wildau.quadroid.models.RxData;
 import de.th_wildau.quadroid.models.Waypoint;
 import de.th_wildau.quadroid.models.XBeeRxTx;
@@ -52,16 +57,16 @@ public class QuadroidMain implements IRxListener
 	/**save handler reference for transmission*/
 	private XBeeTransmitterHandler tx = null;
 	/**instance for encoder*/
-	@SuppressWarnings("unused")
 	private TxDataEncoder encoder = null;
 	/**lock for landmarktransmission*/
 	@SuppressWarnings("unused")
 	private boolean lock_lm = false;
 	/**save instance of webcam handler*/
-	@SuppressWarnings("unused")
-	private UsbCamHandler cam = null;
+	private USBCamConnection cam = null;
 	/**TEST TODO:*/
 	private JFrame frame = null;
+	
+	private static boolean receiver = false;
 	
 	/**
 	 * Init the xBee connection to given port,
@@ -76,7 +81,7 @@ public class QuadroidMain implements IRxListener
 		xbee.setDatabits(XBee.DATABITS.getValue());// set number of databits
 		xbee.setParity(XBee.PARITY.getValue());// set parity type
 		xbee.setStopbits(XBee.STOPBITS.getValue());// set number of stopbits
-		xbee.setPort(XBee.PORT.getName());// set port for connection
+		xbee.setPort("/dev/ttyUSB0");// set port for connection
 		xbee.setDevicename(XBee.DEVICENAME.getName());// set an device name
 		
 		while(true)// wait for xbee device
@@ -184,7 +189,8 @@ public class QuadroidMain implements IRxListener
 		logger.info("Init xBee device");
 		//main.initFlight_Ctrl();
 		//logger.info("Init Flight-Ctrl device");
-		//main.cam = UsbCamHandler.getInstance(logger);
+		if(!receiver)
+		main.cam = USBCamConnection.getInstance(logger);
 		logger.info("Init USB Cam");
 		// registered rx handler
 		main.xbeeconnection.addSerialPortEventListener(new XBeeReceiverHandler());
@@ -201,9 +207,9 @@ public class QuadroidMain implements IRxListener
 		
 		time = (System.currentTimeMillis() - time);
 		logger.info("time for init " + time + " ms");
-	/*	
+
 		//BufferedImage img = ImageIO.read(new File("test.jpg"));
-		while(true){
+		while(!receiver){
 			
 			BufferedImage img = main.cam.getImage();
 			
@@ -240,7 +246,7 @@ public class QuadroidMain implements IRxListener
 		course.setAngleReference(56.00f);
 		
 		qa.setBatteryState((byte) 50);
-		qa.setTime(100254);
+		qa.setTime(System.currentTimeMillis());
 		qa.setGeoData(g1);
 		
 		md.setAirplane(qa);
@@ -264,7 +270,7 @@ public class QuadroidMain implements IRxListener
 		main.tx.transmit(data);
 		try 
 		{
-			Thread.sleep(1000 * 60);
+			Thread.sleep(1000 * 15);
 		
 		} catch (InterruptedException e) {
 		}
@@ -272,14 +278,14 @@ public class QuadroidMain implements IRxListener
 
 		
 		
-*/
+
 
 	}
 
 	@Override
 	public void rx(RxData data) 
-	{
-		//this.xbeeconnection.disconnect();
+	{	if(!receiver)
+		this.xbeeconnection.disconnect();
 		
 		if(data != null)
 		{
@@ -293,14 +299,19 @@ public class QuadroidMain implements IRxListener
 					
 					if(img != null)
 					{
-						if(frame != null)
+						if(frame == null)
+						{
 							frame = new JFrame();
+							frame.setLocation(50, 50);
+							frame.setSize(100, 100);
+						}
 						frame.setVisible(false);
 						frame.getContentPane().removeAll();
 						JLabel label = new JLabel();
 						label.setIcon(new ImageIcon((Image)img));
 						frame.setBounds(100, 100, img.getWidth(), img.getHeight());
 						frame.getContentPane().add(label);
+						frame.pack();
 						frame.setVisible(true);
 					}
 				
@@ -333,7 +344,7 @@ public class QuadroidMain implements IRxListener
 			Logger logger = null;
 			logger = LoggerFactory.getLogger(TestLM.class.getName());
 			logger.info("Init Logger");
-			UsbCamHandler usbcamera = UsbCamHandler.getInstance(logger);
+			USBCamConnection usbcamera = USBCamConnection.getInstance(logger);
 			while(true){
 				t1 = System.currentTimeMillis();
 				bimg = usbcamera.getImage();

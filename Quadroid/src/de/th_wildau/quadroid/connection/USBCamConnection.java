@@ -1,4 +1,4 @@
-package de.th_wildau.quadroid.landmark;
+package de.th_wildau.quadroid.connection;
 
 import java.awt.Dimension;
 import java.awt.image.BufferedImage;
@@ -29,11 +29,11 @@ import com.github.sarxos.webcam.WebcamResolution;
  * 
  * */
 
-public class UsbCamHandler 
+public class USBCamConnection 
 {
-	/**save an return reference of {@link UsbCamHandler} 
+	/**save an return reference of {@link USBCamConnection} 
 	 * for Singleton implementation*/
-	private static UsbCamHandler usbcamerahandler = null;
+	private static USBCamConnection usbcamerahandler = null;
 	/**save camera resolution*/
 	private static final Dimension RESOLUTION = WebcamResolution.VGA.getSize();
 	/**save an instance of Webcam for access of usb camera*/
@@ -47,7 +47,7 @@ public class UsbCamHandler
 	 * Invisible Constructor 
 	 * for Singleton implementation 
 	 * */
-	private UsbCamHandler()
+	private USBCamConnection()
 	{	
 	}
 	
@@ -55,11 +55,11 @@ public class UsbCamHandler
 	 * Invisible Constructor for Singleton 
 	 * @param logger instance of {@link org.slf4j.Logger}
 	 * */
-	private UsbCamHandler(Logger logger)
+	private USBCamConnection(Logger logger)
 	{		
 		this.logger = logger;
 		//set reference
-		UsbCamHandler.usbcamerahandler = this;
+		USBCamConnection.usbcamerahandler = this;
 		//start camera
 		this.usbcam = this.connectToCamera(RESOLUTION);
 	}
@@ -69,13 +69,13 @@ public class UsbCamHandler
 	 * Singleton function
 	 * 
 	 * @param logger - reference of {@link org.slf4j.Logger}
-	 * @return reference of {@link UsbCamHandler} 
+	 * @return reference of {@link USBCamConnection} 
 	 * */
-	public static UsbCamHandler getInstance(Logger logger)
+	public static USBCamConnection getInstance(Logger logger)
 	{	//Singleton Pattern
-		if(UsbCamHandler.usbcamerahandler == null)
-			new UsbCamHandler(logger);
-		return UsbCamHandler.usbcamerahandler;
+		if(USBCamConnection.usbcamerahandler == null)
+			new USBCamConnection(logger);
+		return USBCamConnection.usbcamerahandler;
 	}
 	
 	/**
@@ -97,7 +97,7 @@ public class UsbCamHandler
 	 * */
 	private Webcam connectToCamera(Dimension resolution)
 	{
-		Webcam camera = Webcam.getDefault();
+		Webcam camera = Webcam.getWebcams().get(1);//Webcam.getDefault();
 		
 		
 		if(camera == null || camera.isOpen())
