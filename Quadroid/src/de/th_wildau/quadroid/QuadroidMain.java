@@ -1,9 +1,6 @@
 package de.th_wildau.quadroid;
 
 import gnu.io.CommPortIdentifier;
-import gnu.io.SerialPort;
-import gnu.io.UnsupportedCommOperationException;
-
 import java.awt.Image;
 import java.awt.image.BufferedImage;
 import java.util.Enumeration;
@@ -24,13 +21,8 @@ import de.th_wildau.quadroid.interfaces.IRxListener;
 import de.th_wildau.quadroid.landmark.MainLandmark;
 import de.th_wildau.quadroid.landmark.TestLM;
 import de.th_wildau.quadroid.landmark.UsbCamHandler;
-import de.th_wildau.quadroid.models.Attitude;
-import de.th_wildau.quadroid.models.Course;
 import de.th_wildau.quadroid.models.FlightCtrl;
-import de.th_wildau.quadroid.models.GNSS;
 import de.th_wildau.quadroid.models.Landmark;
-import de.th_wildau.quadroid.models.MetaData;
-import de.th_wildau.quadroid.models.Airplane;
 import de.th_wildau.quadroid.models.RxData;
 import de.th_wildau.quadroid.models.Waypoint;
 import de.th_wildau.quadroid.models.XBeeRxTx;
@@ -53,8 +45,6 @@ public class QuadroidMain implements IRxListener
 	public static Logger logger = null;
 	/**describe the properties file for log4j logging*/
 	private static final String LOGGERPROPERTIES = "log4j.properties";
-	/**operation time*/
-	private static long time = 0;
 	/**save xbee connection*/
 	private Connect xbeeconnection = null;
 	/**save flight ctrl connection*/
@@ -62,11 +52,16 @@ public class QuadroidMain implements IRxListener
 	/**save handler reference for transmission*/
 	private XBeeTransmitterHandler tx = null;
 	/**instance for encoder*/
+	@SuppressWarnings("unused")
 	private TxDataEncoder encoder = null;
 	/**lock for landmarktransmission*/
+	@SuppressWarnings("unused")
 	private boolean lock_lm = false;
 	/**save instance of webcam handler*/
+	@SuppressWarnings("unused")
 	private UsbCamHandler cam = null;
+	/**TEST TODO:*/
+	private JFrame frame = null;
 	
 	/**
 	 * Init the xBee connection to given port,
@@ -122,6 +117,7 @@ public class QuadroidMain implements IRxListener
 	 * an connection are available
 	 * 
 	 * */
+	@SuppressWarnings("unused")
 	private void initFlight_Ctrl()
 	{
 		FlightCtrl flightctrl = new FlightCtrl();// create an new device
@@ -166,7 +162,7 @@ public class QuadroidMain implements IRxListener
 	
 	public static void main(String[] args)
 	{
-		
+		long time = System.currentTimeMillis();
 		// init logger
 		PropertyConfigurator.configure(LOGGERPROPERTIES);
 		logger = LoggerFactory.getLogger(QuadroidMain.class.getName());
@@ -201,9 +197,10 @@ public class QuadroidMain implements IRxListener
 		logger.info("Registered Rx observer");
 		// additional things
 		main.encoder = new TxDataEncoder();
-		// 
 		QuadroidMain.logger.info("StartQuadroid");
 		
+		time = (System.currentTimeMillis() - time);
+		logger.info("time for init " + time + " ms");
 	/*	
 		//BufferedImage img = ImageIO.read(new File("test.jpg"));
 		while(true){
@@ -270,8 +267,6 @@ public class QuadroidMain implements IRxListener
 			Thread.sleep(1000 * 60);
 		
 		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
 		}
 		}
 
@@ -285,31 +280,32 @@ public class QuadroidMain implements IRxListener
 	public void rx(RxData data) 
 	{
 		//this.xbeeconnection.disconnect();
-		/*
-		time = (System.currentTimeMillis() - time);
-		logger.info("Data Rx: " + time);
 		
-		System.out.println(data.getWaypointlist().get(0).toString());
-		
-		BufferedImage img = data.getWaypointlist().get(0).getPictureoflandmark();
-		if(img != null)
-		{
-		JFrame frame = new JFrame();
-		JLabel label = new JLabel();
-		label.setIcon(new ImageIcon((Image)img));
-		frame.setBounds(100, 100, img.getWidth(), img.getHeight());
-		frame.getContentPane().add(label);
-		frame.setVisible(true);
-		
-		
-		
-		}*/
-	
 		if(data != null)
 		{
 			for(Waypoint w : data.getWaypointlist())
 			{
-				System.out.println(w.toString());
+				if(w != null)
+				{
+					System.out.println(w.toString());
+				
+					BufferedImage img = w.getPictureoflandmark();
+					
+					if(img != null)
+					{
+						if(frame != null)
+							frame = new JFrame();
+						frame.setVisible(false);
+						frame.getContentPane().removeAll();
+						JLabel label = new JLabel();
+						label.setIcon(new ImageIcon((Image)img));
+						frame.setBounds(100, 100, img.getWidth(), img.getHeight());
+						frame.getContentPane().add(label);
+						frame.setVisible(true);
+					}
+				
+				
+				}
 			}
 		}
 	

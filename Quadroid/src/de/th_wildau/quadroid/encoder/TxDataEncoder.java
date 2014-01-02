@@ -95,19 +95,19 @@ public class TxDataEncoder
 			
 			try
 			{	//marker for searching yaw values
-				buffer.write(Marker.ATTITUDESTART.getMarker().getBytes());
-				buffer.write(Marker.YAWSTART.getMarker().getBytes());
-				buffer.write(String.valueOf(attitude.getYaw()).getBytes());// set value
-				buffer.write(Marker.YAWEND.getMarker().getBytes());
+				buffer.write(Marker.ATTITUDESTART.getMarker().getBytes("UTF-8"));
+				buffer.write(Marker.YAWSTART.getMarker().getBytes("UTF-8"));
+				buffer.write(String.valueOf(attitude.getYaw()).getBytes("UTF-8"));// set value
+				buffer.write(Marker.YAWEND.getMarker().getBytes("UTF-8"));
 				//marker for searching roll values
-				buffer.write(Marker.ROLLSTART.getMarker().getBytes());
-				buffer.write(String.valueOf(attitude.getRoll()).getBytes());// set value
-				buffer.write(Marker.ROLLEND.getMarker().getBytes());
+				buffer.write(Marker.ROLLSTART.getMarker().getBytes("UTF-8"));
+				buffer.write(String.valueOf(attitude.getRoll()).getBytes("UTF-8"));// set value
+				buffer.write(Marker.ROLLEND.getMarker().getBytes("UTF-8"));
 				//marker for searching pitch values
-				buffer.write(Marker.PITCHSTART.getMarker().getBytes());
-				buffer.write(String.valueOf(attitude.getPitch()).getBytes());// set value
-				buffer.write(Marker.PITCHEND.getMarker().getBytes());
-				buffer.write(Marker.ATTITUDEEND.getMarker().getBytes());
+				buffer.write(Marker.PITCHSTART.getMarker().getBytes("UTF-8"));
+				buffer.write(String.valueOf(attitude.getPitch()).getBytes("UTF-8"));// set value
+				buffer.write(Marker.PITCHEND.getMarker().getBytes("UTF-8"));
+				buffer.write(Marker.ATTITUDEEND.getMarker().getBytes("UTF-8"));
 				
 			}catch(Exception e)
 			{
@@ -150,17 +150,17 @@ public class TxDataEncoder
 			
 			try
 			{	
-				buffer.write(Marker.COURSESTART.getMarker().getBytes());
+				buffer.write(Marker.COURSESTART.getMarker().getBytes("UTF-8"));
 				//marker for searching values
-				buffer.write(Marker.ANGLESTART.getMarker().getBytes());
-				buffer.write(String.valueOf(course.getAngleReference()).getBytes());// set value
-				buffer.write(Marker.ANGELEND.getMarker().getBytes());
+				buffer.write(Marker.ANGLESTART.getMarker().getBytes("UTF-8"));
+				buffer.write(String.valueOf(course.getAngleReference()).getBytes("UTF-8"));// set value
+				buffer.write(Marker.ANGELEND.getMarker().getBytes("UTF-8"));
 				//marker for searching values
-				buffer.write(Marker.SPEEDSTART.getMarker().getBytes());
-				buffer.write(String.valueOf(course.getSpeed()).getBytes());// set value
-				buffer.write(Marker.SPEEDEND.getMarker().getBytes());
+				buffer.write(Marker.SPEEDSTART.getMarker().getBytes("UTF-8"));
+				buffer.write(String.valueOf(course.getSpeed()).getBytes("UTF-8"));// set value
+				buffer.write(Marker.SPEEDEND.getMarker().getBytes("UTF-8"));
 				
-				buffer.write(Marker.COURSEEND.getMarker().getBytes());
+				buffer.write(Marker.COURSEEND.getMarker().getBytes("UTF-8"));
 				
 			}catch(Exception e)
 			{
@@ -204,21 +204,21 @@ public class TxDataEncoder
 			
 			try
 			{	
-				buffer.write(Marker.GNSSSTART.getMarker().getBytes());
+				buffer.write(Marker.GNSSSTART.getMarker().getBytes("UTF-8"));
 				//marker for searching values
-				buffer.write(Marker.LATITUDESTART.getMarker().getBytes());
-				buffer.write(String.valueOf(geodata.getLatitude()).getBytes());// set value
-				buffer.write(Marker.LATITUDEEND.getMarker().getBytes());
+				buffer.write(Marker.LATITUDESTART.getMarker().getBytes("UTF-8"));
+				buffer.write(String.valueOf(geodata.getLatitude()).getBytes("UTF-8"));// set value
+				buffer.write(Marker.LATITUDEEND.getMarker().getBytes("UTF-8"));
 				//marker for searching values
-				buffer.write(Marker.LONGITUDESTART.getMarker().getBytes());
-				buffer.write(String.valueOf(geodata.getLongitude()).getBytes());// set value
-				buffer.write(Marker.LONGITUDEEND.getMarker().getBytes());
+				buffer.write(Marker.LONGITUDESTART.getMarker().getBytes("UTF-8"));
+				buffer.write(String.valueOf(geodata.getLongitude()).getBytes("UTF-8"));// set value
+				buffer.write(Marker.LONGITUDEEND.getMarker().getBytes("UTF-8"));
 				//marker for searching values
-				buffer.write(Marker.HEIGHTSTART.getMarker().getBytes());
-				buffer.write(String.valueOf(geodata.getHeight()).getBytes());// set value
-				buffer.write(Marker.HEIGHTEND.getMarker().getBytes());
+				buffer.write(Marker.HEIGHTSTART.getMarker().getBytes("UTF-8"));
+				buffer.write(String.valueOf(geodata.getHeight()).getBytes("UTF-8"));// set value
+				buffer.write(Marker.HEIGHTEND.getMarker().getBytes("UTF-8"));
 				
-				buffer.write(Marker.GNSSEND.getMarker().getBytes());
+				buffer.write(Marker.GNSSEND.getMarker().getBytes("UTF-8"));
 				
 			}catch(Exception e)
 			{
@@ -262,22 +262,22 @@ public class TxDataEncoder
 			
 			try
 			{	
-				buffer.write(Marker.LANDMARKSTART.getMarker().getBytes());
+				buffer.write(Marker.LANDMARKSTART.getMarker().getBytes("UTF-8"));
 				//marker for searching values
 				if(landmark.getPictureoflandmark() != null)
 				{
-					buffer.write(Marker.PICTURESTART.getMarker().getBytes());//start marker for image data
+					buffer.write(Marker.PICTURESTART.getMarker().getBytes("UTF-8"));//start marker for image data
 					byte[] img = this.imageToByteArray(landmark.getPictureoflandmark(), Marker.IMAGETYPE.getMarker());
 					
 					CRC32 crc = new CRC32();
 					crc.update(img);//compute CRC32 Checksum
 					
 					buffer.write(img);//convert buffered image to bytes and append
-					buffer.write(Marker.PICTUREEND.getMarker().getBytes());//set endmarker for image
+					buffer.write(Marker.PICTUREEND.getMarker().getBytes("UTF-8"));//set endmarker for image
 					
-					buffer.write(Marker.CRCSTART.getMarker().getBytes());//start marker for crc32
-					buffer.write(String.valueOf(crc.getValue()).getBytes());//append crc32 for image
-					buffer.write(Marker.CRCEND.getMarker().getBytes());//end marker for crc32
+					buffer.write(Marker.CRCSTART.getMarker().getBytes("UTF-8"));//start marker for crc32
+					buffer.write(String.valueOf(crc.getValue()).getBytes("UTF-8"));//append crc32 for image
+					buffer.write(Marker.CRCEND.getMarker().getBytes("UTF-8"));//end marker for crc32
 					
 				}	
 				
@@ -286,7 +286,7 @@ public class TxDataEncoder
 					buffer.write(this.metadataToBytes(landmark.getMetaData()));//set metadata
 				}
 				
-				buffer.write(Marker.LANDMARKEND.getMarker().getBytes());
+				buffer.write(Marker.LANDMARKEND.getMarker().getBytes("UTF-8"));
 				
 			}catch(Exception e)
 			{
@@ -331,7 +331,7 @@ public class TxDataEncoder
 			
 			try
 			{	
-				buffer.write(Marker.METADATASTART.getMarker().getBytes());
+				buffer.write(Marker.METADATASTART.getMarker().getBytes("UTF-8"));
 				//marker for searching values
 				
 				if(metadata.getAirplane() != null)
@@ -349,7 +349,7 @@ public class TxDataEncoder
 					buffer.write(this.courseToBytes(metadata.getCourse()));//append data for course
 				}
 				
-				buffer.write(Marker.METADATAEND.getMarker().getBytes());
+				buffer.write(Marker.METADATAEND.getMarker().getBytes("UTF-8"));
 				
 			}catch(Exception e)
 			{
@@ -393,7 +393,7 @@ public class TxDataEncoder
 			
 			try
 			{	
-				buffer.write(Marker.AIRPLANESTART.getMarker().getBytes());
+				buffer.write(Marker.AIRPLANESTART.getMarker().getBytes("UTF-8"));
 				//marker for searching values
 				
 				if(airplane.GeoData() != null)
@@ -401,15 +401,15 @@ public class TxDataEncoder
 					buffer.write(this.geodataToBytes(airplane.GeoData()));//append data for GNSS
 				}
 				
-					buffer.write(Marker.TIMESTART.getMarker().getBytes());//start marker for time
-					buffer.write(String.valueOf(airplane.getTime()).getBytes());//append data for time
-					buffer.write(Marker.TIMEEND.getMarker().getBytes());//start marker for time
+					buffer.write(Marker.TIMESTART.getMarker().getBytes("UTF-8"));//start marker for time
+					buffer.write(String.valueOf(airplane.getTime()).getBytes("UTF-8"));//append data for time
+					buffer.write(Marker.TIMEEND.getMarker().getBytes("UTF-8"));//start marker for time
 					
-					buffer.write(Marker.AKKUSTART.getMarker().getBytes());//start marker for akku
-					buffer.write(String.valueOf(airplane.getBatteryState()).getBytes());//append data for akku
-					buffer.write(Marker.AKKUEND.getMarker().getBytes());//start marker for akku
+					buffer.write(Marker.AKKUSTART.getMarker().getBytes("UTF-8"));//start marker for akku
+					buffer.write(String.valueOf(airplane.getBatteryState()).getBytes("UTF-8"));//append data for akku
+					buffer.write(Marker.AKKUEND.getMarker().getBytes("UTF-8"));//start marker for akku
 				
-				buffer.write(Marker.AIRPLANEEND.getMarker().getBytes());
+				buffer.write(Marker.AIRPLANEEND.getMarker().getBytes("UTF-8"));
 				
 			}catch(Exception e)
 			{
@@ -453,22 +453,22 @@ public class TxDataEncoder
 			
 			try
 			{	
-				buffer.write(Marker.WAYPOINTSTART.getMarker().getBytes());
+				buffer.write(Marker.WAYPOINTSTART.getMarker().getBytes("UTF-8"));
 				//marker for searching values
 				if(point.getPictureoflandmark() != null)
 				{
-					buffer.write(Marker.PICTURESTART.getMarker().getBytes());//start marker for image data
+					buffer.write(Marker.PICTURESTART.getMarker().getBytes("UTF-8"));//start marker for image data
 					byte[] img = this.imageToByteArray(point.getPictureoflandmark(), Marker.IMAGETYPE.getMarker());
 					
 					CRC32 crc = new CRC32();
 					crc.update(img);//compute CRC32 Checksum
 					
 					buffer.write(img);//convert buffered image to bytes and append
-					buffer.write(Marker.PICTUREEND.getMarker().getBytes());//set endmarker for image
+					buffer.write(Marker.PICTUREEND.getMarker().getBytes("UTF-8"));//set endmarker for image
 					
-					buffer.write(Marker.CRCSTART.getMarker().getBytes());//start marker for crc32
-					buffer.write(String.valueOf(crc.getValue()).getBytes());//append crc32 for image
-					buffer.write(Marker.CRCEND.getMarker().getBytes());//end marker for crc32
+					buffer.write(Marker.CRCSTART.getMarker().getBytes("UTF-8"));//start marker for crc32
+					buffer.write(String.valueOf(crc.getValue()).getBytes("UTF-8"));//append crc32 for image
+					buffer.write(Marker.CRCEND.getMarker().getBytes("UTF-8"));//end marker for crc32
 					
 				}	
 				
@@ -482,7 +482,7 @@ public class TxDataEncoder
 					buffer.write(this.metadataToBytes(point.getMetaData()));//set metadata
 				}
 				
-				buffer.write(Marker.WAYPOINTEND.getMarker().getBytes());
+				buffer.write(Marker.WAYPOINTEND.getMarker().getBytes("UTF-8"));
 				
 			}catch(Exception e)
 			{
