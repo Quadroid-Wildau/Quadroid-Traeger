@@ -167,8 +167,15 @@ public class QuadroidMain implements IRxListener
 		logger = LoggerFactory.getLogger(QuadroidMain.class.getName());
 		logger.info("Init Logger");
 		// load library
-		System.loadLibrary("opencv_java245");
-		logger.info("Load OpenCV library");
+		try
+		{
+			//System.loadLibrary("opencv_java245");
+			logger.info("Load OpenCV library");
+		}catch(Exception e)
+		{
+			logger.error("can not load OpenCV library",e);
+			System.exit(-1);
+		}	
 		// instance of this class
 		QuadroidMain main = new QuadroidMain();
 		// init xbee
