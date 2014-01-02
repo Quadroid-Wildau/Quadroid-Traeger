@@ -156,6 +156,7 @@ public class QuadroidMain implements IRxListener
 	
 	public static void main(String[] args)
 	{
+		
 		// init logger
 		PropertyConfigurator.configure(LOGGERPROPERTIES);
 		logger = LoggerFactory.getLogger(QuadroidMain.class.getName());

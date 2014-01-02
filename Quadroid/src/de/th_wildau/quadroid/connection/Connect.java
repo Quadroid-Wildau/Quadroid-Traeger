@@ -337,4 +337,9 @@ public final class Connect implements SerialPortEventListener
 		return this.dev;
 	}
 	
+	public boolean isTransmit()
+	{
+		this.serialport.
+	}
+	
 }
