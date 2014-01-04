@@ -6,9 +6,14 @@
 *.ear
 *.metadata
 
-# Unix Driver #
+# Driver #
 *.so
+*.dll
 
 # Images #
 *.jpg
+*.JPG
 *.png
+
+# Log Files #
+*.txt
