@@ -1,24 +1,8 @@
 package de.th_wildau.quadroid.enums;
 
 /**
- * This enum contains marker for transmissions
+ * This enum contains marker for transmissions protocol 
  * 
- * 
- * <ul>
- * <li>Picture bytes</li>
- * <li>GNSS position</li>
- * <li>Gyro data</li>
- * <li>Height data</li>
- * <li>Akku state</li>
- * <li>Time value</li>
- * <li>Speed value</li>
- * <li>Course data</li>
- * <li>CRC data</li>
- * <li></li>
- * <li></li>
- * <li></li>
- * 
- * </ul>
  * 
  * @author Thomas Rohde, trohde@th-wildau.de
  * @version 1.0 27.11.2013 (JDK 7) 
