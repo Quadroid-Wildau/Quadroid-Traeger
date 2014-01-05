@@ -33,22 +33,20 @@ public class XBeeTransmitterHandler extends AbstractTransmitter
 		super(connection);
 	}
 		
-
 	/**
 	 * this function transmit data to xBee ground station
 	 * 
 	 * @param msg - hand over data to transmit
 	 * */
 	@Override
-	public void transmit(byte[] msg)
+	public synchronized void transmit(byte[] msg)
 	{
 		if(msg == null)
 			return;
-		
 	  try
 	  {	
 		super.getConnection().getOutputStream().write(msg);//send data
-		super.getConnection().getOutputStream().write("|||".getBytes());//send end marker
+		super.getConnection().getOutputStream().write("||||||".getBytes());//send end marker
 		super.getConnection().getOutputStream().flush();//flush pipe
 		logger.debug("Transmit Data");
 	  }catch(Exception e)
@@ -57,6 +55,5 @@ public class XBeeTransmitterHandler extends AbstractTransmitter
 	  }	
 		
 	}
-	
 	
 }

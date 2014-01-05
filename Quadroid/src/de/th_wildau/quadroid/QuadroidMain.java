@@ -56,17 +56,25 @@ public class QuadroidMain implements IRxListener
 	private Connect flightctrlconnection = null;
 	/**save handler reference for transmission*/
 	private XBeeTransmitterHandler tx = null;
-	/**instance for encoder*/
-	private TxDataEncoder encoder = null;
 	/**lock for landmarktransmission*/
 	@SuppressWarnings("unused")
 	private boolean lock_lm = false;
 	/**save instance of webcam handler*/
 	private USBCamConnection cam = null;
-	/**TEST TODO:*/
-	private JFrame frame = null;
+	/**this value define an interval for Flight-Ctrls updates*/
+	private static final long UPDATE_TIME_FLIGHTCTRLUPDATER = 100;
+	/**this value define an interval for updates of metadate 
+	 * in milliseconds for transmission to ground station*/
+	private static final long UPDATE_TIME_STATETRANSMITTER = 200;
+	/**this flag managed metadata updates it is set <b>true</b>, 
+	 *current metadata will be transmit to ground station*/
+	private static boolean statetransmitter = false;
 	
+	//TODO: remove
+	private JFrame frame = null;
+	//TODO: remove
 	private static boolean receiver = false;
+	
 	
 	/**
 	 * Init the xBee connection to given port,
@@ -116,6 +124,7 @@ public class QuadroidMain implements IRxListener
 
 	}
 	
+	
 	/**
 	 * Init the Flight-Ctrl connection to given port,
 	 * this method wait for Flight-Ctrl device until 
@@ -125,6 +134,7 @@ public class QuadroidMain implements IRxListener
 	@SuppressWarnings("unused")
 	private void initFlight_Ctrl()
 	{
+		//TODO: Alex
 		FlightCtrl flightctrl = new FlightCtrl();// create an new device
 		flightctrl.setBaud(Flight_Ctrl.BAUD.getValue());// set baudrate for communication speed
 		flightctrl.setDatabits(Flight_Ctrl.DATABITS.getValue());// set number of databits
@@ -165,6 +175,7 @@ public class QuadroidMain implements IRxListener
 
 	}
 	
+	
 	public static void main(String[] args)
 	{
 		long time = System.currentTimeMillis();
@@ -201,16 +212,33 @@ public class QuadroidMain implements IRxListener
 		// registered observer
 		ObserverHandler.getReference().register(main);
 		logger.info("Registered Rx observer");
-		// additional things
-		main.encoder = new TxDataEncoder();
-		QuadroidMain.logger.info("StartQuadroid");
+		// start Flight-Ctrl updater
+		new FlightCtrlUpdater();
+		logger.info("start Flight-Ctrl updater");
+		// start metadata updater
+		new StateTransmitter(main);
+		logger.info("start metadata updater");
+		// start landmark detection
+		new LandmarkDetection(main);
+		logger.info("start landmark detection");
 		
 		time = (System.currentTimeMillis() - time);
 		logger.info("time for init " + time + " ms");
-
+		QuadroidMain.logger.info("StartQuadroid");
+		
+		
+		
+		
+//**TEST**TEST**TEST**TEST**TEST**TEST**TEST**TEST**TEST**TEST**TEST**TEST**TEST**TEST**TEST**TEST**TEST**TEST**TEST**TEST**TEST**TEST**TEST**TEST
+		//TODO: remove 
+		
+		
+		
+		
 		//BufferedImage img = ImageIO.read(new File("test.jpg"));
 		while(!receiver){
-			
+			/**instance for encoder*/
+			TxDataEncoder encoder = new TxDataEncoder();
 			BufferedImage img = main.cam.getImage();
 			
 		GNSS g1 = new GNSS();
@@ -256,13 +284,13 @@ public class QuadroidMain implements IRxListener
 		wp.setMetaData(md);
 		wp.setPictureoflandmark(img);
 		wp.setPosition(g2);
-		byte[] data = main.encoder.appendBytes(main.encoder.geodataToBytes(g4), main.encoder.waypointToBytes(wp));
+		byte[] data = encoder.appendBytes(encoder.geodataToBytes(g4), encoder.waypointToBytes(wp));
 		
-		data = main.encoder.appendBytes(data, main.encoder.geodataToBytes(g3));
-		data = main.encoder.appendBytes(data, main.encoder.geodataToBytes(g5));
-		data = main.encoder.appendBytes(data, main.encoder.geodataToBytes(g6));
-		data = main.encoder.appendBytes(data, main.encoder.geodataToBytes(g7));
-		data = main.encoder.appendBytes(data, main.encoder.geodataToBytes(g8));
+		data = encoder.appendBytes(data, encoder.geodataToBytes(g3));
+		data = encoder.appendBytes(data, encoder.geodataToBytes(g5));
+		data = encoder.appendBytes(data, encoder.geodataToBytes(g6));
+		data = encoder.appendBytes(data, encoder.geodataToBytes(g7));
+		data = encoder.appendBytes(data, encoder.geodataToBytes(g8));
 
 		time = System.currentTimeMillis();
 		
@@ -278,13 +306,18 @@ public class QuadroidMain implements IRxListener
 
 		
 		
-
-
+		//**TEST**TEST**TEST**TEST**TEST**TEST**TEST**TEST**TEST**TEST**TEST**TEST**TEST**TEST**TEST**TEST**TEST**TEST**TEST**TEST**TEST**TEST**TEST**TEST
 	}
 
+	
 	@Override
 	public void rx(RxData data) 
-	{	if(!receiver)
+	{	
+		
+		//TODO: remove... 
+		
+		
+		if(!receiver)
 		this.xbeeconnection.disconnect();
 		
 		if(data != null)
@@ -321,10 +354,149 @@ public class QuadroidMain implements IRxListener
 		}
 	
 	}
+	
+	
+	
+	/**
+	 * this internal class pull MetaData updates from Flight-Ctrl
+	 * 
+	 * @author Alex
+	 * @see Runnable
+	 * 
+	 * 
+	 * */
+	public static class FlightCtrlUpdater implements Runnable
+	{
 
-	public class LandmarkDetection implements Runnable{
+		@Override
+		public void run() 
+		{
+			while(true)
+			{
+				try 
+				{
+					Thread.sleep(UPDATE_TIME_FLIGHTCTRLUPDATER);
+				} catch (InterruptedException e) {}
+				
+				//TODO: ALEX DOIT, DOIT, DOIT...
+			}
+			
+		}
+		
+	}
+	
+	
 
-		public LandmarkDetection(){
+	/**
+	 * this internal class realized the transmission of metadata
+	 * to ground station into separate thread
+	 * 
+	 * @author Thomas Rohde TM-12, trohde(at)th-wildau.de
+	 * @version 1.0, 05.01.2014, (JDK 7)
+	 * @see Runnable
+	 * 
+	 * 
+	 * */
+	public static class StateTransmitter implements Runnable
+	{
+		/**reference of main class for using fields*/
+		private QuadroidMain mainref = null;
+		/**reference of TxDataEncoder to encode object zu bytes*/
+		private TxDataEncoder encoder = null;
+		
+		
+		/**
+		 * no public constructor
+		 * only use in main
+		 * */
+		private StateTransmitter()
+		{
+		}
+		
+		/**
+		 * Constructor
+		 * 
+		 * @param ref - hand over an reference of {@link QuadroidMain} for starting 
+		 * state transmitter 
+		 * 
+		 * @throws NullPointerException - if parameter <b>null</b>
+		 * */
+		private StateTransmitter(QuadroidMain ref)
+		{
+			if(ref == null)
+			{
+				logger.error("StateTransmitter - reference of QuadroidMain are null");
+				throw new NullPointerException("StateTransmitter - reference of QuadroidMain are null");
+			}
+			this.mainref = ref;
+			this.encoder = new TxDataEncoder();
+			Thread updater = new Thread(this);
+			updater.start();
+		}
+		
+		@Override
+		public void run() 
+		{
+			while(true)
+			{
+				try 
+				{	//wait any time before transmit next metadata to ground station
+					Thread.sleep(UPDATE_TIME_STATETRANSMITTER);
+				} catch (InterruptedException e) {}
+				
+				//is transmission are enable?
+				if(!statetransmitter)
+					continue;
+//*******************************************************************************************************************************
+				//TODO: get MetaData from Navi-Ctrl 
+				MetaData update = new MetaData();
+//*******************************************************************************************************************************	
+				//encode object into bytes
+				byte[] metadata = encoder.metadataToBytes(update);
+				//transmit data to ground station
+				this.mainref.tx.transmit(metadata);
+			}
+		}
+		
+	}
+	
+	
+	/**
+	 * this internal class realized the landmark detection
+	 * into separate thread
+	 * 
+	 * @author Stefan 
+	 * @see Runnable
+	 * */
+	public static class LandmarkDetection implements Runnable{
+
+		/**instance of QuadroidMain for using fields*/
+		private QuadroidMain mainref = null;
+		
+		/**no public constructor class only use in main*/
+		@SuppressWarnings("unused")
+		private LandmarkDetection()
+		{
+			
+		}
+		
+		/**
+		 * Constructor
+		 * 
+		 * @param ref - hand over an reference of {@link QuadroidMain}
+		 * for starting the landmark detection
+		 * 
+		 * @throws NullPointerException - if parameter <b>null</b>
+		 * */
+		public LandmarkDetection(QuadroidMain ref)
+		{
+			if(ref == null)
+			{
+				logger.error("LandmarkDetection - reference of QuadroidMain are null");
+				throw new NullPointerException("LandmarkDetection - reference of QuadroidMain are null");
+			}
+			
+			this.mainref = ref;
 			Thread thread = new Thread(this);
 			thread.start();
 		}
@@ -352,14 +524,14 @@ public class QuadroidMain implements IRxListener
 				if(lmcheck == true){
 					landmark.setPictureoflandmark(bimg);
 					// TODO add Metadata to Landmark
-					lock_lm = true;
+					this.mainref.lock_lm = true;
 					bytedata = encoder.landmarkToBytes(landmark);
-					tx.transmit(bytedata);
+					this.mainref.tx.transmit(bytedata);
 					
 //					do{
 //						Thread.sleep(50);
 //					}while (tx.isTransmit== true);
-					lock_lm = false;
+					this.mainref.lock_lm = false;
 					
 				}else{
 					t2 = System.currentTimeMillis();

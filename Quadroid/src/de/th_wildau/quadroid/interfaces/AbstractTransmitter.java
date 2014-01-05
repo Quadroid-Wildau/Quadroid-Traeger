@@ -64,6 +64,9 @@ public abstract class AbstractTransmitter {
 	 * 
 	 * @param msg - hand over data to transmit it
 	 * */
-	public abstract void transmit(byte[] msg);
+	public synchronized void transmit(byte[] msg)
+	{
+		//TODO: 
+	}
 	
 }
