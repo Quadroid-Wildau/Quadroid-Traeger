@@ -1,6 +1,5 @@
 package de.th_wildau.quadroid;
 
-import gnu.io.CommPortIdentifier;
 import java.awt.Image;
 import java.awt.image.BufferedImage;
 import java.util.Enumeration;
@@ -31,6 +30,7 @@ import de.th_wildau.quadroid.models.MetaData;
 import de.th_wildau.quadroid.models.RxData;
 import de.th_wildau.quadroid.models.Waypoint;
 import de.th_wildau.quadroid.models.XBeeRxTx;
+import purejavacomm.*;
 
 
 /**
