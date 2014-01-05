@@ -66,7 +66,7 @@ public class QuadroidMain implements IRxListener
 	/**TEST TODO:*/
 	private JFrame frame = null;
 	
-	private static boolean receiver = false;
+	private static boolean receiver = true;
 	
 	/**
 	 * Init the xBee connection to given port,
@@ -77,7 +77,7 @@ public class QuadroidMain implements IRxListener
 	private void initxBee()
 	{
 		XBeeRxTx xbee = new XBeeRxTx();// create an new device
-		xbee.setBaud(XBee.BAUD.getValue());// set baudrate for communication speed
+		xbee.setBaud(19200);// set baudrate for communication speed
 		xbee.setDatabits(XBee.DATABITS.getValue());// set number of databits
 		xbee.setParity(XBee.PARITY.getValue());// set parity type
 		xbee.setStopbits(XBee.STOPBITS.getValue());// set number of stopbits
@@ -270,7 +270,7 @@ public class QuadroidMain implements IRxListener
 		main.tx.transmit(data);
 		try 
 		{
-			Thread.sleep(1000 * 15);
+			Thread.sleep(1000 * 60);
 		
 		} catch (InterruptedException e) {
 		}
@@ -284,7 +284,11 @@ public class QuadroidMain implements IRxListener
 
 	@Override
 	public void rx(RxData data) 
-	{	if(!receiver)
+	{	
+		
+		
+		
+		if(!receiver)
 		this.xbeeconnection.disconnect();
 		
 		if(data != null)
