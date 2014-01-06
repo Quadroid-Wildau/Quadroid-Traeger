@@ -136,7 +136,6 @@ public class QuadroidMain implements IRxListener
 	 * an connection are available
 	 * 
 	 * */
-	@SuppressWarnings("unused")
 	private void initFlight_Ctrl()
 	{
 		//TODO: Alex
@@ -198,7 +197,7 @@ public class QuadroidMain implements IRxListener
 		// load library
 		try
 		{
-			//System.loadLibrary("opencv_java245");
+			System.loadLibrary("opencv_java245");
 			logger.info("Load OpenCV library");
 		}catch(Exception e)
 		{
