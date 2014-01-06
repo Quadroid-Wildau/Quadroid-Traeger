@@ -16,7 +16,6 @@ import de.th_wildau.quadroid.enums.Flight_Ctrl;
 import de.th_wildau.quadroid.enums.XBee;
 import de.th_wildau.quadroid.handler.FlightCtrlReceiverHandler;
 import de.th_wildau.quadroid.handler.FlightCtrlTransmitterHandler;
-import de.th_wildau.quadroid.handler.FlightCtrlXbeeConnectionHandler;
 import de.th_wildau.quadroid.handler.ObserverHandler;
 import de.th_wildau.quadroid.handler.XBeeReceiverHandler;
 import de.th_wildau.quadroid.handler.XBeeTransmitterHandler;
@@ -77,8 +76,6 @@ public class QuadroidMain implements IRxListener
 	private JFrame frame = null;
 	//TODO: remove
 	private FlightCtrlUpdater naviCtrlPoller = null;
-	
-	private FlightCtrlXbeeConnectionHandler flightCtrlXbeeHandler;
 	
 	private static boolean receiver = false;
 	
@@ -218,7 +215,7 @@ public class QuadroidMain implements IRxListener
 		logger.info("Init Flight-Ctrl device");
 		
 		if(!receiver)
-			//main.cam = USBCamConnection.getInstance(logger);
+			main.cam = USBCamConnection.getInstance(logger);
 		
 		logger.info("Init USB Cam");
 		// registered xbee rx handler
@@ -375,19 +372,16 @@ public class QuadroidMain implements IRxListener
 	/**
 	 * this internal class pull MetaData updates from Flight-Ctrl
 	 * 
-	 * @author Alex
+	 * @author Alexander Schrot
 	 * @see Runnable
 	 * 
 	 * 
 	 * */
-	public class FlightCtrlUpdater implements Runnable
-	{
-		private Connect flightCtrlConnection;
+	public class FlightCtrlUpdater implements Runnable {
 		private FlightCtrlTransmitterHandler txHandler;
 		
 		public FlightCtrlUpdater(Connect connection) {
-			flightctrlconnection = connection;
-			txHandler = new FlightCtrlTransmitterHandler(flightctrlconnection);
+			txHandler = new FlightCtrlTransmitterHandler(connection);
 			Thread thread = new Thread(this);
 			
 			thread.start();
@@ -434,7 +428,7 @@ public class QuadroidMain implements IRxListener
 		private QuadroidMain mainref = null;
 		/**reference of TxDataEncoder to encode object zu bytes*/
 		private TxDataEncoder encoder = null;
-		
+		private long lastMetaData;
 		
 		/**
 		 * no public constructor
@@ -442,6 +436,7 @@ public class QuadroidMain implements IRxListener
 		 * */
 		private StateTransmitter()
 		{
+			lastMetaData = 0;
 		}
 		
 		/**
@@ -476,16 +471,18 @@ public class QuadroidMain implements IRxListener
 				} catch (InterruptedException e) {}
 				
 				//is transmission are enable?
-				if(!statetransmitter)
-					continue;
-//*******************************************************************************************************************************
-				//TODO: get MetaData from Navi-Ctrl 
-				MetaData update = new MetaData();
-//*******************************************************************************************************************************	
-				//encode object into bytes
-				byte[] metadata = encoder.metadataToBytes(update);
-				//transmit data to ground station
-				this.mainref.tx.transmit(metadata);
+				//if(!statetransmitter)
+				//	continue;
+				
+				if(lastMetaData != NaviDataContainer.getInstance().getLastUpdated()) {
+					logger.info("transmit new meta data");
+					this.lastMetaData = NaviDataContainer.getInstance().getLastUpdated();
+					MetaData update = NaviDataContainer.getInstance().getLastMetaData();
+					//encode object into bytes
+					byte[] metadata = encoder.metadataToBytes(update);
+					//transmit data to ground station
+					this.mainref.tx.transmit(metadata);
+				}
 			}
 		}
 		

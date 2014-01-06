@@ -25,6 +25,10 @@ public class NaviDataContainer extends Observable {
 		return this.naviDatas.lastElement();
 	}
 	
+	public MetaData getLastMetaData() {
+		return new MetaData();
+	}
+	
 	synchronized public void addNaviData(NaviData naviData) {
 		this.naviDatas.add(naviData);
 		this.setLastUpdated(System.currentTimeMillis());

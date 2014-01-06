@@ -48,8 +48,6 @@ public class FlightCtrlReceiverHandler extends AbstractReceiver {
                     } else {
                     	if(i > 3) {
                     		byte[] bytes = decode64(readBuffer, 3, i - 3);
-                        	logger.info(arrayDump(bytes));
-                        	logger.info(arrayDumpS(bytes));
                         	
                         	if(readBuffer[2] == 'O') {
                         		converteData(bytes);
@@ -109,11 +107,6 @@ public class FlightCtrlReceiverHandler extends AbstractReceiver {
 		model.setLatitude(this.decodeS32(Arrays.copyOfRange(bytes, 4, 8)));
 		model.setAltitude(this.decodeS32(Arrays.copyOfRange(bytes, 8, 12)));
 		model.setAltitude(this.decodeU8(bytes[12]));
-		
-		System.out.println(model.getLongitude());
-		System.out.println(model.getLatitude());
-		System.out.println(model.getAltitude());
-		System.out.println(model.getStatus());
 		
 		return model;
 	}
