@@ -2,9 +2,8 @@ package de.th_wildau.quadroid.interfaces;
 
 import java.io.InputStream;
 import java.io.OutputStream;
-import gnu.io.SerialPort;
-import gnu.io.SerialPortEvent;
 import org.slf4j.Logger;
+import purejavacomm.*;
 
 
 /**
@@ -19,8 +18,6 @@ import org.slf4j.Logger;
 public abstract class AbstractReceiver
 {
 
-	
-	
 	/**
 	 * this method is called once detect an event of {@link gnu.io.SerialPortEvent} 
 	 * prove event with: if(envt.getEventType() == SerialPortEvent.DATA_AVAILABLE) 

@@ -1,12 +1,12 @@
 package de.th_wildau.quadroid.handler;
 
-import gnu.io.SerialPort;
-import gnu.io.SerialPortEvent;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import org.slf4j.Logger;
+
+import purejavacomm.*;
 import de.th_wildau.quadroid.decoder.RxDataDecoder;
 import de.th_wildau.quadroid.interfaces.AbstractReceiver;
 

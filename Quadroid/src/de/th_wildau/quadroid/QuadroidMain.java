@@ -14,6 +14,9 @@ import de.th_wildau.quadroid.connection.USBCamConnection;
 import de.th_wildau.quadroid.encoder.TxDataEncoder;
 import de.th_wildau.quadroid.enums.Flight_Ctrl;
 import de.th_wildau.quadroid.enums.XBee;
+import de.th_wildau.quadroid.handler.FlightCtrlReceiverHandler;
+import de.th_wildau.quadroid.handler.FlightCtrlTransmitterHandler;
+import de.th_wildau.quadroid.handler.FlightCtrlXbeeConnectionHandler;
 import de.th_wildau.quadroid.handler.ObserverHandler;
 import de.th_wildau.quadroid.handler.XBeeReceiverHandler;
 import de.th_wildau.quadroid.handler.XBeeTransmitterHandler;
@@ -27,6 +30,7 @@ import de.th_wildau.quadroid.models.FlightCtrl;
 import de.th_wildau.quadroid.models.GNSS;
 import de.th_wildau.quadroid.models.Landmark;
 import de.th_wildau.quadroid.models.MetaData;
+import de.th_wildau.quadroid.models.NaviDataContainer;
 import de.th_wildau.quadroid.models.RxData;
 import de.th_wildau.quadroid.models.Waypoint;
 import de.th_wildau.quadroid.models.XBeeRxTx;
@@ -69,10 +73,13 @@ public class QuadroidMain implements IRxListener
 	/**this flag managed metadata updates it is set <b>true</b>, 
 	 *current metadata will be transmit to ground station*/
 	private static boolean statetransmitter = false;
-	
 	//TODO: remove
 	private JFrame frame = null;
 	//TODO: remove
+	private FlightCtrlUpdater naviCtrlPoller = null;
+	
+	private FlightCtrlXbeeConnectionHandler flightCtrlXbeeHandler;
+	
 	private static boolean receiver = false;
 	
 	
@@ -89,7 +96,8 @@ public class QuadroidMain implements IRxListener
 		xbee.setDatabits(XBee.DATABITS.getValue());// set number of databits
 		xbee.setParity(XBee.PARITY.getValue());// set parity type
 		xbee.setStopbits(XBee.STOPBITS.getValue());// set number of stopbits
-		xbee.setPort("/dev/ttyUSB0");// set port for connection
+		//xbee.setPort("/dev/ttyUSB0");// set port for connection
+		xbee.setPort("cu.usbserial-000014FA");// set port for connection
 		xbee.setDevicename(XBee.DEVICENAME.getName());// set an device name
 		
 		while(true)// wait for xbee device
@@ -140,7 +148,8 @@ public class QuadroidMain implements IRxListener
 		flightctrl.setDatabits(Flight_Ctrl.DATABITS.getValue());// set number of databits
 		flightctrl.setParity(Flight_Ctrl.PARITY.getValue());// set parity type
 		flightctrl.setStopbits(Flight_Ctrl.STOPBITS.getValue());// set number of stopbits
-		flightctrl.setPort(Flight_Ctrl.PORT.getName());// set port for connection
+		//flightctrl.setPort(Flight_Ctrl.PORT.getName());// set port for connection
+		flightctrl.setPort("tty.usbserial-A400fA7A");
 		flightctrl.setDevicename(Flight_Ctrl.DEVICENAME.getName());// set an device name
 		
 		while(true)// wait for FlightCtrl device
@@ -160,6 +169,12 @@ public class QuadroidMain implements IRxListener
 						this.flightctrlconnection = Connect.getInstance(flightctrl);// connect device to port 
 						// connection successfully?
 						if(this.flightctrlconnection != null)
+							flightctrlconnection.addSerialPortEventListener(new FlightCtrlReceiverHandler());
+							logger.info("Register FlightCtrl RX Handler");
+							
+							naviCtrlPoller = new FlightCtrlUpdater(flightctrlconnection);
+							logger.info("start Flight-Ctrl updater");
+							
 							return;// exit While-Loop
 					}
 				}
@@ -198,29 +213,35 @@ public class QuadroidMain implements IRxListener
 		// init xbee
 		main.initxBee();
 		logger.info("Init xBee device");
-		//main.initFlight_Ctrl();
-		//logger.info("Init Flight-Ctrl device");
+		//init flight ctrl
+		main.initFlight_Ctrl();
+		logger.info("Init Flight-Ctrl device");
+		
 		if(!receiver)
-		main.cam = USBCamConnection.getInstance(logger);
+			//main.cam = USBCamConnection.getInstance(logger);
+		
 		logger.info("Init USB Cam");
-		// registered rx handler
+		// registered xbee rx handler
+		
 		main.xbeeconnection.addSerialPortEventListener(new XBeeReceiverHandler());
-		logger.info("Registered Rx handler");
-		// registered tx handler
+		logger.info("Registered Xbee Rx handler");
+		// registered xbee tx handler
 		main.tx = new XBeeTransmitterHandler(main.xbeeconnection);
-		logger.info("Registered Tx handler");
+		logger.info("Registered Xbee Tx handler");
+
 		// registered observer
 		ObserverHandler.getReference().register(main);
 		logger.info("Registered Rx observer");
-		// start Flight-Ctrl updater
-		new FlightCtrlUpdater();
-		logger.info("start Flight-Ctrl updater");
+
 		// start metadata updater
 		new StateTransmitter(main);
 		logger.info("start metadata updater");
 		// start landmark detection
 		new LandmarkDetection(main);
 		logger.info("start landmark detection");
+		
+		// additional things
+		QuadroidMain.logger.info("StartQuadroid");
 		
 		time = (System.currentTimeMillis() - time);
 		logger.info("time for init " + time + " ms");
@@ -241,67 +262,62 @@ public class QuadroidMain implements IRxListener
 			TxDataEncoder encoder = new TxDataEncoder();
 			BufferedImage img = main.cam.getImage();
 			
-		GNSS g1 = new GNSS();
-		GNSS g2 = new GNSS();
-		GNSS g3 = new GNSS();
-		GNSS g4 = new GNSS();
-		GNSS g5 = new GNSS();
-		GNSS g6 = new GNSS();
-		GNSS g7 = new GNSS();
-		GNSS g8 = new GNSS();
-		
-		Waypoint wp = new Waypoint();
-		MetaData md = new MetaData();
-		Airplane qa = new Airplane();
-		Course course = new Course();
-		Attitude attitude = new Attitude();
-		
-		
-		
-		g1.setLatitude(52.1234f);
-		g1.setLongitude(13.1431f);
-		g1.setHeight(500.00f);
-		
-		g2.setHeight(45.003f);
-		g2.setLatitude(53.1114f);
-		g2.setLongitude(14.663f);
-		
-		attitude.setPitch(100.01f);
-		attitude.setRoll(245.4f);
-		attitude.setYaw(36.47f);
-		
-		course.setSpeed(45.123f);
-		course.setAngleReference(56.00f);
-		
-		qa.setBatteryState((byte) 50);
-		qa.setTime(System.currentTimeMillis());
-		qa.setGeoData(g1);
-		
-		md.setAirplane(qa);
-		md.setAttitude(attitude);
-		md.setCourse(course);
-		
-		wp.setMetaData(md);
-		wp.setPictureoflandmark(img);
-		wp.setPosition(g2);
-		byte[] data = encoder.appendBytes(encoder.geodataToBytes(g4), encoder.waypointToBytes(wp));
-		
-		data = encoder.appendBytes(data, encoder.geodataToBytes(g3));
-		data = encoder.appendBytes(data, encoder.geodataToBytes(g5));
-		data = encoder.appendBytes(data, encoder.geodataToBytes(g6));
-		data = encoder.appendBytes(data, encoder.geodataToBytes(g7));
-		data = encoder.appendBytes(data, encoder.geodataToBytes(g8));
+			GNSS g1 = new GNSS();
+			GNSS g2 = new GNSS();
+			GNSS g3 = new GNSS();
+			GNSS g4 = new GNSS();
+			GNSS g5 = new GNSS();
+			GNSS g6 = new GNSS();
+			GNSS g7 = new GNSS();
+			GNSS g8 = new GNSS();
+			
+			Waypoint wp = new Waypoint();
+			MetaData md = new MetaData();
+			Airplane qa = new Airplane();
+			Course course = new Course();
+			Attitude attitude = new Attitude();
+			
+			
+			
+			g1.setLatitude(52.1234f);
+			g1.setLongitude(13.1431f);
+			g1.setHeight(500.00f);
+			
+			g2.setHeight(45.003f);
+			g2.setLatitude(53.1114f);
+			g2.setLongitude(14.663f);
+			
+			attitude.setPitch(100.01f);
+			attitude.setRoll(245.4f);
+			attitude.setYaw(36.47f);
+			
+			course.setSpeed(45.123f);
+			course.setAngleReference(56.00f);
+			
+			qa.setBatteryState((byte) 50);
+			qa.setTime(System.currentTimeMillis());
+			qa.setGeoData(g1);
+			
+			md.setAirplane(qa);
+			md.setAttitude(attitude);
+			md.setCourse(course);
+			
+			wp.setMetaData(md);
+			wp.setPictureoflandmark(img);
+			wp.setPosition(g2);
+			byte[] data = encoder.appendBytes(encoder.geodataToBytes(g4), encoder.waypointToBytes(wp));
+			
+			data = encoder.appendBytes(data, encoder.geodataToBytes(g3));
+			data = encoder.appendBytes(data, encoder.geodataToBytes(g5));
+			data = encoder.appendBytes(data, encoder.geodataToBytes(g6));
+			data = encoder.appendBytes(data, encoder.geodataToBytes(g7));
+			data = encoder.appendBytes(data, encoder.geodataToBytes(g8));
+			try 
+			{
+				Thread.sleep(1000 * 15);
 
-		time = System.currentTimeMillis();
-		
-		
-		main.tx.transmit(data);
-		try 
-		{
-			Thread.sleep(1000 * 15);
-		
-		} catch (InterruptedException e) {
-		}
+			} catch (InterruptedException e) {
+			}
 		}
 
 		
@@ -356,7 +372,6 @@ public class QuadroidMain implements IRxListener
 	}
 	
 	
-	
 	/**
 	 * this internal class pull MetaData updates from Flight-Ctrl
 	 * 
@@ -365,24 +380,40 @@ public class QuadroidMain implements IRxListener
 	 * 
 	 * 
 	 * */
-	public static class FlightCtrlUpdater implements Runnable
+	public class FlightCtrlUpdater implements Runnable
 	{
-
-		@Override
-		public void run() 
-		{
-			while(true)
-			{
-				try 
-				{
-					Thread.sleep(UPDATE_TIME_FLIGHTCTRLUPDATER);
-				} catch (InterruptedException e) {}
-				
-				//TODO: ALEX DOIT, DOIT, DOIT...
-			}
+		private Connect flightCtrlConnection;
+		private FlightCtrlTransmitterHandler txHandler;
+		
+		public FlightCtrlUpdater(Connect connection) {
+			flightctrlconnection = connection;
+			txHandler = new FlightCtrlTransmitterHandler(flightctrlconnection);
+			Thread thread = new Thread(this);
 			
+			thread.start();
 		}
 		
+		public void run() {
+			while(true) {
+				double lastUpdate = System.currentTimeMillis() - NaviDataContainer.getInstance().getLastUpdated();
+				
+				if(lastUpdate > 10000) {
+					logger.info("requestNaviData");
+					txHandler.requestNaviData();
+					try {
+						Thread.sleep(2000);
+					} catch (InterruptedException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				} else {
+					try {
+						Thread.sleep(UPDATE_TIME_FLIGHTCTRLUPDATER);
+					} catch (InterruptedException e) {
+					}
+				}
+			}
+		}
 	}
 	
 	
