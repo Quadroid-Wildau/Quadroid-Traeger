@@ -538,7 +538,7 @@ public class QuadroidMain implements IRxListener
 			TxDataEncoder encoder = new TxDataEncoder();
 			byte[] bytedata;
 			
-			PropertyConfigurator.configure("log4j.properties");
+//			PropertyConfigurator.configure("log4j.properties");
 			MainLandmark lm = new MainLandmark();
 			Logger logger = null;
 			logger = LoggerFactory.getLogger(TestLM.class.getName());
