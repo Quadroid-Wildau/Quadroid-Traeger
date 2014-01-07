@@ -555,9 +555,11 @@ public class QuadroidMain implements IRxListener
 					bytedata = encoder.landmarkToBytes(landmark);
 					this.mainref.tx.transmit(bytedata);
 					
-//					do{
-//						Thread.sleep(50);
-//					}while (tx.isTransmit== true);
+					try {
+						Thread.sleep(1000 * 10);
+					} catch (InterruptedException e) {
+						e.printStackTrace();
+					}
 					this.mainref.lock_lm = false;
 					
 				}else{
