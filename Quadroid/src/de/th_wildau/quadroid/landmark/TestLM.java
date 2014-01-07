@@ -22,22 +22,22 @@ public class TestLM {
 		System.loadLibrary("opencv_java245");
 		BufferedImage test = null;
 		
-		PropertyConfigurator.configure("log4j.properties");
-		
-		Logger logger = null;
-		logger = LoggerFactory.getLogger(TestLM.class.getName());
-		logger.info("Init Logger");
-		USBCamConnection usbcamera = USBCamConnection.getInstance(logger);
+//		PropertyConfigurator.configure("log4j.properties");
+//		
+//		Logger logger = null;
+//		logger = LoggerFactory.getLogger(TestLM.class.getName());
+//		logger.info("Init Logger");
+//		USBCamConnection usbcamera = USBCamConnection.getInstance(logger);
 		while(true){
 			
-			BufferedImage qwer = usbcamera.getImage();
-			try {
-				ImageIO.write(qwer, "JPG", new File("testqwer.jpg"));
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
+//			BufferedImage qwer = usbcamera.getImage();
+//			try {
+//				ImageIO.write(qwer, "JPG", new File("testqwer.jpg"));
+//			} catch (IOException e) {
+//				e.printStackTrace();
+//			}
 		
-			File file = new File("test1.jpg"); 
+			File file = new File("testKamera.png"); 
         	try { 
             	test = ImageIO.read(file); 
         	} 	catch (IOException ex) { 
@@ -51,8 +51,8 @@ public class TestLM {
         	System.out.println("von Platte "+erg);
         
         	//Testbild von Webcam
-        	erg = asdf.checkLandmark(qwer);
-        	System.out.println("Webcam "+erg);
+//        	erg = asdf.checkLandmark(qwer);
+//        	System.out.println("Webcam "+erg);
         	
         	try {
 				Thread.sleep(2000);
