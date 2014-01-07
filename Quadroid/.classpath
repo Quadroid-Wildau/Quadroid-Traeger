@@ -2,8 +2,8 @@
 <classpath>
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
-	<classpathentry kind="lib" path="lib/slf4j-api-1.7.2.jar"/>
-	<classpathentry kind="lib" path="lib/commons-codec-1.8.jar"/>
+	<classpathentry kind="lib" path="D:/Data/Dropbox/Master/Semester 3/TP/Software/GitWorkspace/Quadroid-Traeger/Quadroid/lib/slf4j-api-1.7.2.jar"/>
+	<classpathentry kind="lib" path="D:/Data/Dropbox/Master/Semester 3/TP/Software/GitWorkspace/Quadroid-Traeger/Quadroid/lib/commons-codec-1.8.jar"/>
 	<classpathentry kind="lib" path="lib/log4j-1.2.17.jar"/>
 	<classpathentry kind="lib" path="lib/opencv-245.jar">
 		<attributes>

@@ -13,6 +13,7 @@ import org.opencv.imgproc.Imgproc;
 
 
 /**
+ * Class thats detect an orange ball as a landmark.
  * @author Stephan Funke
  */
 public class OpCheckLandmark {
@@ -38,9 +39,10 @@ public class OpCheckLandmark {
 	
 	
 	/**
-	 * Computes a binary image by applying a threshold to the source image.
-	 * A pixel is set to value 255 if it is larger than the threshold, otherwise
-	 * it is set to 0.
+	 * starting the landmarkdetection
+	 * @param src - Sourceraster of the given image
+	 * @param dest - not used
+	 * @return boolean TRUE = landmark is found, FALSE = no landmark is detected
 	 */
 	public boolean findLm(Raster src, WritableRaster dest)
 	{
@@ -53,7 +55,13 @@ public class OpCheckLandmark {
 	
 
 	
-	//Erode and Segmentation of Colour in the Circlearea
+	/**
+	 * Checks the amount of orange pixels in the given circle.
+	 * @param rad - Radius of the circle
+	 * @param mPoint - midpoint of the circle
+	 * @param src - src raster
+	 * @return boolean - true = if there is a specific amount of orange pixels in the area of the circle
+	 */
 	private boolean findColourInCircle(double rad, Point mPoint, Raster src){
 		
 		int size = width*height;
@@ -99,9 +107,9 @@ public class OpCheckLandmark {
 	}
 	
 	/**
-	 * Find Circles in the given colourimage
+	 * Find Circles in the given colourimage, using HoughCircles from openCV.
 	 * if no circle is found, houghtreshold will be decreased step by step from 45 to a minimum of 25
-	 * @param src
+	 * @param src - Source Raster of the colourimage for circledetection
 	 * @return
 	 */
 	private boolean findCircles(Raster src){
@@ -120,10 +128,8 @@ public class OpCheckLandmark {
 		// Reduce the noise in the image to improve circle detection
 		Imgproc.GaussianBlur(grey, grey, new Size(9, 9), 2, 2);
 		
-		// This matrix will contain the circles in the format
 		
 		Mat circles = new Mat();
-		// Call OpenCV Hough transform
 		int histogramResolution = 1;
 		double minDistOfCircles = 2*minRadius+2;
 		double cannyThreshold = 200;
@@ -136,7 +142,8 @@ public class OpCheckLandmark {
 
 			//If minimum 1 circle is found, check for colour in this circle(s)
 			if(numCircles != 0){
-				//Coloursegmentation in the area of found circle
+				//Coloursegmentation in the area of the founded circle(s).
+				//If minimum 1 Circle with enough orange in it, a landmark is detected.
 				for (int j = 0; j < numCircles; j++){
 					if(findColourInCircle(circles.get(0,j)[2], new Point(circles.get(0,j)[0], circles.get(0,j)[1]), src) == true){
 						erg = true;

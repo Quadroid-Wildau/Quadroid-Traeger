@@ -5,15 +5,24 @@ import java.awt.image.BufferedImage;
 import java.awt.image.Raster;
 import java.awt.image.WritableRaster;
 
-public class MainLandmark implements Runnable{
+/**
+ * Mainclass for Landmarkdetection.
+ * Contains preprocessing for landmarkdetection
+ * @author Stephan Funke
+ *
+ */
+public class MainLandmark{
 
 	
 	public MainLandmark(){
-		Thread lmthread = new Thread(this);
-		lmthread.start();
 		
 	}
 	
+	/**
+	 * Starts the landmarkdetection with preprocessing of the Image
+	 * @param img
+	 * @return boolean - TRUE = landmark detected, FALSE = no landmark is found
+	 */
 	public boolean checkLandmark(BufferedImage img){
 		//System.loadLibrary("opencv_java245");
 		img = convertSourceImage(img);
@@ -42,9 +51,4 @@ public class MainLandmark implements Runnable{
 	
 	
 	 
-	@Override
-	public void run() {
-		// TODO Auto-generated method stub
-		
-	}
 }
