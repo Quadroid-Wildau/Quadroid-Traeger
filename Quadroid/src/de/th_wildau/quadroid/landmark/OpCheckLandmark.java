@@ -136,8 +136,8 @@ public class OpCheckLandmark {
 		
 		//reduce the Houghtreshold if no circle is found
 		for (int i = 0; i < 5; i = i++){
-			System.out.println("hough: "+houghThreshold);
-			System.out.println("canny: "+cannyThreshold);
+//			System.out.println("hough: "+houghThreshold);
+//			System.out.println("canny: "+cannyThreshold);
 			if(houghThreshold == 0 || cannyThreshold <= 0)
 				return false;
 			Imgproc.HoughCircles(grey, circles, Imgproc.CV_HOUGH_GRADIENT, histogramResolution, 
