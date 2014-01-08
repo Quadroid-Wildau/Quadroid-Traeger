@@ -528,7 +528,9 @@ public class QuadroidMain implements IRxListener
 			thread.start();
 		}
 		
-		@Override
+		/**
+		 * Flowcontrolthread for the Landmarkdetection
+		 */
 		public void run() {
 			Landmark landmark = new Landmark();
 			BufferedImage bimg = null;
@@ -543,27 +545,33 @@ public class QuadroidMain implements IRxListener
 			Logger logger = null;
 			logger = LoggerFactory.getLogger(TestLM.class.getName());
 			logger.info("Init Logger");
+			//Getting connection to the USBCam
 			USBCamConnection usbcamera = USBCamConnection.getInstance(logger);
+			
+			//Flowcontrol for Landmarkdetection
 			while(true){
 				t1 = System.currentTimeMillis();
 				bimg = usbcamera.getImage();
-				lmcheck = lm.checkLandmark(bimg);
+				lmcheck = lm.checkLandmark(bimg); //Performing Landmarkcheck
 				if(lmcheck == true){
-					landmark.setPictureoflandmark(bimg);
+					landmark.setPictureoflandmark(bimg); //If found, set the current image 
 					// TODO add Metadata to Landmark
-					this.mainref.lock_lm = true;
-					bytedata = encoder.landmarkToBytes(landmark);
-					this.mainref.tx.transmit(bytedata);
+					
+					this.mainref.lock_lm = true;	//Lock the xbee channel for transmitting
+					bytedata = encoder.landmarkToBytes(landmark);	//encode Data
+					this.mainref.tx.transmit(bytedata);				//Transmit Landmark
 					
 					try {
-						Thread.sleep(1000 * 10);
+						Thread.sleep(1000 * 10);			//Sleep for 10s (approx. time for transmitting the Landmark)
 					} catch (InterruptedException e) {
 						e.printStackTrace();
 					}
-					this.mainref.lock_lm = false;
+					this.mainref.lock_lm = false;	//unlock the xbee channel
 					
-				}else{
+				}else{ //if no landmark is detected
 					t2 = System.currentTimeMillis();
+					
+					//Sleep 500ms before next landmark check
 					try {
 						Thread.sleep(500-(t2-t1));
 					} catch (InterruptedException e) {

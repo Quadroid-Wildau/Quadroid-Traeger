@@ -27,23 +27,28 @@ public class MainLandmark{
 		//System.loadLibrary("opencv_java245");
 		img = convertSourceImage(img);
 		
-		Raster src = img.getRaster();
+		Raster src = img.getRaster();	//get the Raster from the source image
+		
 		
 		OpCheckLandmark checkLM = new OpCheckLandmark();
 		WritableRaster dest = src.createCompatibleWritableRaster();
 		
-		
+		//Calling the Landmarkdetection
 		return checkLM.findLm(src, dest);
 	}
 	
-	
+	/**
+	 * Checks the sourceimagetype
+	 * If the type is not TYPE_INT_RGB, it will be set
+	 * @param src
+	 * @return
+	 */
 	protected BufferedImage convertSourceImage(BufferedImage src) {
 		if (src.getType() == BufferedImage.TYPE_INT_RGB)
 			return src;
 		BufferedImage bufferedImage = new BufferedImage(src.getWidth(null),
 				src.getHeight(null), BufferedImage.TYPE_INT_RGB);
 		Graphics2D g = bufferedImage.createGraphics();
-		// Bild in das BufferedImage zeichnen
 		g.drawImage(src, 0, 0, src.getWidth(null),
 				src.getHeight(null), null);
 		return bufferedImage;
