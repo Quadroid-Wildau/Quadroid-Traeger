@@ -26,7 +26,40 @@ public class NaviDataContainer extends Observable {
 	}
 	
 	public MetaData getLastMetaData() {
-		return new MetaData();
+		MetaData metaData = new MetaData();
+		metaData.setAttitude(this.getLastAttitude());
+		metaData.setAirplane(this.getLastAirplane());
+		metaData.setCourse(this.getLastCourse());
+		
+		return metaData;
+	}
+	
+	public Course getLastCourse() {
+		return new Course();
+	}
+	
+	public Airplane getLastAirplane() {
+		Airplane airplane = new Airplane();
+		airplane.setGeoData(this.getLastGNSS());
+		
+		return airplane;
+	}
+	
+	public GNSS getLastGNSS() {
+		GNSS gnss = new GNSS();
+		gnss.setLongitude(this.getLastNaviData().getCurrentPosition().getLongitude());
+		gnss.setLatitude(this.getLastNaviData().getCurrentPosition().getLatitude());
+		gnss.setHeight(this.getLastNaviData().getCurrentPosition().getAltitude());
+		
+		return gnss;
+	}
+	
+	public Attitude getLastAttitude() {
+		Attitude attitude = new Attitude();
+		attitude.setRoll(this.getLastNaviData().getAngleRoll());
+		attitude.setPitch(this.getLastNaviData().getAngleNick());
+		
+		return attitude;
 	}
 	
 	synchronized public void addNaviData(NaviData naviData) {

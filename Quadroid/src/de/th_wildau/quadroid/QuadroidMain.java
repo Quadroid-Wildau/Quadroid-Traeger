@@ -94,7 +94,7 @@ public class QuadroidMain implements IRxListener
 		xbee.setParity(XBee.PARITY.getValue());// set parity type
 		xbee.setStopbits(XBee.STOPBITS.getValue());// set number of stopbits
 		//xbee.setPort("/dev/ttyUSB0");// set port for connection
-		xbee.setPort("cu.usbserial-000014FA");// set port for connection
+		xbee.setPort("cu.usbserial-003013FD");// set port for connection
 		xbee.setDevicename(XBee.DEVICENAME.getName());// set an device name
 		
 		while(true)// wait for xbee device
@@ -197,7 +197,7 @@ public class QuadroidMain implements IRxListener
 		// load library
 		try
 		{
-			System.loadLibrary("opencv_java245");
+			//System.loadLibrary("opencv_java245");
 			logger.info("Load OpenCV library");
 		}catch(Exception e)
 		{
@@ -242,93 +242,12 @@ public class QuadroidMain implements IRxListener
 		time = (System.currentTimeMillis() - time);
 		logger.info("time for init " + time + " ms");
 		QuadroidMain.logger.info("StartQuadroid");
-		
-		
-		
-		
-//**TEST**TEST**TEST**TEST**TEST**TEST**TEST**TEST**TEST**TEST**TEST**TEST**TEST**TEST**TEST**TEST**TEST**TEST**TEST**TEST**TEST**TEST**TEST**TEST
-		//TODO: remove 
-		
-		
-		
-		
-		//BufferedImage img = ImageIO.read(new File("test.jpg"));
-		while(!receiver){
-			/**instance for encoder*/
-			TxDataEncoder encoder = new TxDataEncoder();
-			BufferedImage img = main.cam.getImage();
-			
-			GNSS g1 = new GNSS();
-			GNSS g2 = new GNSS();
-			GNSS g3 = new GNSS();
-			GNSS g4 = new GNSS();
-			GNSS g5 = new GNSS();
-			GNSS g6 = new GNSS();
-			GNSS g7 = new GNSS();
-			GNSS g8 = new GNSS();
-			
-			Waypoint wp = new Waypoint();
-			MetaData md = new MetaData();
-			Airplane qa = new Airplane();
-			Course course = new Course();
-			Attitude attitude = new Attitude();
-			
-			
-			
-			g1.setLatitude(52.1234f);
-			g1.setLongitude(13.1431f);
-			g1.setHeight(500.00f);
-			
-			g2.setHeight(45.003f);
-			g2.setLatitude(53.1114f);
-			g2.setLongitude(14.663f);
-			
-			attitude.setPitch(100.01f);
-			attitude.setRoll(245.4f);
-			attitude.setYaw(36.47f);
-			
-			course.setSpeed(45.123f);
-			course.setAngleReference(56.00f);
-			
-			qa.setBatteryState((byte) 50);
-			qa.setTime(System.currentTimeMillis());
-			qa.setGeoData(g1);
-			
-			md.setAirplane(qa);
-			md.setAttitude(attitude);
-			md.setCourse(course);
-			
-			wp.setMetaData(md);
-			wp.setPictureoflandmark(img);
-			wp.setPosition(g2);
-			byte[] data = encoder.appendBytes(encoder.geodataToBytes(g4), encoder.waypointToBytes(wp));
-			
-			data = encoder.appendBytes(data, encoder.geodataToBytes(g3));
-			data = encoder.appendBytes(data, encoder.geodataToBytes(g5));
-			data = encoder.appendBytes(data, encoder.geodataToBytes(g6));
-			data = encoder.appendBytes(data, encoder.geodataToBytes(g7));
-			data = encoder.appendBytes(data, encoder.geodataToBytes(g8));
-			try 
-			{
-				Thread.sleep(1000 * 15);
-
-			} catch (InterruptedException e) {
-			}
-		}
-
-		
-		
-		//**TEST**TEST**TEST**TEST**TEST**TEST**TEST**TEST**TEST**TEST**TEST**TEST**TEST**TEST**TEST**TEST**TEST**TEST**TEST**TEST**TEST**TEST**TEST**TEST
 	}
 
 	
 	@Override
 	public void rx(RxData data) 
 	{	
-		
-		//TODO: remove... 
-		
-		
 		if(!receiver)
 		this.xbeeconnection.disconnect();
 		
@@ -390,7 +309,7 @@ public class QuadroidMain implements IRxListener
 			while(true) {
 				double lastUpdate = System.currentTimeMillis() - NaviDataContainer.getInstance().getLastUpdated();
 				
-				if(lastUpdate > 10000) {
+				if(lastUpdate > 5000) {
 					logger.info("requestNaviData");
 					txHandler.requestNaviData();
 					try {
@@ -479,6 +398,7 @@ public class QuadroidMain implements IRxListener
 					MetaData update = NaviDataContainer.getInstance().getLastMetaData();
 					//encode object into bytes
 					byte[] metadata = encoder.metadataToBytes(update);
+					logger.info("metadata length" + metadata.length);
 					//transmit data to ground station
 					this.mainref.tx.transmit(metadata);
 				}
@@ -525,7 +445,7 @@ public class QuadroidMain implements IRxListener
 			
 			this.mainref = ref;
 			Thread thread = new Thread(this);
-			thread.start();
+			//thread.start();
 		}
 		
 		/**
