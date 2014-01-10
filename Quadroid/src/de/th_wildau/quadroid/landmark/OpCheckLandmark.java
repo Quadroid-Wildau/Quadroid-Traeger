@@ -132,13 +132,13 @@ public class OpCheckLandmark {
 		Mat circles = new Mat();
 		int histogramResolution = 1;
 		double minDistOfCircles = 2*minRadius+2;
-		double cannyThreshold = 200;
+		double cannyThreshold = 160;
 		
 		//reduce the Houghtreshold if no circle is found
 		for (int i = 0; i < 5; i = i++){
 //			System.out.println("hough: "+houghThreshold);
 //			System.out.println("canny: "+cannyThreshold);
-			if(houghThreshold == 0 || cannyThreshold <= 0)
+			if(houghThreshold <= 33 || cannyThreshold <= 25)
 				return false;
 			Imgproc.HoughCircles(grey, circles, Imgproc.CV_HOUGH_GRADIENT, histogramResolution, 
 				minDistOfCircles, cannyThreshold, houghThreshold, minRadius, maxRadius);
