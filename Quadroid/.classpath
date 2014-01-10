@@ -1,26 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
 	<classpathentry kind="src" path="src"/>
-	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
-<<<<<<< Updated upstream
-=======
-	<classpathentry kind="lib" path="/Users/alex/Dev/Studium/Quadroid-Traeger/Quadroid/lib/slf4j-api-1.7.2.jar"/>
-	<classpathentry kind="lib" path="/Users/alex/Dev/Studium/Quadroid-Traeger/Quadroid/lib/commons-codec-1.8.jar"/>
->>>>>>> Stashed changes
-	<classpathentry kind="lib" path="lib/log4j-1.2.17.jar"/>
-	<classpathentry kind="lib" path="lib/opencv-245.jar">
-		<attributes>
-			<attribute name="org.eclipse.jdt.launching.CLASSPATH_ATTR_LIBRARY_PATH_ENTRY" value="Quadroid/lib/linux-x86"/>
-		</attributes>
-	</classpathentry>
-	<classpathentry kind="lib" path="lib/slf4j-log4j12-1.6.4.jar"/>
-	<classpathentry kind="lib" path="lib/webcam-capture-0.3.10-RC6.jar"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/jdk1.7.0_25"/>
 	<classpathentry kind="lib" path="lib/bridj-0.7-20131007.003529-54.jar"/>
-	<classpathentry kind="lib" path="lib/purejavacomm.jar"/>
+	<classpathentry kind="lib" path="lib/commons-codec-1.8.jar"/>
 	<classpathentry kind="lib" path="lib/commons-io-2.4.jar"/>
 	<classpathentry kind="lib" path="lib/jna-4.0.0.jar"/>
 	<classpathentry kind="lib" path="lib/jna-platform-4.0.0.jar"/>
-	<classpathentry kind="lib" path="lib/commons-codec-1.8.jar"/>
+	<classpathentry kind="lib" path="lib/log4j-1.2.17.jar"/>
+	<classpathentry kind="lib" path="lib/opencv-245.jar"/>
+	<classpathentry kind="lib" path="lib/purejavacomm.jar"/>
 	<classpathentry kind="lib" path="lib/slf4j-api-1.7.2.jar"/>
+	<classpathentry kind="lib" path="lib/slf4j-log4j12-1.6.4.jar"/>
+	<classpathentry kind="lib" path="lib/webcam-capture-0.3.10-RC6.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
