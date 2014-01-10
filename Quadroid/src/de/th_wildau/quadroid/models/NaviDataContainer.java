@@ -35,12 +35,17 @@ public class NaviDataContainer extends Observable {
 	}
 	
 	public Course getLastCourse() {
-		return new Course();
+		Course course = new Course();
+		course.setAngleReference(this.getLastNaviData().getCompassHeading());
+		course.setSpeed(this.getLastNaviData().getGroundSpeed());
+		
+		return course;
 	}
 	
 	public Airplane getLastAirplane() {
 		Airplane airplane = new Airplane();
 		airplane.setGeoData(this.getLastGNSS());
+		airplane.setBatteryState(this.getLastNaviData().getuBat());
 		
 		return airplane;
 	}

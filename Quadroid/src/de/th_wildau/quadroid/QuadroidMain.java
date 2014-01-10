@@ -94,7 +94,7 @@ public class QuadroidMain implements IRxListener
 		xbee.setParity(XBee.PARITY.getValue());// set parity type
 		xbee.setStopbits(XBee.STOPBITS.getValue());// set number of stopbits
 		//xbee.setPort("/dev/ttyUSB0");// set port for connection
-		xbee.setPort("cu.usbserial-003013FD");// set port for connection
+		xbee.setPort("cu.usbserial-141");// set port for connection
 		xbee.setDevicename(XBee.DEVICENAME.getName());// set an device name
 		
 		while(true)// wait for xbee device
@@ -145,7 +145,7 @@ public class QuadroidMain implements IRxListener
 		flightctrl.setParity(Flight_Ctrl.PARITY.getValue());// set parity type
 		flightctrl.setStopbits(Flight_Ctrl.STOPBITS.getValue());// set number of stopbits
 		//flightctrl.setPort(Flight_Ctrl.PORT.getName());// set port for connection
-		flightctrl.setPort("tty.usbserial-A400fA7A");
+		flightctrl.setPort("cu.usbserial-A400fA7A");
 		flightctrl.setDevicename(Flight_Ctrl.DEVICENAME.getName());// set an device name
 		
 		while(true)// wait for FlightCtrl device
@@ -309,7 +309,7 @@ public class QuadroidMain implements IRxListener
 			while(true) {
 				double lastUpdate = System.currentTimeMillis() - NaviDataContainer.getInstance().getLastUpdated();
 				
-				if(lastUpdate > 5000) {
+				if(lastUpdate > 2000) {
 					logger.info("requestNaviData");
 					txHandler.requestNaviData();
 					try {
@@ -391,7 +391,7 @@ public class QuadroidMain implements IRxListener
 				//is transmission are enable?
 				//if(!statetransmitter)
 				//	continue;
-				
+				logger.debug("last metadata: " + NaviDataContainer.getInstance().getLastUpdated());
 				if(lastMetaData != NaviDataContainer.getInstance().getLastUpdated()) {
 					logger.info("transmit new meta data");
 					this.lastMetaData = NaviDataContainer.getInstance().getLastUpdated();
