@@ -1,15 +1,25 @@
 package de.th_wildau.quadroid.landmark;
 
+import static com.googlecode.javacv.cpp.opencv_core.cvGetSeqElem;
+import static com.googlecode.javacv.cpp.opencv_core.cvPointFrom32f;
+import static com.googlecode.javacv.cpp.opencv_core.cvSize;
+import static com.googlecode.javacv.cpp.opencv_imgproc.BORDER_DEFAULT;
+import static com.googlecode.javacv.cpp.opencv_imgproc.CV_HOUGH_GRADIENT;
+import static com.googlecode.javacv.cpp.opencv_imgproc.GaussianBlur;
+import static com.googlecode.javacv.cpp.opencv_imgproc.cvCvtColor;
+import static com.googlecode.javacv.cpp.opencv_imgproc.cvHoughCircles;
+
 import java.awt.Color;
-import java.awt.image.*;
+import java.awt.Point;
+import java.awt.image.BufferedImage;
 
-import javax.activation.UnsupportedDataTypeException;
-
-import org.opencv.core.CvType;
-import org.opencv.core.Mat;
-import org.opencv.core.Point;
-import org.opencv.core.Size;
-import org.opencv.imgproc.Imgproc;
+import com.googlecode.javacv.cpp.opencv_core;
+import com.googlecode.javacv.cpp.opencv_core.CvMat;
+import com.googlecode.javacv.cpp.opencv_core.CvPoint;
+import com.googlecode.javacv.cpp.opencv_core.CvPoint2D32f;
+import com.googlecode.javacv.cpp.opencv_core.CvPoint3D32f;
+import com.googlecode.javacv.cpp.opencv_core.CvSeq;
+import com.googlecode.javacv.cpp.opencv_core.IplImage;
 
 
 /**
@@ -41,10 +51,9 @@ public class OpCheckLandmark {
 	/**
 	 * starting the landmarkdetection
 	 * @param src - Sourceraster of the given image
-	 * @param dest - not used
 	 * @return boolean TRUE = landmark is found, FALSE = no landmark is detected
 	 */
-	public boolean findLm(Raster src, WritableRaster dest)
+	public boolean findLm(BufferedImage src)
 	{
 		
 		width = src.getWidth();
@@ -62,10 +71,10 @@ public class OpCheckLandmark {
 	 * @param src - src raster
 	 * @return boolean - true = if there is a specific amount of orange pixels in the area of the circle
 	 */
-	private boolean findColourInCircle(double rad, Point mPoint, Raster src){
+	private boolean findColourInCircle(double rad, Point mPoint, BufferedImage src){
 		
 		int size = width*height;
-		int[] srcPixels = src.getPixels(0, 0, width, height, (int[])null);
+		int[] srcPixels = src.getData().getPixels(0, 0, width, height, (int[])null);
 		int[] destPixels = new int[size];
 		float[] hsv = new float[3];
 		double dist = 0; 
@@ -112,49 +121,39 @@ public class OpCheckLandmark {
 	 * @param src - Source Raster of the colourimage for circledetection
 	 * @return
 	 */
-	private boolean findCircles(Raster src){
-		Mat in;
-		boolean erg = false;
-		try {
-			in = OpenCvConverter.convertToMat(src);
-		} catch (UnsupportedDataTypeException e) {
-			e.printStackTrace();
-			return erg;
-		}
-		// Convert the src image to grey
-		Mat grey = new Mat(in.rows(), in.cols(), CvType.CV_8UC1);
-		Imgproc.cvtColor(in, grey, Imgproc.COLOR_BGR2GRAY);
+	private boolean findCircles(BufferedImage src){
+		IplImage image = IplImage.createFrom(src);
+		CvMat grey = CvMat.create(src.getHeight(), src.getWidth(), opencv_core.CV_8UC1);
+		cvCvtColor(image, grey, opencv_core.CV_8UC1);
+		GaussianBlur(grey, grey, cvSize(9, 9), 2, 2, BORDER_DEFAULT);
 		
-		// Reduce the noise in the image to improve circle detection
-		Imgproc.GaussianBlur(grey, grey, new Size(9, 9), 2, 2);
-		
-		
-		Mat circles = new Mat();
+		CvMat unused = new CvMat();
 		int histogramResolution = 1;
 		double minDistOfCircles = 2*minRadius+2;
 		double cannyThreshold = 160;
 		
 		//reduce the Houghtreshold if no circle is found
 		for (int i = 0; i < 5; i = i++){
-//			System.out.println("hough: "+houghThreshold);
-//			System.out.println("canny: "+cannyThreshold);
+			System.out.println("hough: "+houghThreshold);
+			System.out.println("canny: "+cannyThreshold);
 			if(houghThreshold <= 33 || cannyThreshold <= 25)
 				return false;
-			Imgproc.HoughCircles(grey, circles, Imgproc.CV_HOUGH_GRADIENT, histogramResolution, 
+			
+			CvSeq circles = cvHoughCircles(grey, unused, CV_HOUGH_GRADIENT, histogramResolution, 
 				minDistOfCircles, cannyThreshold, houghThreshold, minRadius, maxRadius);
-			int numCircles = circles.cols();
-
-			//If minimum 1 circle is found, check for colour in this circle(s)
-			if(numCircles != 0){
-				//Coloursegmentation in the area of the founded circle(s).
-				//If minimum 1 Circle with enough orange in it, a landmark is detected.
-				for (int j = 0; j < numCircles; j++){
-					if(findColourInCircle(circles.get(0,j)[2], new Point(circles.get(0,j)[0], circles.get(0,j)[1]), src) == true){
-						erg = true;
-					}
+			
+			if(circles.total() > 0){
+				for(int j = 0; j < circles.total(); j++){
+				    CvPoint3D32f circle = new CvPoint3D32f(cvGetSeqElem(circles, j));
+				    CvPoint center = cvPointFrom32f(new CvPoint2D32f(circle.x(), circle.y()));
+				    int radius = Math.round(circle.z());      
+				    
+				    if(findColourInCircle(radius, new Point(center.x(), center.y()), src) == true) {
+				    	return true;
+				    }
 				}
-				return erg;
 			}
+			
 			houghThreshold = houghThreshold - 5; //reduce the houghTreshold if no circle is found
 			cannyThreshold = cannyThreshold - 10; //also reduce the cannyThreshold for better circle detection
 		}
