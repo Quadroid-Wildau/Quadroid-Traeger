@@ -7,6 +7,7 @@ public class NaviDataContainer extends Observable {
 	private long lastUpdated;
 	static NaviDataContainer instance;
 	private Vector<NaviData> naviDatas;
+	private Vector<GPSPos> currentPositionVector;
 	
 	public static NaviDataContainer getInstance() {
 		if(instance == null) {
@@ -19,6 +20,7 @@ public class NaviDataContainer extends Observable {
 	private NaviDataContainer() {
 		this.setLastUpdated(0);
 		this.naviDatas = new Vector<NaviData>();
+		this.currentPositionVector = new Vector<GPSPos>();
 	}
 	
 	public NaviData getLastNaviData() {
@@ -67,11 +69,23 @@ public class NaviDataContainer extends Observable {
 		return attitude;
 	}
 	
+	public GPSPos getCurrentPosition() {
+		return currentPositionVector.lastElement();
+	}
+	
 	synchronized public void addNaviData(NaviData naviData) {
+		if(this.getCurrentPosition() != null) {
+			naviData.setCurrentPosition(this.getCurrentPosition());
+		}
+		
 		this.naviDatas.add(naviData);
 		this.setLastUpdated(System.currentTimeMillis());
 		this.hasChanged();
 		this.notifyObservers();
+	}
+	
+	synchronized public void addGPSPosition(GPSPos position) {
+		this.currentPositionVector.add(position);
 	}
 
 	synchronized public long getLastUpdated() {

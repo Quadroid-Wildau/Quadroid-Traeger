@@ -2,9 +2,11 @@ package de.th_wildau.quadroid;
 
 import java.awt.image.BufferedImage;
 import java.util.Enumeration;
+
 import org.apache.log4j.PropertyConfigurator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
 import de.th_wildau.quadroid.connection.Connect;
 import de.th_wildau.quadroid.connection.USBCamConnection;
 import de.th_wildau.quadroid.encoder.TxDataEncoder;
@@ -12,12 +14,15 @@ import de.th_wildau.quadroid.enums.Flight_Ctrl;
 import de.th_wildau.quadroid.enums.XBee;
 import de.th_wildau.quadroid.handler.FlightCtrlReceiverHandler;
 import de.th_wildau.quadroid.handler.FlightCtrlTransmitterHandler;
+import de.th_wildau.quadroid.handler.GPSModuleReceiveHandler;
 import de.th_wildau.quadroid.handler.ObserverHandler;
 import de.th_wildau.quadroid.handler.XBeeReceiverHandler;
 import de.th_wildau.quadroid.handler.XBeeTransmitterHandler;
 import de.th_wildau.quadroid.interfaces.IRxListener;
 import de.th_wildau.quadroid.landmark.MainLandmark;
 import de.th_wildau.quadroid.models.FlightCtrl;
+import de.th_wildau.quadroid.models.GPSModule;
+import de.th_wildau.quadroid.models.GPSPos;
 import de.th_wildau.quadroid.models.Landmark;
 import de.th_wildau.quadroid.models.MetaData;
 import de.th_wildau.quadroid.models.NaviDataContainer;
@@ -47,6 +52,9 @@ public class QuadroidMain implements IRxListener
 	private Connect xbeeconnection = null;
 	/**save flight ctrl connection*/
 	private Connect flightctrlconnection = null;
+	private volatile FlightCtrlTransmitterHandler flightCtrlTransmitterHandler = null;
+	private GPSModuleReceiveHandler gpsModuleReceiveHandler = null;
+	private Connect gpsModuleConnection = null;
 	/**save handler reference for transmission*/
 	private XBeeTransmitterHandler tx = null;
 	/**this value define an interval for Flight-Ctrls updates*/
@@ -75,7 +83,7 @@ public class QuadroidMain implements IRxListener
 		xbee.setParity(XBee.PARITY.getValue());// set parity type
 		xbee.setStopbits(XBee.STOPBITS.getValue());// set number of stopbits
 		//xbee.setPort("/dev/ttyUSB0");// set port for connection
-		xbee.setPort("cu.usbserial-141");// set port for connection
+		xbee.setPort("cu.usbserial-145");// set port for connection
 		xbee.setDevicename(XBee.DEVICENAME.getName());// set an device name
 		
 		while(true)// wait for xbee device
@@ -125,7 +133,7 @@ public class QuadroidMain implements IRxListener
 		flightctrl.setParity(Flight_Ctrl.PARITY.getValue());// set parity type
 		flightctrl.setStopbits(Flight_Ctrl.STOPBITS.getValue());// set number of stopbits
 		//flightctrl.setPort(Flight_Ctrl.PORT.getName());// set port for connection
-		flightctrl.setPort("cu.usbserial-A400fA7A");
+		flightctrl.setPort("cu.usbserial-A900XZAM");
 		flightctrl.setDevicename(Flight_Ctrl.DEVICENAME.getName());// set an device name
 		
 		while(true)// wait for FlightCtrl device
@@ -145,10 +153,11 @@ public class QuadroidMain implements IRxListener
 						this.flightctrlconnection = Connect.getInstance(flightctrl);// connect device to port 
 						// connection successfully?
 						if(this.flightctrlconnection != null)
+							flightCtrlTransmitterHandler = new FlightCtrlTransmitterHandler(this.flightctrlconnection);
 							flightctrlconnection.addSerialPortEventListener(new FlightCtrlReceiverHandler());
 							logger.info("Register FlightCtrl RX Handler");
 							
-							naviCtrlPoller = new FlightCtrlUpdater(flightctrlconnection);
+							naviCtrlPoller = new FlightCtrlUpdater(flightCtrlTransmitterHandler);
 							logger.info("start Flight-Ctrl updater");
 							
 							return;// exit While-Loop
@@ -157,6 +166,53 @@ public class QuadroidMain implements IRxListener
 				
 			}
 			logger.warn("Wait for Flight-Ctrl Device");
+			
+			try 
+			{
+				Thread.sleep(1000);
+			} catch (InterruptedException e) {}
+		}
+
+	}
+	
+	/**
+	 * Init the GPSModule connection to given port,
+	 * this method wait for GPS device until 
+	 * an connection are available
+	 * 
+	 * */
+	private void initGPSModule()
+	{
+		GPSModule gpsModule = new GPSModule();// create an new device
+		
+		while(true)// wait for FlightCtrl device
+		{
+			if(this.gpsModuleConnection == null)// try to connect only if no connection available
+			{	// get all available ports to prove if FlightCtrl are connected
+				Enumeration<?> commports = CommPortIdentifier.getPortIdentifiers();
+				
+				while(commports.hasMoreElements())
+				{
+					CommPortIdentifier port = (CommPortIdentifier) commports.nextElement();
+					
+					if(port.getName().equals(gpsModule.getPort()) && // only connect to specific port
+					   port.getPortType() == CommPortIdentifier.PORT_SERIAL &&// prove port type
+					   !port.isCurrentlyOwned())// prove if port already in use
+					{
+						this.gpsModuleConnection = Connect.getInstance(gpsModule);// connect device to port 
+						// connection successfully?
+						if(this.gpsModuleConnection != null) {
+							gpsModuleReceiveHandler = new GPSModuleReceiveHandler();
+							gpsModuleConnection.addSerialPortEventListener(gpsModuleReceiveHandler);
+							logger.info("Register GPS Module RX Handler");
+							
+							return;// exit While-Loop
+						}
+					}
+				}
+				
+			}
+			logger.warn("Wait for GPSModuleDevice");
 			
 			try 
 			{
@@ -193,6 +249,10 @@ public class QuadroidMain implements IRxListener
 		main.initFlight_Ctrl();
 		logger.info("Init Flight-Ctrl device");
 		// registered xbee rx handler
+
+		// init gps module
+		logger.info("Init GPS device");
+		main.initGPSModule();
 		
 		main.xbeeconnection.addSerialPortEventListener(new XBeeReceiverHandler());
 		logger.info("Registered Xbee Rx handler");
@@ -223,9 +283,20 @@ public class QuadroidMain implements IRxListener
 	@Override
 	public void rx(RxData data) 
 	{
-		
-		//TODO: Alex receiving GNSS data are waypoint
-		//must be transmit and set to flightctrl 
+		if(data != null && data.getWaypointlist() != null) {
+			logger.debug("waypointlist size:" + data.getWaypointlist().size());
+			logger.debug("waypointlist string:" + data.getWaypointlist().toString());
+			this.flightCtrlTransmitterHandler.addWaypoints(null);
+			
+		} else {
+			if(data == null) {
+				logger.debug("data is null");
+			}
+			
+			if(data.getWaypointlist() == null) {
+				logger.debug("data.getWaypointlist() is null");
+			}
+		}
 	}
 	
 	
@@ -240,8 +311,8 @@ public class QuadroidMain implements IRxListener
 	public class FlightCtrlUpdater implements Runnable {
 		private FlightCtrlTransmitterHandler txHandler;
 		
-		public FlightCtrlUpdater(Connect connection) {
-			txHandler = new FlightCtrlTransmitterHandler(connection);
+		public FlightCtrlUpdater(FlightCtrlTransmitterHandler handler) {
+			txHandler = handler;
 			Thread thread = new Thread(this);
 			
 			thread.start();
@@ -251,8 +322,7 @@ public class QuadroidMain implements IRxListener
 			while(true) {
 				double lastUpdate = System.currentTimeMillis() - NaviDataContainer.getInstance().getLastUpdated();
 				
-				if(lastUpdate > 2000) {
-					logger.info("requestNaviData");
+				if(lastUpdate > 300) {
 					txHandler.requestNaviData();
 					try {
 						Thread.sleep(2000);
