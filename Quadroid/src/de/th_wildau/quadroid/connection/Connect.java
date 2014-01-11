@@ -1,17 +1,12 @@
 package de.th_wildau.quadroid.connection;
 
-import gnu.io.CommPort;
-import gnu.io.CommPortIdentifier;
-import gnu.io.NoSuchPortException;
-import gnu.io.PortInUseException;
-import gnu.io.SerialPort;
-import gnu.io.SerialPortEvent;
-import gnu.io.SerialPortEventListener;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.ArrayList;
 import org.slf4j.Logger;
+
+import purejavacomm.*;
 import de.th_wildau.quadroid.QuadroidMain;
 import de.th_wildau.quadroid.interfaces.IDevice;
 import de.th_wildau.quadroid.interfaces.AbstractReceiver;
@@ -314,14 +309,16 @@ public final class Connect implements SerialPortEventListener
 	}
 
 	@Override
-	public void serialEvent(SerialPortEvent arg0) 
+	public void serialEvent(SerialPortEvent event) 
 	{	//check for available registered listener 
 		if(this.listenerlist != null)
 		for(AbstractReceiver listener: this.listenerlist)
 		{	//notify all registered listener
-			listener.serialEvent(arg0, this.serialport, 
-					this.getInputStream(), this.getOutputStream(), 
-					this.logger);
+			listener.serialEvent(event, 
+								 this.serialport, 
+								 this.getInputStream(), 
+								 this.getOutputStream(), 
+								 this.logger);
 		}
 		
 	}

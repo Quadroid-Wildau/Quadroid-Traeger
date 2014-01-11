@@ -5,7 +5,7 @@ import de.th_wildau.quadroid.QuadroidMain;
 import de.th_wildau.quadroid.connection.Connect;
 
 /**
- * This interface manage 
+ * this class abstract the transmission part and must be overwrite from xbee and flight-ctrl transmission handler
  * 
  * @author Thomas Rohde TM-12, trohde(at)th-wildau.de
  * @version 1.0, 09.12.2013, (JDK 7)
@@ -64,6 +64,9 @@ public abstract class AbstractTransmitter {
 	 * 
 	 * @param msg - hand over data to transmit it
 	 * */
-	public abstract void transmit(byte[] msg);
+	public synchronized void transmit(byte[] msg)
+	{
+		//handle transmission data 
+	}
 	
 }

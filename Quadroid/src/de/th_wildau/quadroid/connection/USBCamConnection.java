@@ -97,7 +97,13 @@ public class USBCamConnection
 	 * */
 	private Webcam connectToCamera(Dimension resolution)
 	{
-		Webcam camera = Webcam.getDefault();
+		Webcam camera = null;
+		
+		if(Webcam.getWebcams().size() > 1){
+			camera = Webcam.getWebcams().get(1);//Webcam.getDefault();
+		} else {
+			camera = Webcam.getWebcams().get(0);//Webcam.getDefault();
+		}
 		
 		
 		if(camera == null || camera.isOpen())

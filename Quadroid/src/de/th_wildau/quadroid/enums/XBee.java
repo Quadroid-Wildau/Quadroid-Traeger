@@ -1,6 +1,7 @@
 package de.th_wildau.quadroid.enums;
 
-import gnu.io.SerialPort;
+import purejavacomm.SerialPort;
+
 
 /**
  * This enum define the communication with XBee

@@ -5,36 +5,50 @@ import java.awt.image.BufferedImage;
 import java.awt.image.Raster;
 import java.awt.image.WritableRaster;
 
-public class MainLandmark implements Runnable{
+/**
+ * Mainclass for Landmarkdetection.
+ * Contains preprocessing for landmarkdetection
+ * @author Stephan Funke
+ *
+ */
+public class MainLandmark{
 
 	
 	public MainLandmark(){
-		Thread lmthread = new Thread(this);
-		lmthread.start();
 		
 	}
 	
+	/**
+	 * Starts the landmarkdetection with preprocessing of the Image
+	 * @param img
+	 * @return boolean - TRUE = landmark detected, FALSE = no landmark is found
+	 */
 	public boolean checkLandmark(BufferedImage img){
 		//System.loadLibrary("opencv_java245");
 		img = convertSourceImage(img);
 		
-		Raster src = img.getRaster();
+		Raster src = img.getRaster();	//get the Raster from the source image
+		
 		
 		OpCheckLandmark checkLM = new OpCheckLandmark();
 		WritableRaster dest = src.createCompatibleWritableRaster();
 		
-		
+		//Calling the Landmarkdetection
 		return checkLM.findLm(src, dest);
 	}
 	
-	
+	/**
+	 * Checks the sourceimagetype
+	 * If the type is not TYPE_INT_RGB, it will be set
+	 * @param src
+	 * @return
+	 */
 	protected BufferedImage convertSourceImage(BufferedImage src) {
 		if (src.getType() == BufferedImage.TYPE_INT_RGB)
 			return src;
 		BufferedImage bufferedImage = new BufferedImage(src.getWidth(null),
 				src.getHeight(null), BufferedImage.TYPE_INT_RGB);
 		Graphics2D g = bufferedImage.createGraphics();
-		// Bild in das BufferedImage zeichnen
 		g.drawImage(src, 0, 0, src.getWidth(null),
 				src.getHeight(null), null);
 		return bufferedImage;
@@ -42,9 +56,4 @@ public class MainLandmark implements Runnable{
 	
 	
 	 
-	@Override
-	public void run() {
-		// TODO Auto-generated method stub
-		
-	}
 }

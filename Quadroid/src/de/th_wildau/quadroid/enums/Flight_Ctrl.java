@@ -1,5 +1,7 @@
 package de.th_wildau.quadroid.enums;
 
+import purejavacomm.SerialPort;
+
 /**
  * This enum define the communication with Flight-Ctrl 2.5
  * 
@@ -11,11 +13,11 @@ package de.th_wildau.quadroid.enums;
 public enum Flight_Ctrl {
 
 	//TODO: set communication parameter for Flight-Ctrl 2.5
-	BAUD(-1), //transmission speed
-	PARITY(-1), //parity flag
-	DATABITS(-1), //number of databits
-	STOPBITS(-1), //stop flag
-	PORT(""), //connection port
+	BAUD(57600), //transmission speed
+	PARITY(SerialPort.PARITY_NONE), //parity flag
+	DATABITS(SerialPort.DATABITS_8), //number of databits
+	STOPBITS(SerialPort.STOPBITS_1), //stop flag
+	PORT("/dev/ttyUSB1"), //connection port
 	DEVICENAME(""); //device name
 	
 	

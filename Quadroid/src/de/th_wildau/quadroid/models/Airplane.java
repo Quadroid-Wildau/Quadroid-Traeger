@@ -18,9 +18,9 @@ public class Airplane {
 	
 	
 	/**
-	 * battery power state [0 ... 100] (percent) 
+	 * battery power state in volt 
 	 */
-	private byte batteryState;
+	private short batteryState;
 	
 	/**
 	 * save an geoposition
@@ -77,7 +77,7 @@ public class Airplane {
 	 * this value can be between [0 ... 100] (percent)
 	 * 
 	 * */
-	public byte getBatteryState() {
+	public short getBatteryState() {
 		return batteryState;
 	}
 
@@ -88,7 +88,7 @@ public class Airplane {
 	 * value can be between [0 ... 100] (percent)
 	 * 
 	 * */
-	public void setBatteryState(byte batteryState) {
+	public void setBatteryState(short batteryState) {
 		this.batteryState = batteryState;
 	}
 	

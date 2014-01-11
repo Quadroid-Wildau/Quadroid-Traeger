@@ -1,24 +1,8 @@
 package de.th_wildau.quadroid.enums;
 
 /**
- * This enum contains marker for transmissions
+ * This enum contains marker for transmissions protocol 
  * 
- * 
- * <ul>
- * <li>Picture bytes</li>
- * <li>GNSS position</li>
- * <li>Gyro data</li>
- * <li>Height data</li>
- * <li>Akku state</li>
- * <li>Time value</li>
- * <li>Speed value</li>
- * <li>Course data</li>
- * <li>CRC data</li>
- * <li></li>
- * <li></li>
- * <li></li>
- * 
- * </ul>
  * 
  * @author Thomas Rohde, trohde@th-wildau.de
  * @version 1.0 27.11.2013 (JDK 7) 
@@ -31,38 +15,22 @@ public enum Marker
 	PICTURESTART("<0>"), 
 	/**marker < /0 for picture values*/
 	PICTUREEND("</0"),
-	/**marker ##> for GNSS data*/
-	GNSSSTART("##>"), 
-	/**marker < ## for GNSS data*/
-	GNSSEND("<##"),
+	/**marker < #> for GNSS data*/
+	GNSSSTART("<#>"), 
+	/**marker < /# for GNSS data*/
+	GNSSEND("</#"),
 	/**marker //> for gyro data*/
-	ATTITUDESTART("//>"), 
+	ATTITUDESTART("</>"), 
 	/**marker < // for gyro data*/
 	ATTITUDEEND("<//"),
-	/**marker ??> for height data*/
-	//HEIGHTSTART("??>"), 
-	/**marker < ?? for height data*/
-	//HEIGHTEND("<??"),
-	/**marker !!> for Akku data*/
-	//AKKUSTART("!!>"), 
-	/**marker < !! for Akku data*/
-	//AKKUEND("<!!"),
-	/**marker ;;> for time value*/
-	//TIMESTART(";;>"), 
-	/**marker < ;; for time value*/
-	//TIMEEND("<;;"),
-	/**marker ::> for speed value */
-	//SPEEDSTART("::>"), 
-	/**marker < :: for speed value*/
-	//SPEEDEND("<::"),
-	/**marker &&> for course value*/
-	COURSESTART("&&>"), 
-	/**marker < && for course value*/
-	COURSEEND("<&&"),
-	/**marker $$> for crc32 value */
-	CRCSTART("$$>"), 
-	/**marker < $$ for crc32 value */
-	CRCEND("<$$"),
+	/**marker < &> for course value*/
+	COURSESTART("<&>"), 
+	/**marker < /& for course value*/
+	COURSEEND("</&"),
+	/**marker <$> for crc32 value */
+	CRCSTART("<$>"), 
+	/**marker < /$ for crc32 value */
+	CRCEND("</$"),
 	/**marker < Y> for yaw data*/
 	YAWSTART("<Y>"),
 	/**marker < /Y> for yaw data*/
