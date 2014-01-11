@@ -22,7 +22,6 @@ import de.th_wildau.quadroid.interfaces.IRxListener;
 import de.th_wildau.quadroid.landmark.MainLandmark;
 import de.th_wildau.quadroid.models.FlightCtrl;
 import de.th_wildau.quadroid.models.GPSModule;
-import de.th_wildau.quadroid.models.GPSPos;
 import de.th_wildau.quadroid.models.Landmark;
 import de.th_wildau.quadroid.models.MetaData;
 import de.th_wildau.quadroid.models.NaviDataContainer;

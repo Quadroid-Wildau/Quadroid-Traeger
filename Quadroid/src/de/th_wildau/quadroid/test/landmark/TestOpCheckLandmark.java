@@ -6,7 +6,6 @@ import java.io.IOException;
 
 import javax.imageio.ImageIO;
 
-import org.junit.Test;
 
 import de.th_wildau.quadroid.landmark.MainLandmark;
 

@@ -100,8 +100,10 @@ public class USBCamConnection
 		Webcam camera = null;
 		
 		if(Webcam.getWebcams().size() > 1){
+			//if testet on laptop get usb caml
 			camera = Webcam.getWebcams().get(1);//Webcam.getDefault();
 		} else {
+			//get usb cam
 			camera = Webcam.getWebcams().get(0);//Webcam.getDefault();
 		}
 		

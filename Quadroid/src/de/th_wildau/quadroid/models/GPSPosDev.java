@@ -1,19 +1,62 @@
 package de.th_wildau.quadroid.models;
 
-public class GPSPosDev {
+/**
+ * Model for ? TODO: 
+ * 
+ * @author Alex
+ * @version 1.0, 11.01.2014, (JDK 7)
+ * 
+ * 
+ * */
+
+public class GPSPosDev 
+{
+	/**save value for distance*/
 	private short distance;
+	/**save value for bearing*/
 	private short bearing;
 	
-	public short getDistance() {
+	/**
+	 * Getter Function
+	 * 
+	 * @return an distance 
+	 * 
+	 * */
+	public short getDistance() 
+	{
 		return distance;
 	}
-	public void setDistance(short distance) {
+	
+	/**
+	 * Setter Method
+	 * 
+	 * @param distance - hand over an new distance to set
+	 * 
+	 * */
+	public void setDistance(short distance) 
+	{
 		this.distance = distance;
 	}
-	public short getBearing() {
+	
+	/**
+	 * Getter Function
+	 * 
+	 * @return the bearing
+	 * 
+	 * */
+	public short getBearing() 
+	{
 		return bearing;
 	}
-	public void setBearing(short bearing) {
+	
+	/**
+	 * Setter Method
+	 * 
+	 * @param bearing - hand over new bearing value
+	 * 
+	 * */
+	public void setBearing(short bearing) 
+	{
 		this.bearing = bearing;
 	}
 }
