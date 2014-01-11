@@ -5,6 +5,7 @@ public class GPSPos {
 	private float latitude; // in 1E-7 deg
 	private float altitude; // in mm
 	private short status;// validity of data
+	private long time;
 	
 	public float getLongitude() {
 		return longitude;
@@ -29,5 +30,11 @@ public class GPSPos {
 	}
 	public void setStatus(short status) {
 		this.status = status;
+	}
+	public long getTime() {
+		return time;
+	}
+	public void setTime(long time) {
+		this.time = time;
 	}
 }

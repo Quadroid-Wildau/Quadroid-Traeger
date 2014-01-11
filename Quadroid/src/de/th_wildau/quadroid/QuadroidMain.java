@@ -82,7 +82,7 @@ public class QuadroidMain implements IRxListener {
 		xbee.setParity(XBee.PARITY.getValue());// set parity type
 		xbee.setStopbits(XBee.STOPBITS.getValue());// set number of stopbits
 		//xbee.setPort("/dev/ttyUSB0");// set port for connection
-		xbee.setPort("cu.usbserial-145");// set port for connection
+		xbee.setPort("cu.usbserial-1412");// set port for connection
 		xbee.setDevicename(XBee.DEVICENAME.getName());// set an device name
 
 		while(true)// wait for xbee device
@@ -322,8 +322,6 @@ public class QuadroidMain implements IRxListener {
 	public void rx(RxData data) 
 	{
 		if(data != null && data.getWaypointlist() != null) {
-			logger.debug("waypointlist size:" + data.getWaypointlist().size());
-			logger.debug("waypointlist string:" + data.getWaypointlist().toString());
 			this.flightCtrlTransmitterHandler.addWaypoints(null);
 
 		} else {
@@ -408,7 +406,6 @@ public class QuadroidMain implements IRxListener {
 					MetaData update = NaviDataContainer.getInstance().getLastMetaData();
 					//encode object into bytes
 					byte[] metadata = encoder.metadataToBytes(update);
-					logger.info("metadata length" + metadata.length);
 					//transmit data to ground station
 					this.mainref.tx.transmit(metadata);
 				}

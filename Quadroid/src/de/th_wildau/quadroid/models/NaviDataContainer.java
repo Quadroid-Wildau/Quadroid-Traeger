@@ -49,6 +49,10 @@ public class NaviDataContainer extends Observable {
 		airplane.setGeoData(this.getLastGNSS());
 		airplane.setBatteryState(this.getLastNaviData().getuBat());
 		
+		if(this.getCurrentPosition() != null) {
+			airplane.setTime(this.getCurrentPosition().getTime());
+		}
+		
 		return airplane;
 	}
 	
@@ -63,6 +67,7 @@ public class NaviDataContainer extends Observable {
 	
 	public Attitude getLastAttitude() {
 		Attitude attitude = new Attitude();
+		attitude.setYaw(this.getLastNaviData().getCompassHeading());
 		attitude.setRoll(this.getLastNaviData().getAngleRoll());
 		attitude.setPitch(this.getLastNaviData().getAngleNick());
 		

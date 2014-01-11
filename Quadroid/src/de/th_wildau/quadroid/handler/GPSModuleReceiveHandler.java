@@ -19,7 +19,6 @@ public class GPSModuleReceiveHandler extends AbstractReceiver {
 	@Override
 	public void serialEvent(SerialPortEvent evnt, SerialPort port, 
 			InputStream istream, OutputStream ostream, Logger logger) {
-		logger.info("GPSModule evnt: "+ evnt.getEventType());
 		
 		switch(evnt.getEventType()) {
         case SerialPortEvent.BI:
@@ -41,7 +40,6 @@ public class GPSModuleReceiveHandler extends AbstractReceiver {
 				while((rx = istream.read()) != -1)
 				{
 					byte b = (byte)rx;
-					logger.debug("receive gps data");
 					if(b == 10)//end marker 
 						break;
 					buffer.write(b);//save data into bytestream
@@ -53,12 +51,11 @@ public class GPSModuleReceiveHandler extends AbstractReceiver {
 			
 			String string = buffer.toString();
 			
-			if (string.startsWith("$GPGLL")) {
-				logger.debug("received complete data :" + string);
+			//GPGGA,104506.00,5219.15347,N,01337.98647,E,1,05,3.32,28.4,M,44.7,M,,*6D
+			if (string.startsWith("$GPGGA")) {
 				GPSPos pos = this.decodeGPSPos(string);
-				
+				logger.debug("gps pos: lat:" + pos.getLatitude() + " lng: " + pos.getLongitude() + "height :" + pos.getAltitude());
 				NaviDataContainer.getInstance().addGPSPosition(pos);
-				logger.debug("pos lat:" + pos.getLatitude() + " lng:" + pos.getLongitude());
 			}
         }
 	}
@@ -68,47 +65,57 @@ public class GPSModuleReceiveHandler extends AbstractReceiver {
 		String[] strings = string.split(",");
 		float latitude = 0;
 		float longitude = 0;
+		int time = 0;
+		float altitude = 0;
 		
 		if(strings[1] != null && !strings[1].equals("")) {
-			int pointIndex = strings[1].indexOf(".");
-			String deg = strings[1].substring(0, pointIndex - 2);
-			String minute = strings[1].substring(pointIndex-2, pointIndex);
-			String second = strings[1].substring(pointIndex + 1, strings[1].length());
+			time = (int)Float.parseFloat(strings[1]);
+		}
+		
+		if(strings[2] != null && !strings[2].equals("")) {
+			int pointIndex = strings[2].indexOf(".");
+			String deg = strings[2].substring(0, pointIndex - 2);
+			String minute = strings[2].substring(pointIndex-2, pointIndex);
+			String second = strings[2].substring(pointIndex + 1, strings[2].length());
 			float degVal = Float.parseFloat(deg);
 			float minuVal = Float.parseFloat(minute);
 			float secVal = Float.parseFloat(second) / 1000;
 			
-			System.out.println("deg :" + degVal + " minVal :" + minuVal + " secVal:" + secVal);
 			latitude = degVal + minuVal / 60 + secVal / 3600;
 		}
 		
-		if(strings[2] != null) {
-			if(strings[2].equals("S")) {
+		if(strings[3] != null) {
+			if(strings[3].equals("S")) {
 				latitude *= -1;
 			}
 		}
 		
-		if(strings[3] != null && !strings[3].equals("")) {
-			int pointIndex = strings[3].indexOf(".");
-			String deg = strings[3].substring(0, pointIndex - 2);
-			String minute = strings[3].substring(pointIndex-2, pointIndex);
-			String second = strings[3].substring(pointIndex + 1, strings[1].length());
+		if(strings[4] != null && !strings[4].equals("")) {
+			int pointIndex = strings[4].indexOf(".");
+			String deg = strings[4].substring(0, pointIndex - 2);
+			String minute = strings[4].substring(pointIndex-2, pointIndex);
+			String second = strings[4].substring(pointIndex + 1, strings[4].length());
 			float degVal = Float.parseFloat(deg);
 			float minuVal = Float.parseFloat(minute);
 			float secVal = Float.parseFloat(second) / 1000;
 			
-			System.out.println("deg :" + degVal + " minVal :" + minuVal + " secVal:" + secVal);
 			longitude = degVal + minuVal / 60 + secVal / 3600;
 		}
 		
-		if(strings[4] != null) {
-			if(strings[4].equals("W")) {
+		if(strings[5] != null) {
+			if(strings[5].equals("W")) {
 				longitude *= -1;
 			}
 		}
 		
+		if(strings[11] != null && !strings[11].isEmpty()) {
+			altitude = Float.parseFloat(strings[11]);
+		}
+		
 		pos.setLatitude(latitude);
 		pos.setLongitude(longitude);
+		pos.setTime(time);
+		pos.setAltitude(altitude);
 		
 		return pos;
 	}

@@ -8,7 +8,7 @@ public class GPSModule implements IDevice{
 	@Override
 	public String getPort() {
 		// TODO Auto-generated method stub
-		return "tty.usbmodem14111";
+		return "tty.usbmodem1451";
 	}
 
 	@Override
