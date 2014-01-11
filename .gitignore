@@ -5,6 +5,7 @@
 *.war
 *.ear
 *.metadata
+*.classpath
 
 # Driver #
 *.so
