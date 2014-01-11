@@ -70,7 +70,11 @@ public class NaviDataContainer extends Observable {
 	}
 	
 	public GPSPos getCurrentPosition() {
-		return currentPositionVector.lastElement();
+		if(currentPositionVector.size() > 0) {
+			return currentPositionVector.lastElement();
+		} else {
+			return null;
+		}
 	}
 	
 	synchronized public void addNaviData(NaviData naviData) {
