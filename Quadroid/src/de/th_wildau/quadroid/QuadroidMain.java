@@ -74,8 +74,8 @@ public class QuadroidMain implements IRxListener
                 xbee.setDatabits(XBee.DATABITS.getValue());// set number of databits
                 xbee.setParity(XBee.PARITY.getValue());// set parity type
                 xbee.setStopbits(XBee.STOPBITS.getValue());// set number of stopbits
-                //xbee.setPort("/dev/ttyUSB0");// set port for connection
-                xbee.setPort("cu.usbserial-141");// set port for connection
+                xbee.setPort(XBee.PORT.getName());// set port for connection
+                //xbee.setPort("cu.usbserial-141");// set port for connection
                 xbee.setDevicename(XBee.DEVICENAME.getName());// set an device name
                 
                 while(true)// wait for xbee device
@@ -88,10 +88,14 @@ public class QuadroidMain implements IRxListener
                                 {
                                         CommPortIdentifier port = (CommPortIdentifier) commports.nextElement();
                                         
+                              	
+ 
+                                        
                                         if(port.getName().equals(xbee.getPort()) && // only connect to specific port
                                          port.getPortType() == CommPortIdentifier.PORT_SERIAL &&// prove port type
                                          !port.isCurrentlyOwned())// prove if port already in use
                                         {
+    
                                                 this.xbeeconnection = Connect.getInstance(xbee);// connect device to port
                                                 // connection successfully?
                                                 if(this.xbeeconnection != null)
@@ -124,8 +128,8 @@ public class QuadroidMain implements IRxListener
                 flightctrl.setDatabits(Flight_Ctrl.DATABITS.getValue());// set number of databits
                 flightctrl.setParity(Flight_Ctrl.PARITY.getValue());// set parity type
                 flightctrl.setStopbits(Flight_Ctrl.STOPBITS.getValue());// set number of stopbits
-                //flightctrl.setPort(Flight_Ctrl.PORT.getName());// set port for connection
-                flightctrl.setPort("cu.usbserial-A400fA7A");
+                flightctrl.setPort(Flight_Ctrl.PORT.getName());// set port for connection
+                //flightctrl.setPort("cu.usbserial-A400fA7A");
                 flightctrl.setDevicename(Flight_Ctrl.DEVICENAME.getName());// set an device name
                 
                 while(true)// wait for FlightCtrl device
@@ -203,7 +207,8 @@ public class QuadroidMain implements IRxListener
                 // registered observer
                 ObserverHandler.getReference().register(main);
                 logger.info("Registered Rx observer");
-
+                
+                new FlightCtrlUpdater(main.flightctrlconnection);
                 // start metadata updater
                 new StateTransmitter(main);
                 logger.info("start metadata updater");
@@ -237,7 +242,7 @@ public class QuadroidMain implements IRxListener
          *
          *
          * */
-        public class FlightCtrlUpdater implements Runnable {
+        public static class FlightCtrlUpdater implements Runnable {
                 private FlightCtrlTransmitterHandler txHandler;
                 
                 public FlightCtrlUpdater(Connect connection) {
