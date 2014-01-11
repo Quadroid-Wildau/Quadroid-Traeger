@@ -1,27 +1,27 @@
 package de.th_wildau.quadroid.models;
 
 public class GPSPos {
-	private int longitude;  // in 1E-7 deg
-	private int latitude; // in 1E-7 deg
-	private int altitude; // in mm
+	private float longitude;  // in 1E-7 deg
+	private float latitude; // in 1E-7 deg
+	private float altitude; // in mm
 	private short status;// validity of data
 	
-	public int getLongitude() {
+	public float getLongitude() {
 		return longitude;
 	}
-	public void setLongitude(int longitude) {
+	public void setLongitude(float longitude) {
 		this.longitude = longitude;
 	}
-	public int getLatitude() {
+	public float getLatitude() {
 		return latitude;
 	}
-	public void setLatitude(int latitude) {
+	public void setLatitude(float latitude) {
 		this.latitude = latitude;
 	}
-	public int getAltitude() {
+	public float getAltitude() {
 		return altitude;
 	}
-	public void setAltitude(int altitude) {
+	public void setAltitude(float altitude) {
 		this.altitude = altitude;
 	}
 	public short getStatus() {

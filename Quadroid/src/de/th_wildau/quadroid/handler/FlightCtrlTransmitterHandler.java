@@ -1,17 +1,26 @@
 package de.th_wildau.quadroid.handler;
 
 import java.io.IOException;
+import java.nio.ByteBuffer;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.concurrent.ArrayBlockingQueue;
+import java.util.concurrent.TimeUnit;
 
 import org.slf4j.Logger;
 
+import sun.misc.Queue;
 import de.th_wildau.quadroid.QuadroidMain;
 import de.th_wildau.quadroid.connection.Connect;
 import de.th_wildau.quadroid.interfaces.AbstractTransmitter;
+import de.th_wildau.quadroid.models.GPSPos;
+import de.th_wildau.quadroid.models.Waypoint;
 
 public class FlightCtrlTransmitterHandler extends AbstractTransmitter {
 	/**reference of logger*/
 	private Logger logger = QuadroidMain.logger;
-	
+	private ArrayBlockingQueue<byte[]> queue = new ArrayBlockingQueue<byte[]>(1000);
+	private SenderThread senderThread = new SenderThread();
 	
 	/**
 	 * public Constructor 
@@ -24,13 +33,21 @@ public class FlightCtrlTransmitterHandler extends AbstractTransmitter {
 	 * */
 	public FlightCtrlTransmitterHandler(Connect connection) throws NullPointerException {	
 		super(connection);
+		this.senderThread.start();
 	}
 		
 
 	public void requestNaviData() {
-		char[] chars = new char[] {'#', 'a', 'o', 100};
+		char[] chars = new char[] {'#', 'a', 'o', 10};
 		
 		this.transmit(chars);
+	}
+	
+	public void addWaypoints(Waypoint waypoint) {
+		ByteBuffer buffer = ByteBuffer.allocate(2);
+		
+		GPSPos geoPos = new GPSPos();
+		//this.transmit(msg);
 	}
 	
 	public void transmit(char[] chars) {
@@ -70,11 +87,63 @@ public class FlightCtrlTransmitterHandler extends AbstractTransmitter {
 	 * @param msg - hand over data to transmit
 	 * */
 	@Override
-	public void transmit(byte[] msg) {
+	public void transmit(byte[] msg) {		
 		try {
-			this.getConnection().getOutputStream().write(msg);
-		} catch (IOException e) {
-			logger.error("Transmission Exception: ", e);
+			logger.debug("before size :" + this.queue.size());
+			this.queue.put(msg);
+			logger.debug("after size :" + this.queue.size());
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+//		try {
+//			this.getConnection().getOutputStream().write(msg);
+//		} catch (IOException e) {
+//			logger.error("Transmission Exception: ", e);
+//		}
+	}
+	
+//	private byte[] encodePoint(Point point) {
+//		
+//	}
+//	
+//	private byte[] encodeGPSPos(GPSPos gpsPos) {
+//		
+//	}
+//	
+//	public byte endcodeU8(short value) {
+//		ByteBuffer buffer = ByteBuffer.allocate(1);
+//		buffer.
+//		
+//		return buffer.get();
+//	}
+	
+	private class SenderThread extends Thread {
+		private boolean isRunning = true;
+		
+		public synchronized void cancel() {
+			this.isRunning = false;
+		}
+		
+		@Override
+		public void run() {
+			while(isRunning) {
+				try {
+					logger.debug("queue size : " + queue.size());
+					byte[] bytes = queue.poll(500, TimeUnit.MILLISECONDS);
+					
+					if(bytes != null) {
+						logger.debug("byte length : " + bytes.length);
+						getConnection().getOutputStream().write(bytes);
+					}
+				} catch (IOException e) {
+					logger.error("Transmission Exception: ", e);
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
 		}
 	}
 }
