@@ -24,17 +24,17 @@ public class MainLandmark{
 	 * @return boolean - TRUE = landmark detected, FALSE = no landmark is found
 	 */
 	public boolean checkLandmark(BufferedImage img){
-		//System.loadLibrary("opencv_java245");
-		img = convertSourceImage(img);
-		
-		Raster src = img.getRaster();	//get the Raster from the source image
-		
-		
+//		//System.loadLibrary("opencv_java245");
+//		img = convertSourceImage(img);
+//		
+//		Raster src = img.getRaster();	//get the Raster from the source image
+//		
+//		
 		OpCheckLandmark checkLM = new OpCheckLandmark();
-		WritableRaster dest = src.createCompatibleWritableRaster();
+//		WritableRaster dest = src.createCompatibleWritableRaster();
 		
 		//Calling the Landmarkdetection
-		return checkLM.findLm(src, dest);
+		return checkLM.findLm(img);
 	}
 	
 	/**
