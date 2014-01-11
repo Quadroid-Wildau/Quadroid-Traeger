@@ -464,7 +464,7 @@ public class RxDataDecoder implements Runnable
 					//convert data bytes to buffered image an set value into waypoint
 					point.setPictureoflandmark(
 							this.byteToBufferedImage(
-									data.substring(pstart, pend).getBytes("UTF-8")));
+									data.substring(pstart, pend).getBytes()));
 				
 				}catch(Exception e)
 				{
@@ -621,7 +621,7 @@ public class RxDataDecoder implements Runnable
 					//convert and set image
 					lm.setPictureoflandmark(
 							this.byteToBufferedImage(
-									data.substring(mstart, mend).getBytes("UTF-8")));
+									data.substring(mstart, mend).getBytes()));
 				}
 				catch(Exception e)
 				{
@@ -665,7 +665,7 @@ public class RxDataDecoder implements Runnable
 		
 		try
 		{	// for windows --> UTF-8
-			data.append(new String(this.rx, "UTF-8"));
+			data.append(new String(this.rx ));
 			
 		}catch(Exception e)
 		{

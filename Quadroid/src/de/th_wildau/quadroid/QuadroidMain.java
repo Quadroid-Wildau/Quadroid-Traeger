@@ -32,18 +32,17 @@ import purejavacomm.*;
 
 
 /**
- * 
+ *
  * Main Method for quadroid project
- * 
+ *
  * @author Thomas Rohde, trohde@th-wildau.de
- * @version 1.0 28.11.2013 (JDK 7) 
- * 
+ * @version 1.0 28.11.2013 (JDK 7)
+ *
  * */
 
-public class QuadroidMain implements IRxListener
-{
-	
-	
+public class QuadroidMain implements IRxListener {
+
+
 	/**Logger for Logging with {@link org.slf4j.Logger}*/
 	public static Logger logger = null;
 	/**describe the properties file for log4j logging*/
@@ -67,8 +66,8 @@ public class QuadroidMain implements IRxListener
 	private static boolean statetransmitter = false;
 	@SuppressWarnings("unused")
 	private FlightCtrlUpdater naviCtrlPoller = null;
-	
-	
+
+
 	/**
 	 * Init the xBee connection to given port,
 	 * this method wait for xBee device until 
@@ -85,20 +84,20 @@ public class QuadroidMain implements IRxListener
 		//xbee.setPort("/dev/ttyUSB0");// set port for connection
 		xbee.setPort("cu.usbserial-145");// set port for connection
 		xbee.setDevicename(XBee.DEVICENAME.getName());// set an device name
-		
+
 		while(true)// wait for xbee device
 		{
 			if(this.xbeeconnection == null)// try to connect only if no connection available
 			{	// get all available ports to prove if xbee are connected
 				Enumeration<?> commports = CommPortIdentifier.getPortIdentifiers();
-				
+
 				while(commports.hasMoreElements())
 				{
 					CommPortIdentifier port = (CommPortIdentifier) commports.nextElement();
-					
+
 					if(port.getName().equals(xbee.getPort()) && // only connect to specific port
-					   port.getPortType() == CommPortIdentifier.PORT_SERIAL &&// prove port type
-					   !port.isCurrentlyOwned())// prove if port already in use
+							port.getPortType() == CommPortIdentifier.PORT_SERIAL &&// prove port type
+							!port.isCurrentlyOwned())// prove if port already in use
 					{
 						this.xbeeconnection = Connect.getInstance(xbee);// connect device to port 
 						// connection successfully?
@@ -106,10 +105,10 @@ public class QuadroidMain implements IRxListener
 							return;// exit While-Loop
 					}
 				}
-				
+
 			}
 			logger.warn("Wait for xBee Device");
-			
+
 			try 
 			{
 				Thread.sleep(1000);
@@ -117,8 +116,8 @@ public class QuadroidMain implements IRxListener
 		}
 
 	}
-	
-	
+
+
 	/**
 	 * Init the Flight-Ctrl connection to given port,
 	 * this method wait for Flight-Ctrl device until 
@@ -133,40 +132,40 @@ public class QuadroidMain implements IRxListener
 		flightctrl.setParity(Flight_Ctrl.PARITY.getValue());// set parity type
 		flightctrl.setStopbits(Flight_Ctrl.STOPBITS.getValue());// set number of stopbits
 		//flightctrl.setPort(Flight_Ctrl.PORT.getName());// set port for connection
-		flightctrl.setPort("cu.usbserial-A900XZAM");
+		flightctrl.setPort("cu.usbserial-A400fA7A");
 		flightctrl.setDevicename(Flight_Ctrl.DEVICENAME.getName());// set an device name
-		
+
 		while(true)// wait for FlightCtrl device
 		{
 			if(this.flightctrlconnection == null)// try to connect only if no connection available
 			{	// get all available ports to prove if FlightCtrl are connected
 				Enumeration<?> commports = CommPortIdentifier.getPortIdentifiers();
-				
+
 				while(commports.hasMoreElements())
 				{
 					CommPortIdentifier port = (CommPortIdentifier) commports.nextElement();
-					
+
 					if(port.getName().equals(flightctrl.getPort()) && // only connect to specific port
-					   port.getPortType() == CommPortIdentifier.PORT_SERIAL &&// prove port type
-					   !port.isCurrentlyOwned())// prove if port already in use
+							port.getPortType() == CommPortIdentifier.PORT_SERIAL &&// prove port type
+							!port.isCurrentlyOwned())// prove if port already in use
 					{
 						this.flightctrlconnection = Connect.getInstance(flightctrl);// connect device to port 
 						// connection successfully?
 						if(this.flightctrlconnection != null)
 							flightCtrlTransmitterHandler = new FlightCtrlTransmitterHandler(this.flightctrlconnection);
-							flightctrlconnection.addSerialPortEventListener(new FlightCtrlReceiverHandler());
-							logger.info("Register FlightCtrl RX Handler");
-							
-							naviCtrlPoller = new FlightCtrlUpdater(flightCtrlTransmitterHandler);
-							logger.info("start Flight-Ctrl updater");
-							
-							return;// exit While-Loop
+						flightctrlconnection.addSerialPortEventListener(new FlightCtrlReceiverHandler());
+						logger.info("Register FlightCtrl RX Handler");
+
+						naviCtrlPoller = new FlightCtrlUpdater(flightCtrlTransmitterHandler);
+						logger.info("start Flight-Ctrl updater");
+
+						return;// exit While-Loop
 					}
 				}
-				
+
 			}
 			logger.warn("Wait for Flight-Ctrl Device");
-			
+
 			try 
 			{
 				Thread.sleep(1000);
@@ -174,7 +173,7 @@ public class QuadroidMain implements IRxListener
 		}
 
 	}
-	
+
 	/**
 	 * Init the GPSModule connection to given port,
 	 * this method wait for GPS device until 
@@ -184,20 +183,20 @@ public class QuadroidMain implements IRxListener
 	private void initGPSModule()
 	{
 		GPSModule gpsModule = new GPSModule();// create an new device
-		
+
 		while(true)// wait for FlightCtrl device
 		{
 			if(this.gpsModuleConnection == null)// try to connect only if no connection available
 			{	// get all available ports to prove if FlightCtrl are connected
 				Enumeration<?> commports = CommPortIdentifier.getPortIdentifiers();
-				
+
 				while(commports.hasMoreElements())
 				{
 					CommPortIdentifier port = (CommPortIdentifier) commports.nextElement();
-					
+
 					if(port.getName().equals(gpsModule.getPort()) && // only connect to specific port
-					   port.getPortType() == CommPortIdentifier.PORT_SERIAL &&// prove port type
-					   !port.isCurrentlyOwned())// prove if port already in use
+							port.getPortType() == CommPortIdentifier.PORT_SERIAL &&// prove port type
+							!port.isCurrentlyOwned())// prove if port already in use
 					{
 						this.gpsModuleConnection = Connect.getInstance(gpsModule);// connect device to port 
 						// connection successfully?
@@ -205,15 +204,15 @@ public class QuadroidMain implements IRxListener
 							gpsModuleReceiveHandler = new GPSModuleReceiveHandler();
 							gpsModuleConnection.addSerialPortEventListener(gpsModuleReceiveHandler);
 							logger.info("Register GPS Module RX Handler");
-							
+
 							return;// exit While-Loop
 						}
 					}
 				}
-				
+
 			}
 			logger.warn("Wait for GPSModuleDevice");
-			
+
 			try 
 			{
 				Thread.sleep(1000);
@@ -221,8 +220,8 @@ public class QuadroidMain implements IRxListener
 		}
 
 	}
-	
-	
+
+
 	public static void main(String[] args)
 	{
 		long time = System.currentTimeMillis();
@@ -253,7 +252,7 @@ public class QuadroidMain implements IRxListener
 		// init gps module
 		logger.info("Init GPS device");
 		main.initGPSModule();
-		
+
 		main.xbeeconnection.addSerialPortEventListener(new XBeeReceiverHandler());
 		logger.info("Registered Xbee Rx handler");
 		// registered xbee tx handler
@@ -270,36 +269,16 @@ public class QuadroidMain implements IRxListener
 		// start landmark detection
 		new LandmarkDetection(main);
 		logger.info("start landmark detection");
-		
+
 		// additional things
 		QuadroidMain.logger.info("StartQuadroid");
-		
+
 		time = (System.currentTimeMillis() - time);
 		logger.info("time for init " + time + " ms");
 		QuadroidMain.logger.info("StartQuadroid");
 	}
 
-	
-	@Override
-	public void rx(RxData data) 
-	{
-		if(data != null && data.getWaypointlist() != null) {
-			logger.debug("waypointlist size:" + data.getWaypointlist().size());
-			logger.debug("waypointlist string:" + data.getWaypointlist().toString());
-			this.flightCtrlTransmitterHandler.addWaypoints(null);
-			
-		} else {
-			if(data == null) {
-				logger.debug("data is null");
-			}
-			
-			if(data.getWaypointlist() == null) {
-				logger.debug("data.getWaypointlist() is null");
-			}
-		}
-	}
-	
-	
+
 	/**
 	 * this internal class pull MetaData updates from Flight-Ctrl
 	 * 
@@ -310,18 +289,18 @@ public class QuadroidMain implements IRxListener
 	 * */
 	public class FlightCtrlUpdater implements Runnable {
 		private FlightCtrlTransmitterHandler txHandler;
-		
+
 		public FlightCtrlUpdater(FlightCtrlTransmitterHandler handler) {
 			txHandler = handler;
 			Thread thread = new Thread(this);
-			
+
 			thread.start();
 		}
-		
+
 		public void run() {
 			while(true) {
 				double lastUpdate = System.currentTimeMillis() - NaviDataContainer.getInstance().getLastUpdated();
-				
+
 				if(lastUpdate > 300) {
 					txHandler.requestNaviData();
 					try {
@@ -338,18 +317,35 @@ public class QuadroidMain implements IRxListener
 			}
 		}
 	}
-	
-	
+
+	@Override
+	public void rx(RxData data) 
+	{
+		if(data != null && data.getWaypointlist() != null) {
+			logger.debug("waypointlist size:" + data.getWaypointlist().size());
+			logger.debug("waypointlist string:" + data.getWaypointlist().toString());
+			this.flightCtrlTransmitterHandler.addWaypoints(null);
+
+		} else {
+			if(data == null) {
+				logger.debug("data is null");
+			}
+
+			if(data.getWaypointlist() == null) {
+				logger.debug("data.getWaypointlist() is null");
+			}
+		}
+	}
 
 	/**
 	 * this internal class realized the transmission of metadata
 	 * to ground station into separate thread
-	 * 
+	 *
 	 * @author Thomas Rohde TM-12, trohde(at)th-wildau.de
 	 * @version 1.0, 05.01.2014, (JDK 7)
 	 * @see Runnable
-	 * 
-	 * 
+	 *
+	 *
 	 * */
 	public static class StateTransmitter implements Runnable
 	{
@@ -358,7 +354,7 @@ public class QuadroidMain implements IRxListener
 		/**reference of TxDataEncoder to encode object zu bytes*/
 		private TxDataEncoder encoder = null;
 		private long lastMetaData;
-		
+
 		/**
 		 * no public constructor
 		 * only use in main
@@ -367,13 +363,13 @@ public class QuadroidMain implements IRxListener
 		{
 			lastMetaData = 0;
 		}
-		
+
 		/**
 		 * Constructor
-		 * 
-		 * @param ref - hand over an reference of {@link QuadroidMain} for starting 
-		 * state transmitter 
-		 * 
+		 *
+		 * @param ref - hand over an reference of {@link QuadroidMain} for starting
+		 * state transmitter
+		 *
 		 * @throws NullPointerException - if parameter <b>null</b>
 		 * */
 		private StateTransmitter(QuadroidMain ref)
@@ -388,19 +384,19 @@ public class QuadroidMain implements IRxListener
 			Thread updater = new Thread(this);
 			updater.start();
 		}
-		
+
 		@Override
-		public void run() 
+		public void run()
 		{
 			while(true)
 			{
-				try 
-				{	//wait any time before transmit next metadata to ground station
+				try
+				{        //wait any time before transmit next metadata to ground station
 					Thread.sleep(UPDATE_TIME_STATETRANSMITTER);
 				} catch (InterruptedException e) {}
-				
+
 				//is transmission are enable?
-				//must be interrupt from landmark detection 
+				//must be interrupt from landmark detection
 				//to transmit image data after transmission enable StateTransmitter
 				if(statetransmitter)
 					continue;
@@ -418,35 +414,35 @@ public class QuadroidMain implements IRxListener
 				}
 			}
 		}
-		
+
 	}
-	
-	
+
+
 	/**
 	 * this internal class realized the landmark detection
 	 * into separate thread
-	 * 
-	 * @author Stefan 
+	 *
+	 * @author Stefan
 	 * @see Runnable
 	 * */
 	public static class LandmarkDetection implements Runnable{
 
 		/**instance of QuadroidMain for using fields*/
 		private QuadroidMain mainref = null;
-		
+
 		/**no public constructor class only use in main*/
 		@SuppressWarnings("unused")
 		private LandmarkDetection()
 		{
-			
+
 		}
-		
+
 		/**
 		 * Constructor
-		 * 
+		 *
 		 * @param ref - hand over an reference of {@link QuadroidMain}
 		 * for starting the landmark detection
-		 * 
+		 *
 		 * @throws NullPointerException - if parameter <b>null</b>
 		 * */
 		public LandmarkDetection(QuadroidMain ref)
@@ -456,12 +452,12 @@ public class QuadroidMain implements IRxListener
 				logger.error("LandmarkDetection - reference of QuadroidMain are null");
 				throw new NullPointerException("LandmarkDetection - reference of QuadroidMain are null");
 			}
-			
+
 			this.mainref = ref;
 			Thread thread = new Thread(this);
 			thread.start();
 		}
-		
+
 		/**
 		 * Flowcontrolthread for the Landmarkdetection
 		 */
@@ -473,37 +469,37 @@ public class QuadroidMain implements IRxListener
 			boolean lmcheck = false;
 			TxDataEncoder encoder = new TxDataEncoder();
 			byte[] bytedata;
-			
+
 			MainLandmark lm = new MainLandmark();
 			Logger logger = null;
 			logger = LoggerFactory.getLogger(LandmarkDetection.class.getName());
 			logger.info("Init Logger");
 			//Getting connection to the USBCam
 			USBCamConnection usbcamera = USBCamConnection.getInstance(logger);
-			
+
 			//Flowcontrol for Landmarkdetection
 			while(true){
 				t1 = System.currentTimeMillis();
 				bimg = usbcamera.getImage();
 				lmcheck = lm.checkLandmark(bimg); //Performing Landmarkcheck
 				if(lmcheck == true){
-					landmark.setPictureoflandmark(bimg); //If found, set the current image 
+					landmark.setPictureoflandmark(bimg); //If found, set the current image
 					//set metadata to landmark
 					landmark.setMetaData(NaviDataContainer.getInstance().getLastMetaData());
-					statetransmitter = true;	//Lock the xbee channel for transmitting
-					bytedata = encoder.landmarkToBytes(landmark);	//encode Data
-					this.mainref.tx.transmit(bytedata);				//Transmit Landmark
-					
+					statetransmitter = true;        //Lock the xbee channel for transmitting
+					bytedata = encoder.landmarkToBytes(landmark);        //encode Data
+					this.mainref.tx.transmit(bytedata);                                //Transmit Landmark
+
 					try {
-						Thread.sleep(1000 * 10);			//Sleep for 10s (approx. time for transmitting the Landmark)
+						Thread.sleep(1000 * 10);                        //Sleep for 10s (approx. time for transmitting the Landmark)
 					} catch (InterruptedException e) {
 						e.printStackTrace();
 					}
-					statetransmitter = false;	//unlock the xbee channel
-					
+					statetransmitter = false;        //unlock the xbee channel
+
 				}else{ //if no landmark is detected
 					t2 = System.currentTimeMillis();
-					
+
 					//Sleep 500ms before next landmark check
 					try {
 						Thread.sleep(500-(t2-t1));
@@ -511,13 +507,13 @@ public class QuadroidMain implements IRxListener
 						e.printStackTrace();
 					}
 				}
-				
-				
+
+
 			}
-			
+
 		}
-		
+
 	}
-	
-	
+
+
 }
