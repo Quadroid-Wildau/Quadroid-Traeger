@@ -69,6 +69,10 @@
 </view>
 <view id="org.eclipse.ui.views.ProblemView" partName="Problems">
 <viewState PRIMARY_SORT_FIELD="org.eclipse.ui.ide.severityAndDescriptionField" categoryGroup="org.eclipse.ui.ide.severity" markerContentGenerator="org.eclipse.ui.ide.problemsGenerator" partName="Problems">
+<expanded>
+<category IMemento.internal.id="Errors (1 item)"/>
+<category IMemento.internal.id="Warnings"/>
+</expanded>
 <columnWidths org.eclipse.ui.ide.locationField="105" org.eclipse.ui.ide.markerType="553" org.eclipse.ui.ide.pathField="140" org.eclipse.ui.ide.resourceField="542" org.eclipse.ui.ide.severityAndDescriptionField="1088"/>
 <visible IMemento.internal.id="org.eclipse.ui.ide.severityAndDescriptionField"/>
 <visible IMemento.internal.id="org.eclipse.ui.ide.resourceField"/>
@@ -481,6 +485,14 @@
 <workbenchWindowAdvisor/>
 <actionBarAdvisor/>
 <trimLayout>
+<trimArea IMemento.internal.id="16384">
+<trimItem IMemento.internal.id="left"/>
+</trimArea>
+<trimArea IMemento.internal.id="131072">
+<trimItem IMemento.internal.id="bottom"/>
+<trimItem IMemento.internal.id="org.eclipse.ui.internal.ViewStack@c6d581"/>
+<trimItem IMemento.internal.id="right"/>
+</trimArea>
 <trimArea IMemento.internal.id="128">
 <trimItem IMemento.internal.id="org.eclipse.ui.internal.WorkbenchWindow.topBar"/>
 <trimItem IMemento.internal.id="org.eclipse.mylyn.tasks.ui.trim.container"/>
@@ -493,6 +505,42 @@
 </trimLayout>
 </window>
 <mruList>
+<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="USBCamConnection.java" tooltip="Quadroid/src/de/th_wildau/quadroid/connection/USBCamConnection.java">
+<persistable path="/Quadroid/src/de/th_wildau/quadroid/connection/USBCamConnection.java"/>
+</file>
+<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="FlightCtrl.java" tooltip="Quadroid/src/de/th_wildau/quadroid/models/FlightCtrl.java">
+<persistable path="/Quadroid/src/de/th_wildau/quadroid/models/FlightCtrl.java"/>
+</file>
+<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="GPSModule.java" tooltip="Quadroid/src/de/th_wildau/quadroid/models/GPSModule.java">
+<persistable path="/Quadroid/src/de/th_wildau/quadroid/models/GPSModule.java"/>
+</file>
+<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="GPSPos.java" tooltip="Quadroid/src/de/th_wildau/quadroid/models/GPSPos.java">
+<persistable path="/Quadroid/src/de/th_wildau/quadroid/models/GPSPos.java"/>
+</file>
+<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="GPSPosDev.java" tooltip="Quadroid/src/de/th_wildau/quadroid/models/GPSPosDev.java">
+<persistable path="/Quadroid/src/de/th_wildau/quadroid/models/GPSPosDev.java"/>
+</file>
+<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="NaviData.java" tooltip="Quadroid/src/de/th_wildau/quadroid/models/NaviData.java">
+<persistable path="/Quadroid/src/de/th_wildau/quadroid/models/NaviData.java"/>
+</file>
+<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="NaviDataContainer.java" tooltip="Quadroid/src/de/th_wildau/quadroid/models/NaviDataContainer.java">
+<persistable path="/Quadroid/src/de/th_wildau/quadroid/models/NaviDataContainer.java"/>
+</file>
+<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="TestOpCheckLandmark.java" tooltip="Quadroid/src/de/th_wildau/quadroid/test/landmark/TestOpCheckLandmark.java">
+<persistable path="/Quadroid/src/de/th_wildau/quadroid/test/landmark/TestOpCheckLandmark.java"/>
+</file>
+<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="FlightCtrlReceiverHandler.java" tooltip="Quadroid/src/de/th_wildau/quadroid/handler/FlightCtrlReceiverHandler.java">
+<persistable path="/Quadroid/src/de/th_wildau/quadroid/handler/FlightCtrlReceiverHandler.java"/>
+</file>
+<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="GPSModuleReceiveHandler.java" tooltip="Quadroid/src/de/th_wildau/quadroid/handler/GPSModuleReceiveHandler.java">
+<persistable path="/Quadroid/src/de/th_wildau/quadroid/handler/GPSModuleReceiveHandler.java"/>
+</file>
+<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="FlightCtrlTransmitterHandler.java" tooltip="Quadroid/src/de/th_wildau/quadroid/handler/FlightCtrlTransmitterHandler.java">
+<persistable path="/Quadroid/src/de/th_wildau/quadroid/handler/FlightCtrlTransmitterHandler.java"/>
+</file>
+<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="QuadroidMain.java" tooltip="Quadroid/src/de/th_wildau/quadroid/QuadroidMain.java">
+<persistable path="/Quadroid/src/de/th_wildau/quadroid/QuadroidMain.java"/>
+</file>
 <file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.PropertiesFileEditor" name="log4j.properties" tooltip="Quadroid/log4j.properties">
 <persistable path="/Quadroid/log4j.properties"/>
 </file>
@@ -501,42 +549,6 @@
 </file>
 <file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="MetaData.java" tooltip="Quadroid/src/de/th_wildau/quadroid/models/MetaData.java">
 <persistable path="/Quadroid/src/de/th_wildau/quadroid/models/MetaData.java"/>
-</file>
-<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="Landmark.java" tooltip="Quadroid/src/de/th_wildau/quadroid/models/Landmark.java">
-<persistable path="/Quadroid/src/de/th_wildau/quadroid/models/Landmark.java"/>
-</file>
-<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="AbstractTransmitter.java" tooltip="Quadroid/src/de/th_wildau/quadroid/interfaces/AbstractTransmitter.java">
-<persistable path="/Quadroid/src/de/th_wildau/quadroid/interfaces/AbstractTransmitter.java"/>
-</file>
-<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.ui.DefaultTextEditor" name="log.txt.1" tooltip="Quadroid/log.txt.1">
-<persistable path="/Quadroid/log.txt.1"/>
-</file>
-<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="TestLM.java" tooltip="Quadroid/src/de/th_wildau/quadroid/landmark/TestLM.java">
-<persistable path="/Quadroid/src/de/th_wildau/quadroid/landmark/TestLM.java"/>
-</file>
-<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="QuadroidMain.java" tooltip="Quadroid/src/de/th_wildau/quadroid/QuadroidMain.java">
-<persistable path="/Quadroid/src/de/th_wildau/quadroid/QuadroidMain.java"/>
-</file>
-<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="NaviDataContainer.java" tooltip="Quadroid/src/de/th_wildau/quadroid/models/NaviDataContainer.java">
-<persistable path="/Quadroid/src/de/th_wildau/quadroid/models/NaviDataContainer.java"/>
-</file>
-<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="FlightCtrlTransmitterHandler.java" tooltip="Quadroid/src/de/th_wildau/quadroid/handler/FlightCtrlTransmitterHandler.java">
-<persistable path="/Quadroid/src/de/th_wildau/quadroid/handler/FlightCtrlTransmitterHandler.java"/>
-</file>
-<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.ui.DefaultTextEditor" name="log.txt" tooltip="Quadroid/log.txt">
-<persistable path="/Quadroid/log.txt"/>
-</file>
-<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="FlightCtrlReceiverHandler.java" tooltip="Quadroid/src/de/th_wildau/quadroid/handler/FlightCtrlReceiverHandler.java">
-<persistable path="/Quadroid/src/de/th_wildau/quadroid/handler/FlightCtrlReceiverHandler.java"/>
-</file>
-<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="XBee.java" tooltip="Quadroid/src/de/th_wildau/quadroid/enums/XBee.java">
-<persistable path="/Quadroid/src/de/th_wildau/quadroid/enums/XBee.java"/>
-</file>
-<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="XBeeRxTx.java" tooltip="Quadroid/src/de/th_wildau/quadroid/models/XBeeRxTx.java">
-<persistable path="/Quadroid/src/de/th_wildau/quadroid/models/XBeeRxTx.java"/>
-</file>
-<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="Flight_Ctrl.java" tooltip="Quadroid/src/de/th_wildau/quadroid/enums/Flight_Ctrl.java">
-<persistable path="/Quadroid/src/de/th_wildau/quadroid/enums/Flight_Ctrl.java"/>
 </file>
 </mruList>
 </workbench>
