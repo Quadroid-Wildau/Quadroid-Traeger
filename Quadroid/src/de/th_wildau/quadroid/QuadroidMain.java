@@ -302,6 +302,7 @@ public class QuadroidMain implements IRxListener {
 				double lastUpdate = System.currentTimeMillis() - NaviDataContainer.getInstance().getLastUpdated();
 
 				if(lastUpdate > 300) {
+					logger.debug("FlightCtrlUpdater");
 					txHandler.requestNaviData();
 					try {
 						Thread.sleep(2000);
@@ -396,8 +397,8 @@ public class QuadroidMain implements IRxListener {
 				//is transmission are enable?
 				//must be interrupt from landmark detection
 				//to transmit image data after transmission enable StateTransmitter
-				if(statetransmitter)
-					continue;
+				//if(statetransmitter)
+				//	continue;
 
 				logger.debug("last metadata: " + NaviDataContainer.getInstance().getLastUpdated());
 				if(lastMetaData != NaviDataContainer.getInstance().getLastUpdated()) {
@@ -479,7 +480,9 @@ public class QuadroidMain implements IRxListener {
 				t1 = System.currentTimeMillis();
 				bimg = usbcamera.getImage();
 				lmcheck = lm.checkLandmark(bimg); //Performing Landmarkcheck
+				logger.debug("detect landmark");
 				if(lmcheck == true){
+					logger.debug("found landmark");
 					landmark.setPictureoflandmark(bimg); //If found, set the current image
 					//set metadata to landmark
 					landmark.setMetaData(NaviDataContainer.getInstance().getLastMetaData());
@@ -499,7 +502,8 @@ public class QuadroidMain implements IRxListener {
 
 					//Sleep 500ms before next landmark check
 					try {
-						Thread.sleep(500-(t2-t1));
+						//Thread.sleep(500-(t2-t1));
+						Thread.sleep(500);
 					} catch (InterruptedException e) {
 						e.printStackTrace();
 					}

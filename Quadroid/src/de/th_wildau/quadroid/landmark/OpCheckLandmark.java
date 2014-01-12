@@ -15,11 +15,13 @@ import java.awt.image.BufferedImage;
 
 import com.googlecode.javacv.cpp.opencv_core;
 import com.googlecode.javacv.cpp.opencv_core.CvMat;
+import com.googlecode.javacv.cpp.opencv_core.CvMemStorage;
 import com.googlecode.javacv.cpp.opencv_core.CvPoint;
 import com.googlecode.javacv.cpp.opencv_core.CvPoint2D32f;
 import com.googlecode.javacv.cpp.opencv_core.CvPoint3D32f;
 import com.googlecode.javacv.cpp.opencv_core.CvSeq;
 import com.googlecode.javacv.cpp.opencv_core.IplImage;
+import com.googlecode.javacv.cpp.opencv_imgproc;
 
 
 /**
@@ -55,7 +57,7 @@ public class OpCheckLandmark {
 	 */
 	public boolean findLm(BufferedImage src)
 	{
-		
+		System.out.println("buffered image src" + src);
 		width = src.getWidth();
 		height = src.getHeight();
 		return findCircles(src);
@@ -108,7 +110,7 @@ public class OpCheckLandmark {
 			if(destPixels[c] == 255)
 				help++;
 		}
-		//System.out.println("Anzahl weiﬂer Punkte: "+help);
+		//System.out.println("Anzahl weier Punkte: "+help);
 		if(rad*rad/4<help)
 			return true;
 		
@@ -123,11 +125,12 @@ public class OpCheckLandmark {
 	 */
 	private boolean findCircles(BufferedImage src){
 		IplImage image = IplImage.createFrom(src);
-		CvMat grey = CvMat.create(src.getHeight(), src.getWidth(), opencv_core.CV_8UC1);
-		cvCvtColor(image, grey, opencv_core.CV_8UC1);
+		CvMat grey = CvMat.create(src.getHeight(), src.getWidth(), opencv_core.CV_8UC1, 1);
+		cvCvtColor(image, grey, opencv_imgproc.CV_RGB2GRAY);
 		GaussianBlur(grey, grey, cvSize(9, 9), 2, 2, BORDER_DEFAULT);
 		
-		CvMat unused = new CvMat();
+		CvMemStorage mem = CvMemStorage.create();
+		CvMat unused = CvMat.create(1, src.getWidth());
 		int histogramResolution = 1;
 		double minDistOfCircles = 2*minRadius+2;
 		double cannyThreshold = 160;
@@ -139,7 +142,7 @@ public class OpCheckLandmark {
 			if(houghThreshold <= 33 || cannyThreshold <= 25)
 				return false;
 			
-			CvSeq circles = cvHoughCircles(grey, unused, CV_HOUGH_GRADIENT, histogramResolution, 
+			CvSeq circles = cvHoughCircles(grey, mem, CV_HOUGH_GRADIENT, histogramResolution, 
 				minDistOfCircles, cannyThreshold, houghThreshold, minRadius, maxRadius);
 			
 			if(circles.total() > 0){

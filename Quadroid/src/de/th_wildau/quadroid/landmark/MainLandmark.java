@@ -2,8 +2,12 @@ package de.th_wildau.quadroid.landmark;
 
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
-import java.awt.image.Raster;
-import java.awt.image.WritableRaster;
+
+import javax.swing.ImageIcon;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+
+import com.googlecode.javacv.cpp.opencv_photo;
 
 /**
  * Mainclass for Landmarkdetection.
@@ -11,11 +15,15 @@ import java.awt.image.WritableRaster;
  * @author Stephan Funke
  *
  */
-public class MainLandmark{
-
+public class MainLandmark extends JFrame {
+	private JFrame frame = null; 
 	
 	public MainLandmark(){
-		
+		super("Fenster");
+		setSize(300,300);
+		setLocation(300,300);
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setVisible(true);
 	}
 	
 	/**
@@ -24,6 +32,9 @@ public class MainLandmark{
 	 * @return boolean - TRUE = landmark detected, FALSE = no landmark is found
 	 */
 	public boolean checkLandmark(BufferedImage img){
+		
+        this.getContentPane().add(new JLabel(new ImageIcon(img)));
+		this.repaint();
 //		//System.loadLibrary("opencv_java245");
 //		img = convertSourceImage(img);
 //		
