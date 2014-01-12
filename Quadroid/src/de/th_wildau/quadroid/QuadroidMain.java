@@ -481,11 +481,7 @@ public class QuadroidMain implements IRxListener {
 				bimg = usbcamera.getImage();
 				lmcheck = lm.checkLandmark(bimg); //Performing Landmarkcheck
 				
-				for (int i = 0; i < 20; i++)
-					logger.debug("detect landmark");
 				if(lmcheck == true){
-					for (int i = 0; i < 20; i++)
-						logger.debug("found landmark");
 					landmark.setPictureoflandmark(bimg); //If found, set the current image
 					//set metadata to landmark
 					landmark.setMetaData(NaviDataContainer.getInstance().getLastMetaData());

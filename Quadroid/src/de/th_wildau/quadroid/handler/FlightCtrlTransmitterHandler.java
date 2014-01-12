@@ -108,6 +108,7 @@ public class FlightCtrlTransmitterHandler extends AbstractTransmitter {
 		sendChar[chars.length] = (char) crc1;//put first crc value
 		sendChar[chars.length + 1] = (char) crc2;//put second crc value
 		sendChar[chars.length + 2] = '\r';//set end marker for detection transmission end
+		
 		//add all data + crc to transmission byte array before cast all data to bytes
 		byte[] b = new byte[sendChar.length];
 		for (int i = 0; i < b.length; i++) {
