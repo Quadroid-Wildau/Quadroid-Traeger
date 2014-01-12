@@ -11,6 +11,11 @@ import de.th_wildau.quadroid.landmark.MainLandmark;
 
 import junit.framework.TestCase;
 
+/**
+ * Testcase for landmarkdetection
+ * @author Stephan Funke
+ *
+ */
 public class TestOpCheckLandmark extends TestCase {
 	
 	
