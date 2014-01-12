@@ -2,6 +2,7 @@ package de.th_wildau.quadroid.models;
 
 import purejavacomm.SerialPort;
 import de.th_wildau.quadroid.interfaces.IDevice;
+import de.th_wildau.quadroid.utils.Properties;
 
 /**
  * GPS Device Model for serial connection 
@@ -18,7 +19,7 @@ public class GPSModule implements IDevice{
 	@Override
 	public String getPort() 
 	{
-		return "tty.usbmodem1451";//TODO: set Odroid x2 Port!
+		return Properties.getInstance().getProperty("gpsport");//TODO: set Odroid x2 Port!
 	}
 
 	@Override

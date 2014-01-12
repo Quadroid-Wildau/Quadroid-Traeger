@@ -27,6 +27,7 @@ import de.th_wildau.quadroid.models.MetaData;
 import de.th_wildau.quadroid.models.NaviDataContainer;
 import de.th_wildau.quadroid.models.RxData;
 import de.th_wildau.quadroid.models.XBeeRxTx;
+import de.th_wildau.quadroid.utils.Properties;
 import purejavacomm.*;
 
 
@@ -81,7 +82,7 @@ public class QuadroidMain implements IRxListener {
 		xbee.setParity(XBee.PARITY.getValue());// set parity type
 		xbee.setStopbits(XBee.STOPBITS.getValue());// set number of stopbits
 		//xbee.setPort("/dev/ttyUSB0");// set port for connection
-		xbee.setPort("cu.usbserial-1412");// set port for connection
+		xbee.setPort(Properties.getInstance().getProperty("xbeeport"));// set port for connection
 		xbee.setDevicename(XBee.DEVICENAME.getName());// set an device name
 
 		while(true)// wait for xbee device
@@ -131,7 +132,7 @@ public class QuadroidMain implements IRxListener {
 		flightctrl.setParity(Flight_Ctrl.PARITY.getValue());// set parity type
 		flightctrl.setStopbits(Flight_Ctrl.STOPBITS.getValue());// set number of stopbits
 		//flightctrl.setPort(Flight_Ctrl.PORT.getName());// set port for connection
-		flightctrl.setPort("cu.usbserial-A400fA7A");
+		flightctrl.setPort(Properties.getInstance().getProperty("flightctrlport"));
 		flightctrl.setDevicename(Flight_Ctrl.DEVICENAME.getName());// set an device name
 
 		while(true)// wait for FlightCtrl device
