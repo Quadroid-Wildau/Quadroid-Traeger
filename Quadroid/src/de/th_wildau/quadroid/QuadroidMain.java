@@ -7,6 +7,7 @@ import org.apache.log4j.PropertyConfigurator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import purejavacomm.CommPortIdentifier;
 import de.th_wildau.quadroid.connection.Connect;
 import de.th_wildau.quadroid.connection.USBCamConnection;
 import de.th_wildau.quadroid.encoder.TxDataEncoder;
@@ -28,7 +29,6 @@ import de.th_wildau.quadroid.models.NaviDataContainer;
 import de.th_wildau.quadroid.models.RxData;
 import de.th_wildau.quadroid.models.XBeeRxTx;
 import de.th_wildau.quadroid.utils.Properties;
-import purejavacomm.*;
 
 
 /**
@@ -480,9 +480,12 @@ public class QuadroidMain implements IRxListener {
 				t1 = System.currentTimeMillis();
 				bimg = usbcamera.getImage();
 				lmcheck = lm.checkLandmark(bimg); //Performing Landmarkcheck
-				logger.debug("detect landmark");
+				
+				for (int i = 0; i < 20; i++)
+					logger.debug("detect landmark");
 				if(lmcheck == true){
-					logger.debug("found landmark");
+					for (int i = 0; i < 20; i++)
+						logger.debug("found landmark");
 					landmark.setPictureoflandmark(bimg); //If found, set the current image
 					//set metadata to landmark
 					landmark.setMetaData(NaviDataContainer.getInstance().getLastMetaData());
