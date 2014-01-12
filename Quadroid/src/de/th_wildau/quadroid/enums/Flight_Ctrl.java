@@ -17,7 +17,7 @@ public enum Flight_Ctrl {
 	PARITY(SerialPort.PARITY_NONE), //parity flag
 	DATABITS(SerialPort.DATABITS_8), //number of databits
 	STOPBITS(SerialPort.STOPBITS_1), //stop flag
-	PORT("/dev/ttyUSB1"), //connection port
+	PORT("ttyUSB1"), //connection port
 	DEVICENAME(""); //device name
 	
 	

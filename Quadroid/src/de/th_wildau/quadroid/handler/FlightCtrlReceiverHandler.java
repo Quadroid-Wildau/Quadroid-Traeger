@@ -17,15 +17,27 @@ import de.th_wildau.quadroid.models.GPSPosDev;
 import de.th_wildau.quadroid.models.NaviData;
 import de.th_wildau.quadroid.models.NaviDataContainer;
 
+/**
+ * This class handle incoming data from Flight-Ctrl
+ * 
+ * @author Alex
+ * @version 1.0, 11.01.2014, (JDK 7)
+ * @see AbstractReceiver
+ * 
+ * 
+ * */
+
+
 public class FlightCtrlReceiverHandler extends AbstractReceiver {
 	
 	@Override
 	public void serialEvent(SerialPortEvent event, SerialPort port, 
 			InputStream inputStream, OutputStream ostream, Logger logger) {
-		logger.info("FlightCtrlReceiverHandler evnt: "+ event.getEventType());
+		//logger.info("FlightCtrlReceiverHandler evnt: "+ event.getEventType());
 		
-		switch(event.getEventType()) {
-        case SerialPortEvent.BI:
+		switch(event.getEventType()) 
+		{
+        case SerialPortEvent.BI://ignore flow control for serial communication
         case SerialPortEvent.OE:
         case SerialPortEvent.FE:
         case SerialPortEvent.PE:
@@ -35,23 +47,30 @@ public class FlightCtrlReceiverHandler extends AbstractReceiver {
         case SerialPortEvent.RI:
         case SerialPortEvent.OUTPUT_BUFFER_EMPTY:
             break;
-        case SerialPortEvent.DATA_AVAILABLE:
+        case SerialPortEvent.DATA_AVAILABLE://data available!
+        	//buffer for incomming data
             byte[] readBuffer = new byte[1024];
             int current;
 
             try {
             	int i = 0;
-                while ((current = inputStream.read()) > -1) {
-                    if ((current & 0xFF) != '\r') {
+            	//read inputstream 
+                while ((current = inputStream.read()) > -1) 
+                {
+                    if ((current & 0xFF) != '\r') //endmarker for incomming data if reach --> transmission ending
+                    {	//save incomming data
                     	readBuffer[i] = (byte) current;
                     	i++;
-                    } else {
-                    	if(i > 3) {
+                    } else 
+                    {
+                    	if(i > 3) 
+                    	{	//decode modified base64 data at specific position 
                     		byte[] bytes = decode64(readBuffer, 3, i - 3);
                         	
-                        	if(readBuffer[2] == 'O') {
+                        	if(readBuffer[2] == 'O') 
+                        	{	//convert all data
                         		converteData(bytes);
-                        		logger.info("convert data");
+                        		logger.debug("convert data");
                         	}
                         	readBuffer = new byte[1024];
                         	i = 0;
@@ -60,12 +79,26 @@ public class FlightCtrlReceiverHandler extends AbstractReceiver {
                 }
             } catch (IOException e) {logger.error(e.getLocalizedMessage());}
             break;
+            default:
+            	logger.debug("Default value into FlightCtrlReceiverHandler");
+            break;	
         }
 	}
 	
-	public void converteData(byte[] bytes) {
+	/**
+	 * This Method create and {@link NaviData} model and put it to data container
+	 * all received data are available in {@link NaviDataContainer} 
+	 * 
+	 * @param bytes - hand over data from flight-ctrl to convert
+	 * 
+	 * */
+	public void converteData(byte[] bytes) 
+	{
         NaviData model = new NaviData();
 		
+        // all decoder become an subarray and decode the specific data
+        
+        
         model.setVersion(this.decodeU8(bytes[0]));
         model.setCurrentPosition(this.decodeGPSPos(Arrays.copyOfRange(bytes, 1, 14)));
         model.setTargetPosition(this.decodeGPSPos(Arrays.copyOfRange(bytes, 14, 27)));
@@ -99,10 +132,16 @@ public class FlightCtrlReceiverHandler extends AbstractReceiver {
         
         NaviDataContainer.getInstance().addNaviData(model);
 	}
-	
+
+	/**
+	 * decoder for {@link GPSPos} 
+	 * 
+	 * @param bytes - hand over an subarray contains data for GPS
+	 * 
+	 * */
 	private GPSPos decodeGPSPos(byte[] bytes) {
 		GPSPos model = new GPSPos();
-		
+		//decode and set GNSS data
 		model.setLongitude(this.decodeS32(Arrays.copyOfRange(bytes, 0, 4)));
 		model.setLatitude(this.decodeS32(Arrays.copyOfRange(bytes, 4, 8)));
 		model.setAltitude(this.decodeS32(Arrays.copyOfRange(bytes, 8, 12)));
@@ -110,7 +149,12 @@ public class FlightCtrlReceiverHandler extends AbstractReceiver {
 		
 		return model;
 	}
-	
+	/**
+	 * decoder for deviation of {@link GPSPosDev}
+	 * 
+	 * @param bytes - hand over an subarray contains data for GPS Deviation
+	 * 
+	 * */
 	private GPSPosDev decodeGPSPosDev(byte[] bytes) {
 		GPSPosDev model = new GPSPosDev();
 		
@@ -120,7 +164,21 @@ public class FlightCtrlReceiverHandler extends AbstractReceiver {
 		return model;
 	}
 	
-	public byte[] decode64(byte[] in_arr, int offset, int len) {
+	/**
+	 * decoder for modified bast64 from Flight-Ctrl
+	 * 
+	 * @param in_arr - hand over data contains base64 coded data
+	 * @param offset - start position of base64 data into <tt>in_arr</tt>
+	 * @param len - end position of base64 coded data into <tt>in_arr</tt>
+	 * 
+	 * @return get decoded data 
+	 * 
+	 * */
+	public byte[] decode64(byte[] in_arr, int offset, int len) 
+	{
+		
+		//TODO: Alex its your turn 
+		
         int ptrIn = offset;
         byte a, b, c, d, x, y, z;
         int ptr = 0;
@@ -167,13 +225,30 @@ public class FlightCtrlReceiverHandler extends AbstractReceiver {
         return out_arr;
     }
 	
+	/**
+	 * decoder for unsigned byte from C
+	 * 
+	 * @param b - hand over byte data to decode 
+	 * 
+	 * @return decoded C value
+	 * 
+	 * */
 	protected short decodeU8(byte b) {
+		//TODO: Alex
 		String s = "";
 		s += (b & 0xFF);
 		
 		return Short.parseShort(s);
 	}
 	
+	/**
+	 * decoder for singned byte from C ---> <tt>Null-Function</tt>
+	 * 
+	 * @param b - hand over byte data to convert 
+	 * 
+	 * @return decoded C value 
+	 * 
+	 * */
 	protected short decodeS8(byte b) {
 		String s = "";
 		s += (b);
@@ -181,7 +256,16 @@ public class FlightCtrlReceiverHandler extends AbstractReceiver {
 		return Short.parseShort(s);
 	}
 	
-	protected short decodeU16(byte[] bytes) {
+	/**
+	 * decoder for unsigned short from C
+	 * 
+	 * @param bytes - hand over short data to convert 
+	 * 
+	 * @return decoded C value to java format
+	 * 
+	 * */
+	protected short decodeU16(byte[] bytes) 
+	{	//TODO: Alex 
 		ByteBuffer bb = ByteBuffer.allocate(2);
 		bb.order(ByteOrder.LITTLE_ENDIAN);
 		bb.put(bytes[0]);
@@ -191,7 +275,16 @@ public class FlightCtrlReceiverHandler extends AbstractReceiver {
 		return (short)(shortVal & 0x00FF);
 	}
 	
+	/**
+	 * decoder for signed short from C --> <tt>Null-Function</tt>
+	 * 
+	 * @param bytes - hand over byte data for C short value
+	 * 
+	 *  @return decoded short value into java format
+	 * 
+	 * */
 	protected short decodeS16(byte[] bytes) {
+		//TODO: Alex
 		ByteBuffer bb = ByteBuffer.allocate(2);
 		bb.order(ByteOrder.LITTLE_ENDIAN);
 		bb.put(bytes[0]);
@@ -201,7 +294,16 @@ public class FlightCtrlReceiverHandler extends AbstractReceiver {
 		return shortVal;
 	}
 	
+	/**
+	 * decoder for signed integer value from C --> <tt>Null-Function</tt>
+	 * 
+	 * @param bytes - hand over data bytes from C integer value 
+	 * 
+	 * @return decoded integer value into java format
+	 * 
+	 * */
 	protected int decodeS32(byte[] bytes) {
+		//TODO: Alex
 		ByteBuffer bb = ByteBuffer.allocate(4);
 		bb.order(ByteOrder.LITTLE_ENDIAN);
 		bb.put(bytes[0]);
@@ -213,7 +315,17 @@ public class FlightCtrlReceiverHandler extends AbstractReceiver {
 		return intVal;
 	}
 	
+	/**
+	 * test function for decoding data
+	 * 
+	 * @param arr - data to decoding process 
+	 * 
+	 * @return decoded data to show
+	 * 
+	 * */
     public String arrayDump(byte[] arr) {
+    	
+    	//TODO: @Alex should be remove if no using ?!
     	String s = "";
     	for (byte b : arr) {
     		s += "[" + (b & 0xFF) + "]";
@@ -221,7 +333,16 @@ public class FlightCtrlReceiverHandler extends AbstractReceiver {
     	return s;
     }
     
+    /**
+     * test  function for decoding data 
+     * 
+     * @param arr - data to decoding process 
+     * 
+     * @return decoded data to show
+     * 
+     * */
     public String arrayDumpS(byte[] arr) {
+    	//TODO: @Alex should be remove if no using ?!
     	String s = "";
     	for (byte b : arr) {
     		s += "[" + (char)(b & 0xFF) + "]";

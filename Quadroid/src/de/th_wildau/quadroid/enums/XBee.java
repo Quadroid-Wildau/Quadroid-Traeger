@@ -17,7 +17,7 @@ public enum XBee {
 	PARITY(SerialPort.PARITY_NONE), //parity flag
 	DATABITS(SerialPort.DATABITS_8), //number of databits
 	STOPBITS(SerialPort.STOPBITS_1), //stop flag
-	PORT("/dev/ttyUSB0"), //port for connection
+	PORT("ttyUSB0"), //port for connection
 	DEVICENAME("xBee5sPro");//device name
 
 	/** save an parameter */
