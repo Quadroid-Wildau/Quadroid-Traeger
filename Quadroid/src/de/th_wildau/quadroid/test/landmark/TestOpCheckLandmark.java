@@ -11,6 +11,11 @@ import de.th_wildau.quadroid.landmark.MainLandmark;
 
 import junit.framework.TestCase;
 
+/**
+ * Testcase for landmarkdetection
+ * @author Stephan Funke
+ *
+ */
 public class TestOpCheckLandmark extends TestCase {
 	
 	
@@ -18,15 +23,16 @@ public class TestOpCheckLandmark extends TestCase {
 		try {
 			System.loadLibrary("opencv_java245");
 
-			BufferedImage positivTest = ImageIO.read( new File( "testKamera.png" ) );
-			BufferedImage negativTest = ImageIO.read( new File( "k-DSC_4243.jpg" ) );
+			BufferedImage positivTest = ImageIO.read( new File( "testKamera.png" ) );//Load Testpicture with landmark
+			BufferedImage negativTest = ImageIO.read( new File( "k-DSC_4243.jpg" ) );//Load Testpicture without landmark
 			MainLandmark lm = new MainLandmark();
+			//Test positive Picture
 			assertTrue(lm.checkLandmark(positivTest));
+			//Test negative Picture
 			assertFalse(lm.checkLandmark(negativTest));
 			
 			
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
