@@ -322,18 +322,6 @@ public class QuadroidMain implements IRxListener {
 	@Override
 	public void rx(RxData data) 
 	{
-		if(data != null && data.getWaypointlist() != null) {
-			this.flightCtrlTransmitterHandler.addWaypoints(null);
-
-		} else {
-			if(data == null) {
-				logger.debug("data is null");
-			}
-
-			if(data.getWaypointlist() == null) {
-				logger.debug("data.getWaypointlist() is null");
-			}
-		}
 	}
 
 	/**

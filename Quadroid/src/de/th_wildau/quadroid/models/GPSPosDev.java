@@ -1,7 +1,7 @@
 package de.th_wildau.quadroid.models;
 
 /**
- * Model for ? TODO: 
+ * Model for the wrapping of the c structure that get returned from the flightctrl 
  * 
  * @author Alex
  * @version 1.0, 11.01.2014, (JDK 7)

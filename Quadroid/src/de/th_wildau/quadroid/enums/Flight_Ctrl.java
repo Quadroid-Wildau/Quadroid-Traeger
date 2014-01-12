@@ -11,13 +11,10 @@ import purejavacomm.SerialPort;
  * */
 
 public enum Flight_Ctrl {
-
-	//TODO: set communication parameter for Flight-Ctrl 2.5
 	BAUD(57600), //transmission speed
 	PARITY(SerialPort.PARITY_NONE), //parity flag
 	DATABITS(SerialPort.DATABITS_8), //number of databits
 	STOPBITS(SerialPort.STOPBITS_1), //stop flag
-	PORT("ttyUSB1"), //connection port
 	DEVICENAME(""); //device name
 	
 	

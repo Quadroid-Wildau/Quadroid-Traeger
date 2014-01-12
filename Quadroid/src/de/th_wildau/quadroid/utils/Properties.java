@@ -25,10 +25,8 @@ public class Properties extends java.util.Properties{
 		try {
 			this.load(new FileInputStream("config.properties"));
 		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}

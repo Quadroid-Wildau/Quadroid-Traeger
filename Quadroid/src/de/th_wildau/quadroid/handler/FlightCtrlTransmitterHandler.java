@@ -61,21 +61,6 @@ public class FlightCtrlTransmitterHandler extends AbstractTransmitter {
 	}
 	
 	/**
-	 * TODO: Alex!? 
-	 * 
-	 * wtf? ^^
-	 * 
-	 * */
-	public void addWaypoints(Waypoint waypoint) {
-		@SuppressWarnings("unused")
-		ByteBuffer buffer = ByteBuffer.allocate(2);
-		
-		@SuppressWarnings("unused")
-		GPSPos geoPos = new GPSPos();
-		//this.transmit(msg);
-	}
-	
-	/**
 	 * This method transmit data, before transmission put crc checksum to data 
 	 * 
 	 * @param chars - hand over data to transmit to Flight-Ctrl
@@ -133,28 +118,9 @@ public class FlightCtrlTransmitterHandler extends AbstractTransmitter {
 		} catch (InterruptedException e) {
 			//no logging for interrupt exception!
 		}
-		
-//		try {
-//			this.getConnection().getOutputStream().write(msg);
-//		} catch (IOException e) {
-//			logger.error("Transmission Exception: ", e);
-//		}
 	}
 	
-//	private byte[] encodePoint(Point point) {
-//		
-//	}
-//	
-//	private byte[] encodeGPSPos(GPSPos gpsPos) {
-//		
-//	}
-//	
-//	public byte endcodeU8(short value) {
-//		ByteBuffer buffer = ByteBuffer.allocate(1);
-//		buffer.
-//		
-//		return buffer.get();
-//	}
+	
 	/**
 	 * Internal class for transmission data from blocking queue 
 	 * @author Alex

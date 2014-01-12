@@ -33,7 +33,6 @@ public class FlightCtrlReceiverHandler extends AbstractReceiver {
 	@Override
 	public void serialEvent(SerialPortEvent event, SerialPort port, 
 			InputStream inputStream, OutputStream ostream, Logger logger) {
-		//logger.info("FlightCtrlReceiverHandler evnt: "+ event.getEventType());
 		
 		switch(event.getEventType()) 
 		{
@@ -174,11 +173,7 @@ public class FlightCtrlReceiverHandler extends AbstractReceiver {
 	 * @return get decoded data 
 	 * 
 	 * */
-	public byte[] decode64(byte[] in_arr, int offset, int len) 
-	{
-		
-		//TODO: Alex its your turn 
-		
+	public byte[] decode64(byte[] in_arr, int offset, int len) { 	
         int ptrIn = offset;
         byte a, b, c, d, x, y, z;
         int ptr = 0;
@@ -234,7 +229,6 @@ public class FlightCtrlReceiverHandler extends AbstractReceiver {
 	 * 
 	 * */
 	protected short decodeU8(byte b) {
-		//TODO: Alex
 		String s = "";
 		s += (b & 0xFF);
 		
@@ -265,7 +259,7 @@ public class FlightCtrlReceiverHandler extends AbstractReceiver {
 	 * 
 	 * */
 	protected short decodeU16(byte[] bytes) 
-	{	//TODO: Alex 
+	{	
 		ByteBuffer bb = ByteBuffer.allocate(2);
 		bb.order(ByteOrder.LITTLE_ENDIAN);
 		bb.put(bytes[0]);
@@ -284,7 +278,6 @@ public class FlightCtrlReceiverHandler extends AbstractReceiver {
 	 * 
 	 * */
 	protected short decodeS16(byte[] bytes) {
-		//TODO: Alex
 		ByteBuffer bb = ByteBuffer.allocate(2);
 		bb.order(ByteOrder.LITTLE_ENDIAN);
 		bb.put(bytes[0]);
@@ -303,7 +296,6 @@ public class FlightCtrlReceiverHandler extends AbstractReceiver {
 	 * 
 	 * */
 	protected int decodeS32(byte[] bytes) {
-		//TODO: Alex
 		ByteBuffer bb = ByteBuffer.allocate(4);
 		bb.order(ByteOrder.LITTLE_ENDIAN);
 		bb.put(bytes[0]);
@@ -324,8 +316,6 @@ public class FlightCtrlReceiverHandler extends AbstractReceiver {
 	 * 
 	 * */
     public String arrayDump(byte[] arr) {
-    	
-    	//TODO: @Alex should be remove if no using ?!
     	String s = "";
     	for (byte b : arr) {
     		s += "[" + (b & 0xFF) + "]";
@@ -342,7 +332,6 @@ public class FlightCtrlReceiverHandler extends AbstractReceiver {
      * 
      * */
     public String arrayDumpS(byte[] arr) {
-    	//TODO: @Alex should be remove if no using ?!
     	String s = "";
     	for (byte b : arr) {
     		s += "[" + (char)(b & 0xFF) + "]";

@@ -39,7 +39,7 @@ public class NaviData
 	private short variometer;
 	/**save flying time of quadroid*/
 	private short flyingTime;
-	/**TODO: ?*/
+	/**battery voltage: */
 	private short uBat;
 	/**save current speed*/
 	private short groundSpeed;
@@ -51,7 +51,7 @@ public class NaviData
 	private short angleNick;
 	/**save angel of roll for airplane*/
 	private short angleRoll;
-	/**TODO: ?*/
+	/**connection quality of the remote control: ?*/
 	private short rcQuality;
 	/**save Flight-Ctrl state flags*/
 	private short fCStatusFlags;
@@ -71,9 +71,9 @@ public class NaviData
 	private short setpointAltitude;
 	/**save current gas of airplane*/
 	private short gas;
-	/**TODO: ???*/
+	/**current used amper: ???*/
 	private short current;
-	/**TODO: ???*/
+	/**used voltage: ???*/
 	private short usedCapacity;
 	
 	
@@ -283,7 +283,7 @@ public class NaviData
 	/**
 	 * Getter Function
 	 * 
-	 * TODO: ????
+	 * voltage of the battery
 	 * 
 	 * */
 	public short getuBat() {
@@ -294,7 +294,7 @@ public class NaviData
 	/**
 	 * Setter Method
 	 * 
-	 * @param uBat - hand over an TODO: ???
+	 * @param uBat - hand over an voltage value of the battery
 	 * 
 	 * 
 	 * */
@@ -419,7 +419,7 @@ public class NaviData
 	/**
 	 * Getter Function
 	 * 
-	 * @return TODO: ???
+	 * @return remote control signal quality
 	 * 
 	 * */
 	public short getRcQuality() {
@@ -431,7 +431,7 @@ public class NaviData
 	 * Setter Method
 	 * 
 	 * 
-	 * @param rC_Quality - set an new value for TODO: ????
+	 * @param rC_Quality - set an new value for remote control signal quality
 	 * 
 	 * */
 	public void setRcQuality(short rC_Quality) {
@@ -646,7 +646,7 @@ public class NaviData
 	/**
 	 * Getter Function
 	 * 
-	 * @return TODO: ???
+	 * @return get current used voltage
 	 * 
 	 * */
 	public short getCurrent() {
@@ -657,7 +657,7 @@ public class NaviData
 	/**
 	 * Setter Method
 	 * 
-	 * TODO: ??
+	 * set current used voltage
 	 * 
 	 * */
 	public void setCurrent(short current) {
@@ -668,7 +668,7 @@ public class NaviData
 	/**
 	 * Getter Function
 	 * 
-	 * @return TODO: ???
+	 * @return get used ampere
 	 * 
 	 * */
 	public short getUsedCapacity() {
@@ -679,7 +679,7 @@ public class NaviData
 	/**
 	 * Setter Method
 	 * 
-	 * TODO: ??
+	 * set used ampere
 	 * 
 	 * */
 	public void setUsedCapacity(short usedCapacity) {
