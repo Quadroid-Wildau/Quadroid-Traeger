@@ -351,29 +351,101 @@ public class RxDataDecoderTest {
 						//prove airplane data
 						assertTrue(airplane.getBatteryState() == this.refairplane.getBatteryState());
 						assertTrue(airplane.getTime() == this.refairplane.getTime());		
-			
-		
-			
-			
-			
-		
-		
+
 	}
 
 	/**
 	 * Test method for {@link de.th_wildau.quadroid.decoder.RxDataDecoder#stringToMetaData(java.lang.String)}.
 	 */
 	@Test
-	public void testStringToMetaData() {
-		fail("Not yet implemented");
+	public void testStringToMetaData() 
+	{
+		MetaData md = decoder.stringToMetaData(validmetadata);
+		
+		assertNotNull(md);//prove metadata
+		
+		Attitude attitude = md.getAttitude();
+		
+				assertNotNull(attitude);//prove attitude
+				//prove attitude data
+				assertTrue(attitude.getPitch() == this.refattitude.getPitch());
+				assertTrue(attitude.getRoll() == this.refattitude.getRoll());
+				assertTrue(attitude.getYaw() == this.refattitude.getYaw());
+		
+		Course course = md.getCourse();
+		
+				assertNotNull(course);//prove course
+				//prove values
+				assertTrue( course.getAngleReference() == this.refcourse.getAngleReference());
+				assertTrue( course.getSpeed() == this.refcourse.getSpeed());
+
+		Airplane airplane = md.getAirplane();
+		
+				assertNotNull(airplane);//prove airplane
+				
+				GNSS gnssairplane = airplane.GeoData();
+				
+						assertNotNull(gnssairplane);
+						
+						//prove geo data
+						assertTrue(gnssairplane.getLatitude() == this.geo.getLatitude());
+						assertTrue(gnssairplane.getLongitude() == this.geo.getLongitude());
+						assertTrue(gnssairplane.getHeight() == this.geo.getHeight());
+	
+				//prove airplane data
+				assertTrue(airplane.getBatteryState() == this.refairplane.getBatteryState());
+				assertTrue(airplane.getTime() == this.refairplane.getTime());
 	}
 
 	/**
 	 * Test method for {@link de.th_wildau.quadroid.decoder.RxDataDecoder#stringToLandmark(java.lang.String)}.
 	 */
 	@Test
-	public void testStringToLandmark() {
-		fail("Not yet implemented");
+	public void testStringToLandmark() 
+	{	//hand over an sring contains valid data for testing decoder
+		Landmark lm = decoder.stringToLandmark(this.validlandmark);
+		
+		assertNotNull(lm);//prove landmark
+		
+			BufferedImage img = lm.getPictureoflandmark();
+			//prove image
+			assertNull(img);//must be null
+			
+				MetaData md = lm.getMetaData();
+			
+				assertNotNull(md);//prove metadata
+				
+				Attitude attitude = md.getAttitude();
+				
+						assertNotNull(attitude);//prove attitude
+						//prove attitude data
+						assertTrue(attitude.getPitch() == this.refattitude.getPitch());
+						assertTrue(attitude.getRoll() == this.refattitude.getRoll());
+						assertTrue(attitude.getYaw() == this.refattitude.getYaw());
+				
+				Course course = md.getCourse();
+				
+						assertNotNull(course);//prove course
+						//prove values
+						assertTrue( course.getAngleReference() == this.refcourse.getAngleReference());
+						assertTrue( course.getSpeed() == this.refcourse.getSpeed());
+
+				Airplane airplane = md.getAirplane();
+				
+						assertNotNull(airplane);//prove airplane
+						
+						GNSS gnssairplane = airplane.GeoData();
+						
+								assertNotNull(gnssairplane);
+								
+								//prove geo data
+								assertTrue(gnssairplane.getLatitude() == this.geo.getLatitude());
+								assertTrue(gnssairplane.getLongitude() == this.geo.getLongitude());
+								assertTrue(gnssairplane.getHeight() == this.geo.getHeight());
+			
+						//prove airplane data
+						assertTrue(airplane.getBatteryState() == this.refairplane.getBatteryState());
+						assertTrue(airplane.getTime() == this.refairplane.getTime());
 	}
 
 }
