@@ -19,7 +19,7 @@ public class GPSModule implements IDevice{
 	@Override
 	public String getPort() 
 	{
-		return Properties.getInstance().getProperty("gpsport");//TODO: set Odroid x2 Port!
+		return Properties.getInstance().getProperty("gpsport");
 	}
 
 	@Override
