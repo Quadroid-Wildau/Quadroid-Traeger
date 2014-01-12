@@ -83,7 +83,7 @@ public class RxDataDecoder implements Runnable
 	 * if <tt>imagedata null</tt> return <b>null</b> 
 	 * 
 	 * */
-	protected BufferedImage byteToBufferedImage(byte[] imagedata)
+	public BufferedImage byteToBufferedImage(byte[] imagedata)
 	{
 		if(imagedata == null)
 			return null;
