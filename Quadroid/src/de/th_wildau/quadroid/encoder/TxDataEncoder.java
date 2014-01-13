@@ -44,7 +44,7 @@ public class TxDataEncoder
 	 * @return return an byte-array contains data from given BufferedImage,
 	 * return <b>null</b> if parameters are <tt>null</tt> 
 	 * */
-	protected byte[] imageToByteArray(BufferedImage bufferedimage, String type)
+	public byte[] imageToByteArray(BufferedImage bufferedimage, String type)
 	{	//prove parameter
 		if(bufferedimage == null || type == null)
 			return null;
