@@ -12,9 +12,11 @@
 	<classpathentry kind="lib" path="lib/slf4j-api-1.7.2.jar"/>
 	<classpathentry kind="lib" path="lib/slf4j-log4j12-1.6.4.jar"/>
 	<classpathentry kind="lib" path="lib/webcam-capture-0.3.10-RC6.jar"/>
+	<classpathentry kind="lib" path="lib/ffmpeg-2.0.1-macosx-x86_64.jar"/>
 	<classpathentry kind="lib" path="lib/javacpp.jar"/>
+	<classpathentry kind="lib" path="lib/javacv-macosx-x86_64.jar"/>
 	<classpathentry kind="lib" path="lib/javacv.jar"/>
-	<classpathentry kind="lib" path="lib/opencv-2.4.6.1-android-arm.jar"/>
+	<classpathentry kind="lib" path="lib/opencv-2.4.6.1-macosx-x86_64.jar"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/4"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

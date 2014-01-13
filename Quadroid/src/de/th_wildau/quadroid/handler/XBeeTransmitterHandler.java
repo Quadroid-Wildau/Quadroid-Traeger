@@ -45,6 +45,9 @@ public class XBeeTransmitterHandler extends AbstractTransmitter
 			return;
 	  try
 	  {	
+		  for (int i = 0; i < 20; i++) 
+			  logger.debug("image data");
+		logger.debug(new String(msg));
 		super.getConnection().getOutputStream().write(msg);//send data
 		super.getConnection().getOutputStream().write("||||||".getBytes());//send end marker
 		super.getConnection().getOutputStream().flush();//flush pipe
